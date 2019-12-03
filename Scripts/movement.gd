@@ -35,6 +35,7 @@ onready var node_armaTresRotDesv = get_node(armaTresRotDesv)
 
 # objeto bullet
 var Bullet = preload("res://objetos/bestbullet.tscn")
+var fire = preload("res://objetos/fuego.tscn")
 # MATRIZ ARMAS
 var armas = [[2,0.1,4],[16,60,30],[16,60,30],[4,4,4],[4,4,4],[2,5,7],[10,5,40]]
 	# col 0: retardo de cada ramas
@@ -117,15 +118,20 @@ func shoot():
 	armas[2][typeOfGun]-=1
 	# variable que instancia la bala
 	var bullet = Bullet.instance()
+	var fireSprite = fire.instance()
 	# la bala comienza a moverse desde el punto bullet_spawn
 	if(typeOfGun==0):
+		fireSprite.start(node_armaUnobulletspawn.global_position, rotation + node_armaUnoRotDesv.rotation)
 		bullet.start(node_armaUnobulletspawn.global_position, rotation + node_armaUnoRotDesv.rotation, armas[6][typeOfGun])
 	if(typeOfGun==1):
+		fireSprite.start(node_armaDosbulletspawn.global_position, rotation + node_armaDosRotDesv.rotation)
 		bullet.start(node_armaDosbulletspawn.global_position, rotation + node_armaDosRotDesv.rotation, armas[6][typeOfGun])
 	if(typeOfGun==2):
+		fireSprite.start(node_armaTresbulletspawn.global_position, rotation + node_armaTresRotDesv.rotation)
 		bullet.start(node_armaTresbulletspawn.global_position, rotation + node_armaTresRotDesv.rotation, armas[6][typeOfGun])
 	# añadimos en el arbol de nodos la bala
 	get_parent().add_child(bullet)
+	get_parent().add_child(fireSprite)
 	can_shoot = false
 	timer.start()
 

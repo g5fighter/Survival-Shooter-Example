@@ -12,9 +12,9 @@ func _ready():
 	if(node): printt(node, node.get_name())
 	
 func hit(damage):
-	print_debug("Soy el padre")
+	#print_debug("Soy el padre")
 	health -= damage
-	print_debug(str(health)+str(damage))
+	#print_debug(str(health)+str(damage))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
