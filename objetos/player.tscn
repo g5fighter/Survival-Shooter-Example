@@ -1,0 +1,132 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Scripts/movement.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/lookatnode.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/guns/ak/brazolargo.svg" type="Texture" id=3]
+[ext_resource path="res://Sprites/guns/ak/minibrazo.svg" type="Texture" id=4]
+[ext_resource path="res://Scripts/lookatmouse.gd" type="Script" id=5]
+[ext_resource path="res://Sprites/guns/ak/ak.svg" type="Texture" id=6]
+[ext_resource path="res://Sprites/guns/simple/simple.svg" type="Texture" id=7]
+[ext_resource path="res://Sprites/persona.svg" type="Texture" id=8]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 49.7425, 21.702 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 21.4813
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 35.6208
+
+[node name="player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+speed = 300
+lab = NodePath("../UI/Label")
+armaUno = NodePath("brazo")
+armaDos = NodePath("Aka")
+armaTres = NodePath("Aka")
+armaUnobulletspawn = NodePath("brazo/bullet_spawn")
+armaDosbulletspawn = NodePath("Aka/ak_sprite/Position2D")
+armaTresbulletspawn = NodePath("Aka/ak_sprite/Position2D")
+armaUnoRotDesv = NodePath("brazo")
+armaDosRotDesv = NodePath("Aka/ak_sprite")
+armaTresRotDesv = NodePath("Aka/ak_sprite")
+
+[node name="Aka" type="Position2D" parent="."]
+visible = false
+
+[node name="brazolargo" type="Position2D" parent="Aka"]
+editor/display_folded = true
+position = Vector2( 17.74, -48.69 )
+script = ExtResource( 2 )
+lab = NodePath("../ak_sprite/brazograndetrigger")
+
+[node name="Sprite" type="Sprite" parent="Aka/brazolargo"]
+position = Vector2( 16.5972, -4.30299 )
+rotation = 1.09219
+scale = Vector2( 0.268, 0.268 )
+texture = ExtResource( 3 )
+
+[node name="minibrazo" type="Position2D" parent="Aka"]
+editor/display_folded = true
+position = Vector2( 17.74, 48.69 )
+script = ExtResource( 2 )
+lab = NodePath("../ak_sprite/manopequeñapos")
+
+[node name="Sprite2" type="Sprite" parent="Aka/minibrazo"]
+position = Vector2( 27.213, 0.36644 )
+rotation = 1.5708
+scale = Vector2( 0.268, 0.268 )
+z_index = -1
+texture = ExtResource( 4 )
+
+[node name="ak_sprite" type="Position2D" parent="Aka"]
+editor/display_folded = true
+position = Vector2( 25.01, 36.625 )
+script = ExtResource( 5 )
+notRotate = true
+distance = 160
+player = NodePath("../..")
+
+[node name="Sprite" type="Sprite" parent="Aka/ak_sprite"]
+position = Vector2( 67.7412, -0.291992 )
+rotation = 1.5708
+scale = Vector2( 0.205267, 0.205267 )
+texture = ExtResource( 6 )
+
+[node name="manopequeñapos" type="Position2D" parent="Aka/ak_sprite"]
+position = Vector2( 39.84, 0 )
+
+[node name="brazograndetrigger" type="Position2D" parent="Aka/ak_sprite"]
+position = Vector2( 74.51, 0 )
+
+[node name="Position2D" type="Position2D" parent="Aka/ak_sprite"]
+position = Vector2( 137.94, 0 )
+
+[node name="brazo" type="Position2D" parent="."]
+position = Vector2( 0, 50.0353 )
+script = ExtResource( 5 )
+notRotate = true
+distance = 115
+player = NodePath("..")
+
+[node name="simple" type="Sprite" parent="brazo"]
+position = Vector2( 54.205, -0.463299 )
+rotation = 1.5708
+scale = Vector2( 0.268, 0.268 )
+texture = ExtResource( 7 )
+
+[node name="bullet_spawn" type="Position2D" parent="brazo"]
+position = Vector2( 115.699, -0.585545 )
+
+[node name="Sprite" type="Sprite" parent="."]
+rotation = 1.5708
+scale = Vector2( 0.268262, 0.268262 )
+texture = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( -0.487671, 0 )
+rotation = -1.57079
+shape = SubResource( 1 )
+one_way_collision_margin = 0.0
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 0, 40 )
+rotation = -1.57079
+shape = SubResource( 2 )
+one_way_collision_margin = 0.0
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 0, -40 )
+rotation = -4.71238
+shape = SubResource( 2 )
+one_way_collision_margin = 0.0
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 7.29761, -0.663422 )
+rotation = -1.57079
+shape = SubResource( 3 )
