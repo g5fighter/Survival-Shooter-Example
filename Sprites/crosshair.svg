@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="210mm"
+   viewBox="0 0 210 210"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="crosshair.svg"
+   inkscape:export-filename="C:\Users\grmap\Documents\GodotProjects\Prueba\Sprites\croshhair.png"
+   inkscape:export-xdpi="4.8380952"
+   inkscape:export-ydpi="4.8380952">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="194.89579"
+     inkscape:cy="475.80964"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer2"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Capa 2" />
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-87)">
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:30.61417362;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       d="M 405 17.564453 A 379.28564 379.28564 0 0 0 25.714844 396.84961 A 379.28564 379.28564 0 0 0 405 776.13672 A 379.28564 379.28564 0 0 0 784.28516 396.84961 A 379.28564 379.28564 0 0 0 405 17.564453 z M 376.43555 77.582031 L 376.43555 284.71484 C 376.43555 300.34182 389.0156 312.92187 404.64258 312.92188 L 408.92773 312.92188 C 424.55471 312.92188 437.13672 300.34182 437.13672 284.71484 L 437.13672 77.6875 A 320.78398 320.78398 0 0 1 724.91211 373.64258 L 522.49414 373.64258 C 506.86716 373.64258 494.28516 386.22263 494.28516 401.84961 L 494.28516 406.13672 C 494.28516 421.7637 506.86716 434.34375 522.49414 434.34375 L 723.32617 434.34375 A 320.78398 320.78398 0 0 1 433.56445 716.11914 L 433.56445 519.70117 C 433.56445 504.07419 420.9844 491.49414 405.35742 491.49414 L 401.07227 491.49414 C 385.44529 491.49414 372.86328 504.07419 372.86328 519.70117 L 372.86328 715.97852 A 320.78398 320.78398 0 0 1 86.382812 430.77148 L 287.50586 430.77148 C 303.13284 430.77148 315.71484 418.19143 315.71484 402.56445 L 315.71484 398.2793 C 315.71484 382.65232 303.13284 370.07227 287.50586 370.07227 L 85.578125 370.07227 A 320.78398 320.78398 0 0 1 376.43555 77.582031 z "
+       transform="matrix(0.26458333,0,0,0.26458333,0,87)"
+       id="path815" />
+    <g
+       id="g829" />
+    <g
+       id="g835"
+       transform="rotate(90,107.15626,193.41742)" />
+  </g>
+</svg>
