@@ -1,11 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/enemy.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/enemigos/animales/oso/oso.svg" type="Texture" id=2]
-[ext_resource path="res://Scripts/Area2Ddamage.gd" type="Script" id=3]
-[ext_resource path="res://Sprites/enemigos/animales/oso/mano.svg" type="Texture" id=4]
-[ext_resource path="res://Scripts/lookatnodeplayer.gd" type="Script" id=5]
-[ext_resource path="res://Sprites/enemigos/animales/oso/mcCabesa.svg" type="Texture" id=6]
+[ext_resource path="res://Sprites/enemigos/animales/oso/mano.svg" type="Texture" id=3]
+[ext_resource path="res://Scripts/lookatnodeplayer.gd" type="Script" id=4]
+[ext_resource path="res://Sprites/enemigos/animales/oso/mcCabesa.svg" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 85.696, 52.2987 )
@@ -72,14 +71,13 @@ position = Vector2( 70, 25 )
 rotation = -1.23933
 
 [node name="Area2D" type="Area2D" parent="Brazo"]
-script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="Brazo/Area2D"]
 position = Vector2( 46, 22 )
 rotation = 1.5708
 scale = Vector2( 0.29, 0.29 )
 z_index = -1
-texture = ExtResource( 4 )
+texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Brazo/Area2D"]
 position = Vector2( 85, 32 )
@@ -90,13 +88,13 @@ disabled = true
 [node name="Position2D" type="Position2D" parent="."]
 editor/display_folded = true
 position = Vector2( 80.39, 0 )
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 
 [node name="Sprite2" type="Sprite" parent="Position2D"]
 position = Vector2( 31.61, -3.55271e-013 )
 rotation = 1.5708
 scale = Vector2( 0.28, 0.28 )
-texture = ExtResource( 6 )
+texture = ExtResource( 5 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
 "anims/brazo golpeando" = SubResource( 3 )

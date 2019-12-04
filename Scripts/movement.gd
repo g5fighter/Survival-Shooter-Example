@@ -61,6 +61,10 @@ var can_change_gun = true
 var can_recharge_gun = true
 
 func _ready():
+	configure_timers()
+	add_to_group("player")
+
+func configure_timers():
 	timer = Timer.new()
 	timer.set_one_shot(true)
 	timer.set_wait_time(bullet_delay)
@@ -76,7 +80,6 @@ func _ready():
 	timerRchrgGun.set_wait_time(recharge_delay)
 	timerRchrgGun.connect("timeout", self,"on_rechargetimer_complete")
 	add_child(timerRchrgGun)
-	add_to_group("player")
 
 func on_timeout_complete():
 	can_shoot = true
@@ -158,6 +161,9 @@ func changeGun():
 func get_damage(damage):
 	print_debug("Me dañaste con "+str(damage))
 	health -= damage
+	
+func get_recursos():
+	print_debug("funciona")
 
 func rechargeGun():
 	can_recharge_gun = false
