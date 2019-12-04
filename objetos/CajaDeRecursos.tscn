@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/CajaDeRecursos.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/misc/caja/caja.svg" type="Texture" id=2]
+[ext_resource path="res://Fuentes/GlacialIndifference-Regular.otf" type="DynamicFontData" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 44.4449, 43.5718 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 60, 60 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 48
+outline_size = 1
+font_data = ExtResource( 3 )
+
+[node name="KinematicBody2D" type="KinematicBody2D"]
+script = ExtResource( 1 )
+lab = NodePath("ColorRect/Label")
+parent = NodePath(".")
+colorRect = NodePath("ColorRect")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Area2D"]
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -30.0
+margin_top = -30.0
+margin_right = 30.0
+margin_bottom = 30.0
+color = Color( 0, 0, 0, 0.65098 )
+
+[node name="Label" type="Label" parent="ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -12.5
+margin_top = -29.0
+margin_right = 12.5
+margin_bottom = 29.0
+custom_fonts/font = SubResource( 3 )
+text = "3"
+align = 3
+valign = 3
+[connection signal="body_entered" from="Area2D" to="." method="_on_CajaDeRecursos_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_CajaDeRecursos_body_exited"]
