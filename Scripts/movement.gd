@@ -155,6 +155,9 @@ func changeGun():
 	if(typeOfGun==2):
 		node_armaTres.show()
 
+func get_damage(damage):
+	print_debug("Me dañaste con "+str(damage))
+	health -= damage
 
 func rechargeGun():
 	can_recharge_gun = false
