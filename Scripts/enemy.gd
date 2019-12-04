@@ -6,6 +6,8 @@ var distance2Mouse
 export (int) var distance = 0
 export (NodePath) var player
 onready var player_node = get_node(player)
+var playerFree
+onready var anim = get_node("anim")
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -13,8 +15,8 @@ onready var player_node = get_node(player)
 func _ready():
 	add_to_group("enemy")
 	node = find_node_by_name(get_tree().get_root(), "player")
-	if(node): printt(node, node.get_name())
-	
+	playerFree = weakref(node)
+
 func hit(damage):
 	#print_debug("Soy el padre")
 	health -= damage
@@ -22,13 +24,16 @@ func hit(damage):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	distance2Mouse = player_node.position.distance_to(node.position)
+	if(playerFree.get_ref()):
+		distance2Mouse = player_node.position.distance_to(node.position)
 	#print_debug(distance2Mouse)
-	look_at(node.global_position)
-	if(distance2Mouse>distance):
-		var dir = (node.global_position - global_position).normalized()
-		move_and_collide(dir * speed * delta)
-#	pass
+		look_at(node.global_position)
+		if(distance2Mouse>distance):
+			var dir = (node.global_position - global_position).normalized()
+			move_and_collide(dir * speed * delta)
+		elif(not anim.is_playing()):
+			anim.play("brazo golpeando")
+#		pass
 	if(health<=0): queue_free()
 
 
@@ -46,3 +51,6 @@ func find_node_by_name(root, name):
         if(found): return found
 
     return null
+
+func _on_Area2D_body_entered(body):
+	body.get_damage(20)

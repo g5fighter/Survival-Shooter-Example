@@ -1,16 +1,61 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/enemy.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/enemigos/animales/oso/oso.svg" type="Texture" id=2]
-[ext_resource path="res://Scripts/lookatnodeplayer.gd" type="Script" id=3]
-[ext_resource path="res://Sprites/enemigos/animales/oso/mcCabesa.svg" type="Texture" id=4]
+[ext_resource path="res://Scripts/Area2Ddamage.gd" type="Script" id=3]
+[ext_resource path="res://Sprites/enemigos/animales/oso/mano.svg" type="Texture" id=4]
+[ext_resource path="res://Scripts/lookatnodeplayer.gd" type="Script" id=5]
+[ext_resource path="res://Sprites/enemigos/animales/oso/mcCabesa.svg" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 85.696, 52.2987 )
 
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 18.2133
+height = 3.11953
+
+[sub_resource type="Animation" id=3]
+resource_name = "brazo golpeando"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Brazo:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Brazo:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 48.7515, -71.0084 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Brazo/Area2D/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false, true ]
+}
+
 [node name="enemy" type="KinematicBody2D"]
 script = ExtResource( 1 )
-distance = 100
+distance = 320
 player = NodePath(".")
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -21,12 +66,38 @@ texture = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 80.39, 0 )
+[node name="Brazo" type="Position2D" parent="."]
+visible = false
+position = Vector2( 70, 25 )
+rotation = -1.23933
+
+[node name="Area2D" type="Area2D" parent="Brazo"]
 script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="Brazo/Area2D"]
+position = Vector2( 46, 22 )
+rotation = 1.5708
+scale = Vector2( 0.29, 0.29 )
+z_index = -1
+texture = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Brazo/Area2D"]
+position = Vector2( 85, 32 )
+rotation = 1.8326
+shape = SubResource( 2 )
+disabled = true
+
+[node name="Position2D" type="Position2D" parent="."]
+editor/display_folded = true
+position = Vector2( 80.39, 0 )
+script = ExtResource( 5 )
 
 [node name="Sprite2" type="Sprite" parent="Position2D"]
 position = Vector2( 31.61, -3.55271e-013 )
 rotation = 1.5708
 scale = Vector2( 0.28, 0.28 )
-texture = ExtResource( 4 )
+texture = ExtResource( 6 )
+
+[node name="anim" type="AnimationPlayer" parent="."]
+"anims/brazo golpeando" = SubResource( 3 )
+[connection signal="body_entered" from="Brazo/Area2D" to="." method="_on_Area2D_body_entered"]
