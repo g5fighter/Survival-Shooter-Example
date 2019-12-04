@@ -15,6 +15,7 @@ current = true
 
 [node name="enemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( 511.866, 269.611 )
+distance = 320
 
 [node name="UI" type="Control" parent="."]
 editor/display_folded = true
