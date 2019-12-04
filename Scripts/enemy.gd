@@ -2,6 +2,10 @@ extends KinematicBody2D
 var health = 100
 var node
 export (int) var speed = 100
+var distance2Mouse
+export (int) var distance = 0
+export (NodePath) var player
+onready var player_node = get_node(player)
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -18,11 +22,15 @@ func hit(damage):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	distance2Mouse = player_node.position.distance_to(node.position)
+	#print_debug(distance2Mouse)
+	look_at(node.global_position)
+	if(distance2Mouse>distance):
+		var dir = (node.global_position - global_position).normalized()
+		move_and_collide(dir * speed * delta)
 #	pass
 	if(health<=0): queue_free()
-	look_at(node.global_position)
-	var dir = (node.global_position - global_position).normalized()
-	move_and_collide(dir * speed * delta)
+
 
 	
 func find_node_by_name(root, name):
