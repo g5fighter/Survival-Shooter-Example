@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://objetos/CajaDeRecursos.tscn" type="PackedScene" id=1]
 [ext_resource path="res://objetos/player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://objetos/enemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Navegacion2D/Navigation2D.gd" type="Script" id=3]
+[ext_resource path="res://objetos/enemy.tscn" type="PackedScene" id=4]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( -1326.63, -940.793, 3900.53, -905.384, 3612.84, 2254.82, -1424.01, 2316.78 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+outlines = [ PoolVector2Array( -1326.63, -940.793, 3900.53, -905.384, 3612.84, 2254.82, -1424.01, 2316.78 ) ]
 
 [node name="MainScene" type="Node2D"]
 __meta__ = {
@@ -17,10 +23,6 @@ position = Vector2( 323.911, 127.481 )
 [node name="Camera2D" type="Camera2D" parent="player"]
 current = true
 
-[node name="enemy" parent="." instance=ExtResource( 3 )]
-position = Vector2( 511.866, 269.611 )
-distance = 200
-
 [node name="UI" type="Control" parent="."]
 editor/display_folded = true
 margin_right = 40.0
@@ -29,3 +31,16 @@ margin_bottom = 40.0
 [node name="Label" type="Label" parent="UI"]
 margin_right = 40.0
 margin_bottom = 14.0
+
+[node name="Navigation2D" type="Navigation2D" parent="."]
+script = ExtResource( 3 )
+speed = 100
+lab = NodePath("../player")
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
+navpoly = SubResource( 1 )
+
+[node name="enemy" parent="Navigation2D" instance=ExtResource( 4 )]
+position = Vector2( 511.866, 269.611 )
+distance = 200
+player = NodePath("../../player")
