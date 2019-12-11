@@ -38,4 +38,14 @@ func _seguir_ruta(distancia):
 			distancia -= distancia_al_final
 			ultima_pos = path[0]
 			path.remove(0)
-		
+			
+func _obstacle(nodeCollShape, parentNode):
+	var new_polygon = Array()
+	var col_polygon = nodeCollShape.get_polygon()
+	for vector in col_polygon:
+		new_polygon.append(vector + parentNode.position)
+	var navPolyInstance = $NavigationPolygonInstance
+	navPolyInstance.get_navigation_polygon().add_outline(new_polygon)
+	navPolyInstance.get_navigation_polygon().make_polygons_from_outlines()
+	navPolyInstance.enabled = false
+	navPolyInstance.enabled = true
