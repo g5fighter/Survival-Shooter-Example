@@ -6,6 +6,19 @@ var path =[]
 export (NodePath) var lab
 onready var ui_lab = get_node(lab)
 
+var navPolyInstance
+
+onready var current_navpoly_id = 1
+func _draw():
+    # This draw a white circle with radius of 10px for each point in the path
+    for p in path:
+        draw_circle(p, 10, Color(1, 1, 1))
+		
+func _process(delta):
+	 _draw()
+func _ready():
+	navPolyInstance = $NavigationPolygonInstance 
+
 func _physics_process(delta):
 	_nueva_posicion($enemy.position,ui_lab.position)
 	var distance = speed*delta
@@ -44,8 +57,10 @@ func _obstacle(nodeCollShape, parentNode):
 	var col_polygon = nodeCollShape.get_polygon()
 	for vector in col_polygon:
 		new_polygon.append(vector + parentNode.position)
-	var navPolyInstance = $NavigationPolygonInstance
+	navPolyInstance = $NavigationPolygonInstance 
 	navPolyInstance.get_navigation_polygon().add_outline(new_polygon)
 	navPolyInstance.get_navigation_polygon().make_polygons_from_outlines()
 	navPolyInstance.enabled = false
 	navPolyInstance.enabled = true
+	update()
+
