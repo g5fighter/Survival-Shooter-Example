@@ -16,6 +16,9 @@ onready var node_parent = get_node(parent)
 
 export (NodePath) var colorRect
 onready var ui_color_rect = get_node(colorRect)
+
+export (NodePath) var collisionShape
+onready var colShape = get_node(collisionShape)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	timer = Timer.new()
@@ -23,6 +26,8 @@ func _ready():
 	timer.set_wait_time(3)
 	timer.connect("timeout", self,"on_timeout_complete")
 	add_child(timer)
+	add_to_group("obstacles")
+	get_tree().get_root().get_node("MainScene").find_node("Navigation2D")._obstacle(colShape,node_parent)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
