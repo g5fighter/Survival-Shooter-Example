@@ -9,22 +9,17 @@ onready var ui_lab = get_node(lab)
 var navPolyInstance
 
 onready var current_navpoly_id = 1
-func _draw():
-    # This draw a white circle with radius of 10px for each point in the path
-    for p in path:
-        draw_circle(p, 10, Color(1, 1, 1))
-		
-func _process(delta):
-	 _draw()
+
 func _ready():
 	navPolyInstance = $NavigationPolygonInstance 
 
 func _physics_process(delta):
-	_nueva_posicion($enemy.position,ui_lab.position)
-	var distance = speed*delta
-	_seguir_ruta(distance)
-	if ($enemy.position.distance_to(ui_lab.position) <= $enemy.distance):
-		$enemy.play_anim_golpear()
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		_nueva_posicion(enemy.position,ui_lab.position)
+		var distance = speed*delta
+		_seguir_ruta(distance, enemy)
+		if (enemy.position.distance_to(ui_lab.position) <= enemy.distance):
+			enemy.play_anim_golpear()
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -37,16 +32,16 @@ func _nueva_posicion(pos_inicial,pos_final):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-func _seguir_ruta(distancia):
-	var ultima_pos = $enemy.position
-	if $enemy.position.distance_to(ui_lab.position) >= $enemy.distance:
+func _seguir_ruta(distancia, enemigo):
+	var ultima_pos = enemigo.position
+	if enemigo.position.distance_to(ui_lab.position) >= enemigo.distance:
 		for i in range(path.size()):
 			var distancia_al_final = ultima_pos.distance_to(path[0])
 			if distancia <= distancia_al_final:
-				$enemy.position = ultima_pos.linear_interpolate(path[0],distancia/distancia_al_final)
+				enemigo.position = ultima_pos.linear_interpolate(path[0],distancia/distancia_al_final)
 				break
 			elif distancia <= 0.0:
-				$enemy.position = path[0]
+				enemigo.position = path[0]
 				break
 			distancia -= distancia_al_final
 			ultima_pos = path[0]

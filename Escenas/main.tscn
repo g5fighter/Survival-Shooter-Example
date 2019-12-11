@@ -44,3 +44,7 @@ navpoly = SubResource( 1 )
 position = Vector2( 511.866, 269.611 )
 distance = 200
 player = NodePath("../../player")
+
+[node name="enemy2" parent="Navigation2D" instance=ExtResource( 4 )]
+position = Vector2( 647.06, 0 )
+distance = 200
