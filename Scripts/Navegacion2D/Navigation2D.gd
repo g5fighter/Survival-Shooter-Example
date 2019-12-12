@@ -7,22 +7,21 @@ export (NodePath) var lab
 onready var ui_lab = get_node(lab)
 
 var navPolyInstance
-
+var playerFree
 onready var current_navpoly_id = 1
 
 func _ready():
 	navPolyInstance = $NavigationPolygonInstance 
+	playerFree = weakref(ui_lab)
 
 func _physics_process(delta):
-	for enemy in get_tree().get_nodes_in_group("enemy"):
-		_nueva_posicion(enemy.position,ui_lab.position)
-		var distance = speed*delta
-		_seguir_ruta(distance, enemy)
-		if (enemy.position.distance_to(ui_lab.position) <= enemy.distance):
-			enemy.play_anim_golpear()
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+	if(playerFree.get_ref()):
+		for enemy in get_tree().get_nodes_in_group("enemy"):
+			_nueva_posicion(enemy.position,ui_lab.position)
+			var distance = speed*delta
+			_seguir_ruta(distance, enemy)
+			if (enemy.position.distance_to(ui_lab.position) <= enemy.distance):
+				enemy.play_anim_golpear()
 
 # Called when the node enters the scene tree for the first time.
 func _nueva_posicion(pos_inicial,pos_final):

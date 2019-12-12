@@ -1,10 +1,6 @@
 extends KinematicBody2D
 
-# COSAS POR HACER
-	# PONER COOLDOWN AL ARMA
-
-
-# velocidad
+# vida, velocidad, tipo de arma
 export (int) var health = 100
 export (int) var speed = 600
 export (int) var typeOfGun = 0
@@ -12,6 +8,7 @@ export (int) var typeOfGun = 0
 export (NodePath) var lab
 onready var ui_lab = get_node(lab)
 
+#nodos de las diferentes armas
 export (NodePath) var armaUno
 onready var node_armaUno = get_node(armaUno)
 export (NodePath) var armaDos
@@ -19,6 +16,7 @@ onready var node_armaDos = get_node(armaDos)
 export (NodePath) var armaTres
 onready var node_armaTres = get_node(armaTres)
 
+#nodos donde se spawnean las diferentes balas
 export (NodePath) var armaUnobulletspawn
 onready var node_armaUnobulletspawn = get_node(armaUnobulletspawn)
 export (NodePath) var armaDosbulletspawn
@@ -26,6 +24,7 @@ onready var node_armaDosbulletspawn = get_node(armaDosbulletspawn)
 export (NodePath) var armaTresbulletspawn
 onready var node_armaTresbulletspawn = get_node(armaTresbulletspawn)
 
+#desviaciones de arma a la hora de apuntar
 export (NodePath) var armaUnoRotDesv
 onready var node_armaUnoRotDesv = get_node(armaUnoRotDesv)
 export (NodePath) var armaDosRotDesv
@@ -45,17 +44,21 @@ var armas = [[2,0.1,4],[16,60,30],[16,60,30],[4,4,4],[4,4,4],[2,5,7],[10,5,40]]
 	#col 4: cargadores actuales
 	#col 5:recharge gun delay
 	#col 6: gun damage
-
+onready var node_Array = [[node_armaUnobulletspawn,node_armaDosbulletspawn,node_armaTresbulletspawn],[node_armaUnoRotDesv,node_armaDosRotDesv,node_armaTresRotDesv]]
+onready var path_Array = [[armaUnobulletspawn,armaDosbulletspawn,armaTresbulletspawn],[armaUnoRotDesv,armaDosRotDesv,armaTresRotDesv]]
 # vector desplacamiento
 var velocity = Vector2()
 
+# temporizadores de arma para disparar, recarga y cooldown
 var timer = null
 var timerChngGun = null
 var timerRchrgGun = null
 
+#retardo: de disparar y recargar
 var bullet_delay = 2
 var recharge_delay = 2
 
+# bolleanos que permiten el disparo, recarga y cambio de arma
 var can_shoot = true
 var can_change_gun = true
 var can_recharge_gun = true
@@ -64,6 +67,7 @@ func _ready():
 	configure_timers()
 	add_to_group("player")
 
+#configurar los temporizadores
 func configure_timers():
 	timer = Timer.new()
 	timer.set_one_shot(true)
@@ -81,6 +85,7 @@ func configure_timers():
 	timerRchrgGun.connect("timeout", self,"on_rechargetimer_complete")
 	add_child(timerRchrgGun)
 
+# funciones para cuando terminan los temporizadores #
 func on_timeout_complete():
 	can_shoot = true
 
@@ -90,7 +95,7 @@ func on_guntimer_complete():
 func on_rechargetimer_complete():
 	can_recharge_gun = true
 
-# funcion que se ejecyta con un input
+# funcion que se ejecuta en el process y comprueba un input
 func get_input():
 	
 	# mirar al raton
@@ -122,16 +127,10 @@ func shoot():
 	# variable que instancia la bala
 	var bullet = Bullet.instance()
 	var fireSprite = fire.instance()
-	# la bala comienza a moverse desde el punto bullet_spawn
-	if(typeOfGun==0):
-		fireSprite.start(node_armaUnobulletspawn.global_position, rotation + node_armaUnoRotDesv.rotation)
-		bullet.start(node_armaUnobulletspawn.global_position, rotation + node_armaUnoRotDesv.rotation, armas[6][typeOfGun])
-	if(typeOfGun==1):
-		fireSprite.start(node_armaDosbulletspawn.global_position, rotation + node_armaDosRotDesv.rotation)
-		bullet.start(node_armaDosbulletspawn.global_position, rotation + node_armaDosRotDesv.rotation, armas[6][typeOfGun])
-	if(typeOfGun==2):
-		fireSprite.start(node_armaTresbulletspawn.global_position, rotation + node_armaTresRotDesv.rotation)
-		bullet.start(node_armaTresbulletspawn.global_position, rotation + node_armaTresRotDesv.rotation, armas[6][typeOfGun])
+	
+	fireSprite.start(node_Array[0][typeOfGun].global_position, rotation + node_Array[1][typeOfGun].rotation)
+	bullet.start(node_Array[0][typeOfGun].global_position, rotation + node_Array[1][typeOfGun].rotation, armas[6][typeOfGun])
+	
 	# añadimos en el arbol de nodos la bala
 	get_parent().add_child(bullet)
 	get_parent().add_child(fireSprite)
@@ -144,7 +143,7 @@ func changeGun():
 	timer.stop()
 	can_shoot = true
 	typeOfGun += 1
-	if(typeOfGun>2):
+	if(typeOfGun>=armas[0].size()):
 		typeOfGun = 0
 	bullet_delay = armas[0][typeOfGun]
 	timer.set_wait_time(bullet_delay)    # A for loop for column entries 
