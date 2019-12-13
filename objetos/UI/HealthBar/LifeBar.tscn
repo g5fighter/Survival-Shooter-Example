@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/UI/LifeBar.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/UI/Barra de vida/fondodetexto.svg" type="Texture" id=2]
+[ext_resource path="res://Sprites/UI/Barra de vida/texto vida.png" type="Texture" id=3]
+[ext_resource path="res://temas/inGameUITheme.tres" type="Theme" id=4]
+[ext_resource path="res://Sprites/UI/Barra de vida/fondo.svg" type="Texture" id=5]
+[ext_resource path="res://Sprites/UI/Barra de vida/partedelantera.svg" type="Texture" id=6]
+
+[node name="LifeBar" type="HBoxContainer"]
+margin_left = 0.598724
+margin_right = 778.599
+margin_bottom = 105.0
+script = ExtResource( 1 )
+
+[node name="Contador" type="NinePatchRect" parent="."]
+margin_right = 150.0
+margin_bottom = 105.0
+rect_min_size = Vector2( 150, 0 )
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 160, 0, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="Contador"]
+margin_left = 11.42
+margin_top = 4.57
+margin_right = 1887.42
+margin_bottom = 735.57
+rect_scale = Vector2( 0.0407213, 0.0407213 )
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="Contador"]
+margin_left = 99.0
+margin_top = 2.0
+margin_right = 43.0
+margin_bottom = 37.0
+theme = ExtResource( 4 )
+text = "100"
+align = 2
+valign = 2
+
+[node name="TextureProgress" type="TextureProgress" parent="."]
+margin_left = 154.0
+margin_right = 456.0
+margin_bottom = 105.0
+value = 100.0
+texture_under = ExtResource( 5 )
+texture_progress = ExtResource( 6 )

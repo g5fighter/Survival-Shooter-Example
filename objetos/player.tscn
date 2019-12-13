@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/movement.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/lookatnode.gd" type="Script" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://Sprites/guns/ak/ak.svg" type="Texture" id=6]
 [ext_resource path="res://Sprites/guns/simple/simple.svg" type="Texture" id=7]
 [ext_resource path="res://Sprites/persona.svg" type="Texture" id=8]
+[ext_resource path="res://objetos/interfaz.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scripts/UI/interfaz.gd" type="Script" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 49.7425, 21.702 )
@@ -21,7 +23,8 @@ radius = 35.6208
 [node name="player" type="KinematicBody2D"]
 script = ExtResource( 1 )
 speed = 300
-lab = NodePath("../UI/Label")
+lab = NodePath("UI/Control/Label")
+ui_manager = NodePath("UI")
 armaUno = NodePath("brazo")
 armaDos = NodePath("Aka")
 armaTres = NodePath("Aka")
@@ -33,6 +36,7 @@ armaDosRotDesv = NodePath("Aka/ak_sprite")
 armaTresRotDesv = NodePath("Aka/ak_sprite")
 
 [node name="Aka" type="Position2D" parent="."]
+editor/display_folded = true
 visible = false
 
 [node name="brazolargo" type="Position2D" parent="Aka"]
@@ -61,7 +65,6 @@ z_index = -1
 texture = ExtResource( 4 )
 
 [node name="ak_sprite" type="Position2D" parent="Aka"]
-editor/display_folded = true
 position = Vector2( 25.01, 36.625 )
 script = ExtResource( 5 )
 notRotate = true
@@ -84,6 +87,8 @@ position = Vector2( 74.51, 0 )
 position = Vector2( 137.94, 0 )
 
 [node name="brazo" type="Position2D" parent="."]
+editor/display_folded = true
+visible = false
 position = Vector2( 0, 50.0353 )
 script = ExtResource( 5 )
 notRotate = true
@@ -105,28 +110,29 @@ scale = Vector2( 0.268262, 0.268262 )
 texture = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( -0.487671, 0 )
 rotation = -1.57079
 shape = SubResource( 1 )
 one_way_collision_margin = 0.0
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0, 40 )
 rotation = -1.57079
 shape = SubResource( 2 )
 one_way_collision_margin = 0.0
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0, -40 )
 rotation = -4.71238
 shape = SubResource( 2 )
 one_way_collision_margin = 0.0
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 7.29761, -0.663422 )
 rotation = -1.57079
 shape = SubResource( 3 )
+
+[node name="UI" parent="." instance=ExtResource( 9 )]
+script = ExtResource( 10 )
+
+[editable path="UI"]

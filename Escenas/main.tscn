@@ -23,15 +23,6 @@ position = Vector2( 323.911, 127.481 )
 [node name="Camera2D" type="Camera2D" parent="player"]
 current = true
 
-[node name="UI" type="Control" parent="."]
-editor/display_folded = true
-margin_right = 40.0
-margin_bottom = 40.0
-
-[node name="Label" type="Label" parent="UI"]
-margin_right = 40.0
-margin_bottom = 14.0
-
 [node name="Navigation2D" type="Navigation2D" parent="."]
 script = ExtResource( 3 )
 speed = 100
