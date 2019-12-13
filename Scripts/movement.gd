@@ -8,6 +8,9 @@ export (int) var typeOfGun = 0
 export (NodePath) var lab
 onready var ui_lab = get_node(lab)
 
+export (NodePath) var ui_manager
+onready var node_ui_manager = get_node(ui_manager)
+
 #nodos de las diferentes armas
 export (NodePath) var armaUno
 onready var node_armaUno = get_node(armaUno)
@@ -44,7 +47,7 @@ var armas = [[2,0.1,4],[16,60,30],[16,60,30],[4,4,4],[4,4,4],[2,5,7],[10,5,40]]
 	#col 4: cargadores actuales
 	#col 5:recharge gun delay
 	#col 6: gun damage
-onready var node_Array = [[node_armaUnobulletspawn,node_armaDosbulletspawn,node_armaTresbulletspawn],[node_armaUnoRotDesv,node_armaDosRotDesv,node_armaTresRotDesv]]
+onready var node_Array = [[node_armaUnobulletspawn,node_armaDosbulletspawn,node_armaTresbulletspawn],[node_armaUnoRotDesv,node_armaDosRotDesv,node_armaTresRotDesv],[node_armaUno,node_armaDos,node_armaTres]]
 onready var path_Array = [[armaUnobulletspawn,armaDosbulletspawn,armaTresbulletspawn],[armaUnoRotDesv,armaDosRotDesv,armaTresRotDesv]]
 # vector desplacamiento
 var velocity = Vector2()
@@ -55,8 +58,8 @@ var timerChngGun = null
 var timerRchrgGun = null
 
 #retardo: de disparar y recargar
-var bullet_delay = 2
-var recharge_delay = 2
+var bullet_delay = 0
+var recharge_delay = 0
 
 # bolleanos que permiten el disparo, recarga y cambio de arma
 var can_shoot = true
@@ -66,6 +69,11 @@ var can_recharge_gun = true
 func _ready():
 	configure_timers()
 	add_to_group("player")
+	node_ui_manager.inicializar_todo()
+	show_gun()
+	bullet_delay = armas[0][typeOfGun]
+	recharge_delay = armas[5][typeOfGun]
+	update_UI()
 
 #configurar los temporizadores
 func configure_timers():
@@ -136,6 +144,7 @@ func shoot():
 	get_parent().add_child(fireSprite)
 	can_shoot = false
 	timer.start()
+	update_UI()
 
 func changeGun():
 	can_change_gun = false
@@ -146,20 +155,14 @@ func changeGun():
 	if(typeOfGun>=armas[0].size()):
 		typeOfGun = 0
 	bullet_delay = armas[0][typeOfGun]
-	timer.set_wait_time(bullet_delay)    # A for loop for column entries 
-	node_armaUno.hide()
-	node_armaDos.hide()
-	node_armaTres.hide()
-	if(typeOfGun==0):
-		node_armaUno.show()
-	if(typeOfGun==1):
-		node_armaDos.show()
-	if(typeOfGun==2):
-		node_armaTres.show()
+	timer.set_wait_time(bullet_delay)
+	show_gun()
+	update_UI()
 
 func get_damage(damage):
 	print_debug("Me dañaste con "+str(damage))
 	health -= damage
+	node_ui_manager.update_health_things(health)
 	
 func get_recursos():
 	print_debug("funciona")
@@ -170,9 +173,18 @@ func rechargeGun():
 	timerRchrgGun.start()
 	armas[2][typeOfGun] = armas[1][typeOfGun]
 	armas[4][typeOfGun] -= 1
+	update_UI()
+	
+func show_gun():
+	for nodeArma in  node_Array[2]:
+		nodeArma.hide()
+	node_Array[2][typeOfGun].show()
+
+func update_UI():
+	$UI.update_info_gun(armas[2][typeOfGun],armas[4][typeOfGun])
 
 func _physics_process(delta):
     get_input()
     velocity = move_and_slide(velocity)
     if(health<=0): queue_free()
-    ui_lab.set_text("Arma Actual:"+str(typeOfGun)+" Retardo de arma:"+str(bullet_delay)+" Balas restantes:"+str(armas[2][typeOfGun])+" Cargadores restantes:"+str(armas[4][typeOfGun])+" Se puede deisparar:"+str(can_shoot))
+    ui_lab.set_text("Arma Actual:"+str(typeOfGun)+" Retardo de arma:"+str(bullet_delay)+" Se puede deisparar:"+str(can_shoot))

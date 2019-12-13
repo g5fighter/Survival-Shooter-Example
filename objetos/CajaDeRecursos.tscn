@@ -4,15 +4,16 @@
 [ext_resource path="res://Sprites/misc/caja/caja.svg" type="Texture" id=2]
 [ext_resource path="res://Fuentes/GlacialIndifference-Regular.otf" type="DynamicFontData" id=3]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 60, 60 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 48
 outline_size = 1
 font_data = ExtResource( 3 )
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
+z_index = -1
 script = ExtResource( 1 )
 lab = NodePath("ColorRect/Label")
 parent = NodePath(".")
@@ -29,7 +30,7 @@ scale = Vector2( 0.15, 0.15 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 visible = false
@@ -52,7 +53,7 @@ margin_left = -12.5
 margin_top = -29.0
 margin_right = 12.5
 margin_bottom = 29.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 text = "3"
 align = 3
 valign = 3
