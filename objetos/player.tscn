@@ -133,6 +133,10 @@ rotation = -1.57079
 shape = SubResource( 3 )
 
 [node name="UI" parent="." instance=ExtResource( 9 )]
+editor/display_folded = true
 script = ExtResource( 10 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
 
 [editable path="UI"]

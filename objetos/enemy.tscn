@@ -54,8 +54,7 @@ tracks/2/keys = {
 
 [node name="enemy" type="KinematicBody2D"]
 script = ExtResource( 1 )
-distance = 320
-player = NodePath(".")
+distance = 160
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708

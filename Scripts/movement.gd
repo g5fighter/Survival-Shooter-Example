@@ -67,12 +67,12 @@ var can_change_gun = true
 var can_recharge_gun = true
 
 func _ready():
-	configure_timers()
 	add_to_group("player")
 	node_ui_manager.inicializar_todo()
 	show_gun()
 	bullet_delay = armas[0][typeOfGun]
 	recharge_delay = armas[5][typeOfGun]
+	configure_timers()
 	update_UI()
 
 #configurar los temporizadores

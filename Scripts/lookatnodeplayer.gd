@@ -1,17 +1,25 @@
 extends Position2D
 
 # Declare member variables here. Examples:
-var ui_lab
+var player_node
 var wr
+var playerFound = false
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	ui_lab = find_node_by_name(get_tree().get_root(), "player")
-	wr = weakref(ui_lab)
+func searchPlayer():
+	var players = get_tree().get_nodes_in_group("player")
+	for pl in players:
+		if(!playerFound):
+			player_node = pl
+			wr = weakref(player_node)
+			playerFound = true
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-#	pass
-	if(wr.get_ref()):
-		look_at(ui_lab.global_position)
+	if(player_node==null&&!playerFound):
+		searchPlayer()
+	elif(wr.get_ref()):
+		look_at(player_node.global_position)
+	else:
+		playerFound = false
 
 func find_node_by_name(root, name):
 
