@@ -3,24 +3,34 @@ extends Navigation2D
 export (int) var speed = 500
 var path =[]
 
-export (NodePath) var lab
-onready var ui_lab = get_node(lab)
+var player_node
 
+var playerFound = false
 var navPolyInstance
 var playerFree
 onready var current_navpoly_id = 1
 
+func searchPlayer():
+	var players = get_tree().get_nodes_in_group("player")
+	for pl in players:
+		if(!playerFound):
+			player_node = pl
+			playerFree = weakref(player_node)
+			playerFound = true
+
 func _ready():
 	navPolyInstance = $NavigationPolygonInstance 
-	playerFree = weakref(ui_lab)
+	searchPlayer()
 
 func _physics_process(delta):
-	if(playerFree.get_ref()):
+	if(player_node==null&&!playerFound):
+		searchPlayer()
+	elif(playerFree.get_ref()):
 		for enemy in get_tree().get_nodes_in_group("enemy"):
-			_nueva_posicion(enemy.position,ui_lab.position)
+			_nueva_posicion(enemy.position,player_node.position)
 			var distance = speed*delta
 			_seguir_ruta(distance, enemy)
-			if (enemy.position.distance_to(ui_lab.position) <= enemy.distance):
+			if (enemy.position.distance_to(player_node.position) <= enemy.distance):
 				enemy.play_anim_golpear()
 
 # Called when the node enters the scene tree for the first time.
@@ -33,7 +43,7 @@ func _nueva_posicion(pos_inicial,pos_final):
 #	pass
 func _seguir_ruta(distancia, enemigo):
 	var ultima_pos = enemigo.position
-	if enemigo.position.distance_to(ui_lab.position) >= enemigo.distance:
+	if enemigo.position.distance_to(player_node.position) >= enemigo.distance:
 		for i in range(path.size()):
 			var distancia_al_final = ultima_pos.distance_to(path[0])
 			if distancia <= distancia_al_final:
