@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/mainScript.gd" type="Script" id=1]
 [ext_resource path="res://objetos/CajaDeRecursos.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Navegacion2D/Navigation2D.gd" type="Script" id=3]
-[ext_resource path="res://objetos/enemy.tscn" type="PackedScene" id=4]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( -1326.63, -940.793, 3900.53, -905.384, 3612.84, 2254.82, -1424.01, 2316.78 )
@@ -20,14 +19,54 @@ __meta__ = {
 position = Vector2( 323.911, 127.481 )
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
+editor/display_folded = true
 script = ExtResource( 3 )
 speed = 100
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
 navpoly = SubResource( 1 )
 
-[node name="enemy" parent="Navigation2D" instance=ExtResource( 4 )]
-position = Vector2( 511.866, 269.611 )
+[node name="Player Spawns" type="Node2D" parent="."]
+editor/display_folded = true
 
-[node name="enemy2" parent="Navigation2D" instance=ExtResource( 4 )]
-position = Vector2( 647.06, 0 )
+[node name="Spawn1" type="Position2D" parent="Player Spawns" groups=[
+"playerSpawn",
+]]
+position = Vector2( 976.067, -244.017 )
+
+[node name="Spawn2" type="Position2D" parent="Player Spawns" groups=[
+"playerSpawn",
+]]
+position = Vector2( -361.145, -224.495 )
+
+[node name="Spawn3" type="Position2D" parent="Player Spawns" groups=[
+"playerSpawn",
+]]
+position = Vector2( -367.652, 432.723 )
+
+[node name="Spawn4" type="Position2D" parent="Player Spawns" groups=[
+"playerSpawn",
+]]
+position = Vector2( 891.474, 488.033 )
+
+[node name="Enemy Spawns" type="Node2D" parent="."]
+
+[node name="Spawn1" type="Position2D" parent="Enemy Spawns" groups=[
+"enemySpawn",
+]]
+position = Vector2( 585.64, -9.76071 )
+
+[node name="Spawn2" type="Position2D" parent="Enemy Spawns" groups=[
+"enemySpawn",
+]]
+position = Vector2( -16.2678, -19.5214 )
+
+[node name="Spawn3" type="Position2D" parent="Enemy Spawns" groups=[
+"enemySpawn",
+]]
+position = Vector2( -3.25354, 214.735 )
+
+[node name="Spawn4" type="Position2D" parent="Enemy Spawns" groups=[
+"enemySpawn",
+]]
+position = Vector2( 520.569, 299.327 )

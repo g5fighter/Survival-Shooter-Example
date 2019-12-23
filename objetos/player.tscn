@@ -1,15 +1,18 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://Scripts/movement.gd" type="Script" id=1]
-[ext_resource path="res://Scripts/lookatnode.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Player/movement.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Player/lookatnode.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/guns/ak/brazolargo.svg" type="Texture" id=3]
 [ext_resource path="res://Sprites/guns/ak/minibrazo.svg" type="Texture" id=4]
-[ext_resource path="res://Scripts/lookatmouse.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/Player/lookatmouse.gd" type="Script" id=5]
 [ext_resource path="res://Sprites/guns/ak/ak.svg" type="Texture" id=6]
 [ext_resource path="res://Sprites/guns/simple/simple.svg" type="Texture" id=7]
 [ext_resource path="res://Sprites/persona.svg" type="Texture" id=8]
 [ext_resource path="res://objetos/interfaz.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scripts/UI/interfaz.gd" type="Script" id=10]
+
+
+
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 49.7425, 21.702 )
