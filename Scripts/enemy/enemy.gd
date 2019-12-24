@@ -1,9 +1,10 @@
 extends KinematicBody2D
 var health = 100
+var speed = 200
 var node
+var lastPos
 #export (int) var speed = 100
 export (int) var distance
-var playerFree
 onready var anim = get_node("anim")
 
 var playerFound = false
@@ -11,16 +12,9 @@ var playerFound = false
 func _ready():
 	add_to_group("enemy")
 
-func start(pos):
-    position = pos
-
-func searchPlayer():
-	var players = get_tree().get_nodes_in_group("player")
-	for pl in players:
-		if(!playerFound):
-			node = pl
-			playerFree = weakref(node)
-			playerFound = true
+func start(pos, followNode):
+	position = pos
+	node = followNode
 
 func hit(damage):
 	#print_debug("Soy el padre")
@@ -29,13 +23,13 @@ func hit(damage):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if(node==null&&!playerFound):
-		searchPlayer()
-	elif(playerFree.get_ref()):
-		look_at(node.global_position)
-	else:
-		playerFound = false
-	if(health<=0): queue_free()
+	if(position.distance_to(node.global_position)>10):
+		var dir = (node.global_position - global_position).normalized()
+		move_and_collide(dir * speed * delta)
+		rotation = dir.angle()
+	if(health<=0):
+		node.queue_free()
+		queue_free()
 
 func play_anim_golpear():
 	if(not anim.is_playing()):

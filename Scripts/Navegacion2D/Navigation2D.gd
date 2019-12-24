@@ -26,10 +26,11 @@ func _physics_process(delta):
 	if(player_node==null&&!playerFound):
 		searchPlayer()
 	elif(playerFree.get_ref()):
-		for enemy in get_tree().get_nodes_in_group("enemy"):
+		for enemy in get_tree().get_nodes_in_group("follow"):
 			_nueva_posicion(enemy.position,player_node.position)
 			var distance = speed*delta
-			_seguir_ruta(distance, enemy)
+			if(enemy.position.distance_to(enemy.followedNode.global_position)<50):
+				_seguir_ruta(distance, enemy)
 			if (enemy.position.distance_to(player_node.position) <= enemy.distance):
 				enemy.play_anim_golpear()
 
