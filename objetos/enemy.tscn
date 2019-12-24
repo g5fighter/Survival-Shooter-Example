@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/enemy/enemy.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/enemigos/animales/oso/oso.svg" type="Texture" id=2]
@@ -6,16 +6,11 @@
 [ext_resource path="res://Scripts/enemy/lookatnodeplayer.gd" type="Script" id=4]
 [ext_resource path="res://Sprites/enemigos/animales/oso/mcCabesa.svg" type="Texture" id=5]
 
-
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 85.696, 52.2987 )
-
-[sub_resource type="CapsuleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=1]
 radius = 18.2133
 height = 3.11953
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "brazo golpeando"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Brazo:visible")
@@ -63,8 +58,8 @@ rotation = 1.5708
 scale = Vector2( 0.28, 0.28 )
 texture = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -56.6834, -53.3253, -75.6771, -33.8183, -85.4306, -0.964432, -75.6771, 31.8895, -54.6301, 53.4498, -20.2362, 51.9098, 13.6444, 50.3698, 53.6851, 50.8831, 78.3254, 23.1626, 76.7854, -28.6849, 53.6851, -50.7586, 20.8312, -50.2452, -19.7228, -50.2452 )
 
 [node name="Brazo" type="Position2D" parent="."]
 visible = false
@@ -83,7 +78,7 @@ texture = ExtResource( 3 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Brazo/Area2D"]
 position = Vector2( 85, 32 )
 rotation = 1.8326
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 disabled = true
 
 [node name="Position2D" type="Position2D" parent="."]
@@ -98,5 +93,5 @@ scale = Vector2( 0.28, 0.28 )
 texture = ExtResource( 5 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
-"anims/brazo golpeando" = SubResource( 3 )
+"anims/brazo golpeando" = SubResource( 2 )
 [connection signal="body_entered" from="Brazo/Area2D" to="." method="_on_Area2D_body_entered"]

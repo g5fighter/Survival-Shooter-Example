@@ -1,10 +1,12 @@
 extends Node2D
 var Player = preload("res://objetos/player.tscn")
 var Enemy = preload("res://objetos/enemy.tscn")
+var followedObject = preload("res://objetos/nodeToBeFollowed.tscn")
 var timer = null
 var enemyDelay = 3
 var spawnEnemy = true
 var rng = RandomNumberGenerator.new()
+var numberOfSpawnedEnem = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -41,10 +43,14 @@ func _instantiate_player():
 	player.start(randomSpawn(0))
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _instantiate_enemies():
+	var objectFollowed = followedObject.instance()
 	var enemy = Enemy.instance()
-	$Navigation2D.add_child(enemy)
+	$Navigation2D.add_child(objectFollowed)
+	self.add_child(enemy)
+	var spawn = randomSpawn(1)
+	objectFollowed.start(spawn, enemy, enemy.distance)
+	enemy.start(spawn, objectFollowed)
 	spawnEnemy = false
-	enemy.start(randomSpawn(1))
 #
 func _process(delta):
 	if(spawnEnemy):

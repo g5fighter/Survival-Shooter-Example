@@ -19,7 +19,6 @@ __meta__ = {
 position = Vector2( 323.911, 127.481 )
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
-editor/display_folded = true
 script = ExtResource( 3 )
 speed = 100
 
@@ -27,7 +26,6 @@ speed = 100
 navpoly = SubResource( 1 )
 
 [node name="Player Spawns" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="Spawn1" type="Position2D" parent="Player Spawns" groups=[
 "playerSpawn",

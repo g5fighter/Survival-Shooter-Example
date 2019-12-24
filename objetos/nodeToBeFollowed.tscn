@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/Navegacion2D/nodeToBeFollowed.gd" type="Script" id=1]
+
+[node name="nodeToBeFollowed" type="KinematicBody2D"]
+script = ExtResource( 1 )
