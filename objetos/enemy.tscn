@@ -6,14 +6,14 @@
 [ext_resource path="res://Scripts/enemy/lookatnodeplayer.gd" type="Script" id=4]
 [ext_resource path="res://Sprites/enemigos/animales/oso/mcCabesa.svg" type="Texture" id=5]
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=2]
 radius = 18.2133
 height = 3.11953
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 resource_name = "brazo golpeando"
 tracks/0/type = "value"
-tracks/0/path = NodePath("Brazo:visible")
+tracks/0/path = NodePath("Oso/Brazo:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -25,7 +25,7 @@ tracks/0/keys = {
 "values": [ false, true, true, false ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Brazo:rotation_degrees")
+tracks/1/path = NodePath("Oso/Brazo:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -37,7 +37,7 @@ tracks/1/keys = {
 "values": [ 48.7515, -71.0084 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Brazo/Area2D/CollisionShape2D:disabled")
+tracks/2/path = NodePath("Oso/Brazo/Area2D/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -53,45 +53,49 @@ tracks/2/keys = {
 script = ExtResource( 1 )
 distance = 160
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -56.6834, -53.3253, -75.6771, -33.8183, -85.4306, -0.964432, -75.6771, 31.8895, -54.6301, 53.4498, -20.2362, 51.9098, 13.6444, 50.3698, 53.6851, 50.8831, 78.3254, 23.1626, 76.7854, -28.6849, 53.6851, -50.7586, 20.8312, -50.2452, -19.7228, -50.2452 )
+
+[node name="Oso" type="Node2D" parent="."]
+editor/display_folded = true
+
+[node name="sprite_cuerpo" type="Sprite" parent="Oso"]
 rotation = 1.5708
 scale = Vector2( 0.28, 0.28 )
 texture = ExtResource( 2 )
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -56.6834, -53.3253, -75.6771, -33.8183, -85.4306, -0.964432, -75.6771, 31.8895, -54.6301, 53.4498, -20.2362, 51.9098, 13.6444, 50.3698, 53.6851, 50.8831, 78.3254, 23.1626, 76.7854, -28.6849, 53.6851, -50.7586, 20.8312, -50.2452, -19.7228, -50.2452 )
-
-[node name="Brazo" type="Position2D" parent="."]
+[node name="Brazo" type="Position2D" parent="Oso"]
+editor/display_folded = true
 visible = false
 position = Vector2( 70, 25 )
 rotation = -1.23933
 
-[node name="Area2D" type="Area2D" parent="Brazo"]
+[node name="Area2D" type="Area2D" parent="Oso/Brazo"]
 
-[node name="Sprite" type="Sprite" parent="Brazo/Area2D"]
+[node name="Sprite" type="Sprite" parent="Oso/Brazo/Area2D"]
 position = Vector2( 46, 22 )
 rotation = 1.5708
 scale = Vector2( 0.29, 0.29 )
 z_index = -1
 texture = ExtResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Brazo/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Oso/Brazo/Area2D"]
 position = Vector2( 85, 32 )
 rotation = 1.8326
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 disabled = true
 
-[node name="Position2D" type="Position2D" parent="."]
+[node name="Cabeza" type="Position2D" parent="Oso"]
 editor/display_folded = true
 position = Vector2( 80.39, 0 )
 script = ExtResource( 4 )
 
-[node name="Sprite2" type="Sprite" parent="Position2D"]
+[node name="sprite_cabeza" type="Sprite" parent="Oso/Cabeza"]
 position = Vector2( 31.61, -3.55271e-013 )
 rotation = 1.5708
 scale = Vector2( 0.28, 0.28 )
 texture = ExtResource( 5 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
-"anims/brazo golpeando" = SubResource( 2 )
-[connection signal="body_entered" from="Brazo/Area2D" to="." method="_on_Area2D_body_entered"]
+"anims/brazo golpeando" = SubResource( 1 )
+[connection signal="body_entered" from="Oso/Brazo/Area2D" to="." method="_on_Area2D_body_entered"]
