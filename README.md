@@ -9,3 +9,7 @@ Diversos enemigos
 UI para el jugador  
 Mapa  
 Modo infinito  
+Musica  
+Inventario  
+Obtencion de armas en cajas  
+
