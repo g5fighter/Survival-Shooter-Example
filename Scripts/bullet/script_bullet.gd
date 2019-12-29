@@ -22,7 +22,6 @@ func _physics_process(delta):
     var collision = move_and_collide(velocity * delta)
     if collision:
         if collision.collider.has_method("hit"):
-            #print_debug("Objeto golpeado")
             collision.collider.hit(bullet_damage)
         queue_free()
 
