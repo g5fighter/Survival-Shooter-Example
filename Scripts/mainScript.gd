@@ -1,16 +1,25 @@
 extends Node2D
+# objetos que pueden ser instanciados
 var Player = preload("res://objetos/player.tscn")
 var Enemy = preload("res://objetos/enemy.tscn")
 var followedObject = preload("res://objetos/nodeToBeFollowed.tscn")
+#temporizadores
 var timer = null
-var enemyDelay = 3
+var roundTimer = null
+#delays
+var enemyDelay = 10
+var roundDelay = 20
+
 var spawnEnemy = true
 var rng = RandomNumberGenerator.new()
-var numberOfSpawnedEnem = 0
 
-# Called when the node enters the scene tree for the first time.
+var spawnedEnemies = 0
+var enemiesPerRound = 10
+var rondaActual = 1
+
+
 func _ready():
-	_instantiate_player() # Replace with function body.
+	_instantiate_player() 
 	configure_timers()
 	
 func randomSpawn(tipo):
@@ -33,6 +42,11 @@ func configure_timers():
 	timer.set_wait_time(enemyDelay)
 	timer.connect("timeout", self,"on_timeout_complete")
 	add_child(timer)
+	roundTimer = Timer.new()
+	roundTimer.set_one_shot(true)
+	roundTimer.set_wait_time(roundDelay)
+	roundTimer.connect("timeout", self,"on_timeout_complete")
+	add_child(roundTimer)
 	
 func on_timeout_complete():
 	spawnEnemy = true
@@ -56,3 +70,11 @@ func _process(delta):
 	if(spawnEnemy):
 		timer.start()
 		_instantiate_enemies()
+	if(spawnedEnemies==enemiesPerRound):
+		rondaActual+=1
+		spawnEnemy = false
+		enemiesPerRound+=enemiesPerRound/2
+		enemiesPerRound = round(enemiesPerRound)
+		spawnedEnemies = 0
+		enemyDelay = enemyDelay*0.95
+		roundTimer.start()

@@ -35,6 +35,8 @@ onready var node_armaDosRotDesv = get_node(armaDosRotDesv)
 export (NodePath) var armaTresRotDesv
 onready var node_armaTresRotDesv = get_node(armaTresRotDesv)
 
+onready var soundManager = $sonidos
+
 # objeto bullet
 var Bullet = preload("res://objetos/bestbullet.tscn")
 var fire = preload("res://objetos/fuego.tscn")
@@ -126,6 +128,8 @@ func get_input():
         # llamar funcion disparo
 		if(can_shoot&&armas[2][typeOfGun]>0):
             shoot()
+		elif(armas[2][typeOfGun]==0):
+			soundManager._play(2)
 	if Input.is_action_pressed('change_gun'):
 		if(can_change_gun):
 			changeGun()
@@ -150,6 +154,7 @@ func shoot():
 	can_shoot = false
 	timer.start()
 	update_UI()
+	soundManager._play(0)
 
 func changeGun():
 	can_change_gun = false
@@ -165,7 +170,6 @@ func changeGun():
 	update_UI()
 
 func get_damage(damage):
-	print_debug("Me dañaste con "+str(damage))
 	health -= damage
 	node_ui_manager.update_health_things(health)
 	
@@ -179,6 +183,7 @@ func rechargeGun():
 	armas[2][typeOfGun] = armas[1][typeOfGun]
 	armas[4][typeOfGun] -= 1
 	update_UI()
+	soundManager._play(1)
 	
 func show_gun():
 	for nodeArma in  node_Array[2]:

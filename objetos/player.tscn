@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/Player/movement.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Player/lookatnode.gd" type="Script" id=2]
@@ -10,9 +10,10 @@
 [ext_resource path="res://Sprites/persona.svg" type="Texture" id=8]
 [ext_resource path="res://objetos/interfaz.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scripts/UI/interfaz.gd" type="Script" id=10]
-
-
-
+[ext_resource path="res://Scripts/Player/soundManager.gd" type="Script" id=11]
+[ext_resource path="res://Sounds/Gun/disparar.wav" type="AudioStream" id=12]
+[ext_resource path="res://Sounds/Gun/recarga.wav" type="AudioStream" id=13]
+[ext_resource path="res://Sounds/Gun/sinBalas.wav" type="AudioStream" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 49.7425, 21.702 )
@@ -107,7 +108,7 @@ texture = ExtResource( 7 )
 [node name="bullet_spawn" type="Position2D" parent="brazo"]
 position = Vector2( 115.699, -0.585545 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="sprite_cuerpo" type="Sprite" parent="."]
 rotation = 1.5708
 scale = Vector2( 0.268262, 0.268262 )
 texture = ExtResource( 8 )
@@ -141,5 +142,17 @@ script = ExtResource( 10 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+
+[node name="sonidos" type="Node2D" parent="."]
+script = ExtResource( 11 )
+
+[node name="sonidoDisparo" type="AudioStreamPlayer" parent="sonidos"]
+stream = ExtResource( 12 )
+
+[node name="sonidoRecarga" type="AudioStreamPlayer" parent="sonidos"]
+stream = ExtResource( 13 )
+
+[node name="sonidoSinBalas" type="AudioStreamPlayer" parent="sonidos"]
+stream = ExtResource( 14 )
 
 [editable path="UI"]
