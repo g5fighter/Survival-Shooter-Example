@@ -13,26 +13,35 @@ onready var node_ui_manager = get_node(ui_manager)
 
 #nodos de las diferentes armas
 export (NodePath) var armaUno
+# warning-ignore:unused_class_variable
 onready var node_armaUno = get_node(armaUno)
 export (NodePath) var armaDos
+# warning-ignore:unused_class_variable
 onready var node_armaDos = get_node(armaDos)
 export (NodePath) var armaTres
+# warning-ignore:unused_class_variable
 onready var node_armaTres = get_node(armaTres)
 
 #nodos donde se spawnean las diferentes balas
 export (NodePath) var armaUnobulletspawn
+# warning-ignore:unused_class_variable
 onready var node_armaUnobulletspawn = get_node(armaUnobulletspawn)
 export (NodePath) var armaDosbulletspawn
+# warning-ignore:unused_class_variable
 onready var node_armaDosbulletspawn = get_node(armaDosbulletspawn)
 export (NodePath) var armaTresbulletspawn
+# warning-ignore:unused_class_variable
 onready var node_armaTresbulletspawn = get_node(armaTresbulletspawn)
 
 #desviaciones de arma a la hora de apuntar
 export (NodePath) var armaUnoRotDesv
+# warning-ignore:unused_class_variable
 onready var node_armaUnoRotDesv = get_node(armaUnoRotDesv)
 export (NodePath) var armaDosRotDesv
+# warning-ignore:unused_class_variable
 onready var node_armaDosRotDesv = get_node(armaDosRotDesv)
 export (NodePath) var armaTresRotDesv
+# warning-ignore:unused_class_variable
 onready var node_armaTresRotDesv = get_node(armaTresRotDesv)
 
 onready var soundManager = $sonidos
@@ -52,7 +61,7 @@ var armas = [[2,0.1,4],[16,60,30],[16,60,30],[4,4,4],[4,4,4],[2,5,7],[10,5,40]]
 	#col 6: gun damage
 	
 onready var node_Array = [[node_armaUnobulletspawn,node_armaDosbulletspawn,node_armaTresbulletspawn],[node_armaUnoRotDesv,node_armaDosRotDesv,node_armaTresRotDesv],[node_armaUno,node_armaDos,node_armaTres]]
-#onready var path_Array = [[armaUnobulletspawn,armaDosbulletspawn,armaTresbulletspawn],[armaUnoRotDesv,armaDosRotDesv,armaTresRotDesv]]
+
 # vector desplacamiento
 var velocity = Vector2()
 
@@ -70,12 +79,16 @@ var can_shoot = true
 var can_change_gun = true
 var can_recharge_gun = true
 
+var inventario = [null,null,null,null,null]
+var index = 0
+
 func _ready():
 	add_to_group("player")
 	node_ui_manager.inicializar_todo()
 	show_gun()
-	bullet_delay = armas[0][typeOfGun]
-	recharge_delay = armas[5][typeOfGun]
+	if(inventario[index]!=null):
+		bullet_delay = inventario[index].bullet_delay
+		recharge_delay = inventario[index].recharge_delay
 	configure_timers()
 	update_UI()
 
@@ -126,21 +139,24 @@ func get_input():
         velocity.y -= 1
 	if Input.is_action_pressed('click'):
         # llamar funcion disparo
-		if(can_shoot&&armas[2][typeOfGun]>0):
-            shoot()
-		elif(armas[2][typeOfGun]==0):
-			soundManager._play(2)
+		if (inventario[index]!=null):
+			if(can_shoot&&inventario[index].bulletAmount>0):
+	            shoot()
+			elif(inventario[index].bulletAmount==0):
+				soundManager._play(2)
 	if Input.is_action_pressed('change_gun'):
 		if(can_change_gun):
 			changeGun()
 	if Input.is_action_pressed('recharge'):
-		if(can_recharge_gun&&armas[4][typeOfGun]):
-			rechargeGun()
+		if (inventario[index]!=null):
+			if(can_recharge_gun&&inventario[index].cargadoresAmount>0):
+				rechargeGun()
 	velocity = velocity.normalized() * speed
 
 #funcion disparo
-func shoot():    
-	armas[2][typeOfGun]-=1
+func shoot():  
+	typeOfGun = inventario[index].gunID  
+	inventario[index].restAmmo()
 	# variable que instancia la bala
 	var bullet = Bullet.instance()
 	var fireSprite = fire.instance()
@@ -161,13 +177,18 @@ func changeGun():
 	timerChngGun.start()
 	timer.stop()
 	can_shoot = true
-	typeOfGun += 1
-	if(typeOfGun>=armas[0].size()):
-		typeOfGun = 0
-	bullet_delay = armas[0][typeOfGun]
-	timer.set_wait_time(bullet_delay)
+	index += 1
+	if(index>=inventario.size()):
+		index = 0
+	if(inventario[index]!=null):
+		config_gun()
 	show_gun()
 	update_UI()
+	
+func config_gun():
+		bullet_delay = inventario[index].bullet_delay
+		timer.set_wait_time(bullet_delay)
+		typeOfGun=inventario[index].gunID
 
 func get_damage(damage):
 	health -= damage
@@ -175,24 +196,37 @@ func get_damage(damage):
 	
 func get_recursos():
 	print_debug("funciona")
+func get_gun(node):
+	if(inventario[index]==null):
+		inventario[index]=node
+	else:
+		inventario[index].drop(position)
+		inventario[index]=node
+	config_gun()
+	show_gun()
+	node.take()
 
 func rechargeGun():
 	can_recharge_gun = false
-	recharge_delay = armas[5][typeOfGun]
+	recharge_delay = inventario[index].recharge_delay
 	timerRchrgGun.start()
-	armas[2][typeOfGun] = armas[1][typeOfGun]
-	armas[4][typeOfGun] -= 1
+	inventario[index].recharge()
 	update_UI()
 	soundManager._play(1)
 	
 func show_gun():
 	for nodeArma in  node_Array[2]:
 		nodeArma.hide()
-	node_Array[2][typeOfGun].show()
+	if(inventario[index]!=null):
+		node_Array[2][typeOfGun].show()
 
 func update_UI():
-	$UI.update_info_gun(armas[2][typeOfGun],armas[4][typeOfGun])
+	if(inventario[index]!=null):
+		$UI.update_info_gun(inventario[index].bulletAmount,inventario[index].cargadoresAmount)
+	else:
+		$UI.update_info_gun("N","N")
 
+# warning-ignore:unused_argument
 func _physics_process(delta):
     get_input()
     velocity = move_and_slide(velocity)

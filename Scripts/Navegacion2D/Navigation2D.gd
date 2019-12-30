@@ -8,7 +8,6 @@ var player_node
 var playerFound = false
 var navPolyInstance
 var playerFree
-onready var current_navpoly_id = 1
 
 func searchPlayer():
 	var players = get_tree().get_nodes_in_group("player")
@@ -45,6 +44,7 @@ func _nueva_posicion(pos_inicial,pos_final):
 func _seguir_ruta(distancia, enemigo):
 	var ultima_pos = enemigo.position
 	if enemigo.position.distance_to(player_node.position) >= enemigo.distance:
+# warning-ignore:unused_variable
 		for i in range(path.size()):
 			var distancia_al_final = ultima_pos.distance_to(path[0])
 			if distancia <= distancia_al_final:

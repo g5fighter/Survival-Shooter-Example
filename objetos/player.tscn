@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scripts/Player/movement.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Player/lookatnode.gd" type="Script" id=2]
@@ -6,14 +6,15 @@
 [ext_resource path="res://Sprites/guns/ak/minibrazo.svg" type="Texture" id=4]
 [ext_resource path="res://Scripts/Player/lookatmouse.gd" type="Script" id=5]
 [ext_resource path="res://Sprites/guns/ak/ak.svg" type="Texture" id=6]
-[ext_resource path="res://Sprites/guns/simple/simple.svg" type="Texture" id=7]
-[ext_resource path="res://Sprites/persona.svg" type="Texture" id=8]
-[ext_resource path="res://objetos/interfaz.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scripts/UI/interfaz.gd" type="Script" id=10]
-[ext_resource path="res://Scripts/Player/soundManager.gd" type="Script" id=11]
-[ext_resource path="res://Sounds/Gun/disparar.wav" type="AudioStream" id=12]
-[ext_resource path="res://Sounds/Gun/recarga.wav" type="AudioStream" id=13]
-[ext_resource path="res://Sounds/Gun/sinBalas.wav" type="AudioStream" id=14]
+[ext_resource path="res://Sprites/guns/sniper/sniper.svg" type="Texture" id=7]
+[ext_resource path="res://Sprites/guns/simple/simple.svg" type="Texture" id=8]
+[ext_resource path="res://Sprites/persona.svg" type="Texture" id=9]
+[ext_resource path="res://objetos/interfaz.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scripts/UI/interfaz.gd" type="Script" id=11]
+[ext_resource path="res://Scripts/Player/soundManager.gd" type="Script" id=12]
+[ext_resource path="res://Sounds/Gun/disparar.wav" type="AudioStream" id=13]
+[ext_resource path="res://Sounds/Gun/recarga.wav" type="AudioStream" id=14]
+[ext_resource path="res://Sounds/Gun/sinBalas.wav" type="AudioStream" id=15]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 49.7425, 21.702 )
@@ -31,13 +32,13 @@ lab = NodePath("UI/Control/Label")
 ui_manager = NodePath("UI")
 armaUno = NodePath("brazo")
 armaDos = NodePath("Aka")
-armaTres = NodePath("Aka")
+armaTres = NodePath("sniper")
 armaUnobulletspawn = NodePath("brazo/bullet_spawn")
 armaDosbulletspawn = NodePath("Aka/ak_sprite/Position2D")
-armaTresbulletspawn = NodePath("Aka/ak_sprite/Position2D")
+armaTresbulletspawn = NodePath("sniper/sniper_sprite/Position2D")
 armaUnoRotDesv = NodePath("brazo")
 armaDosRotDesv = NodePath("Aka/ak_sprite")
-armaTresRotDesv = NodePath("Aka/ak_sprite")
+armaTresRotDesv = NodePath("sniper/sniper_sprite")
 
 [node name="Aka" type="Position2D" parent="."]
 editor/display_folded = true
@@ -90,6 +91,54 @@ position = Vector2( 74.51, 0 )
 [node name="Position2D" type="Position2D" parent="Aka/ak_sprite"]
 position = Vector2( 137.94, 0 )
 
+[node name="sniper" type="Position2D" parent="."]
+visible = false
+
+[node name="brazolargo" type="Position2D" parent="sniper"]
+position = Vector2( 17.74, -48.69 )
+script = ExtResource( 2 )
+lab = NodePath("../sniper_sprite/brazograndetrigger")
+
+[node name="Sprite" type="Sprite" parent="sniper/brazolargo"]
+position = Vector2( 16.5972, -4.30299 )
+rotation = 1.09219
+scale = Vector2( 0.268, 0.268 )
+texture = ExtResource( 3 )
+
+[node name="minibrazo" type="Position2D" parent="sniper"]
+position = Vector2( 17.74, 48.69 )
+script = ExtResource( 2 )
+lab = NodePath("../sniper_sprite/manopequeñapos")
+
+[node name="Sprite2" type="Sprite" parent="sniper/minibrazo"]
+position = Vector2( 27.213, 0.36644 )
+rotation = 1.5708
+scale = Vector2( 0.268, 0.268 )
+z_index = -1
+texture = ExtResource( 4 )
+
+[node name="sniper_sprite" type="Position2D" parent="sniper"]
+position = Vector2( 25.01, 36.625 )
+script = ExtResource( 5 )
+notRotate = true
+distance = 160
+player = NodePath("../..")
+
+[node name="Sprite" type="Sprite" parent="sniper/sniper_sprite"]
+position = Vector2( 67.7412, -0.291992 )
+rotation = 1.5708
+scale = Vector2( 0.205267, 0.205267 )
+texture = ExtResource( 7 )
+
+[node name="manopequeñapos" type="Position2D" parent="sniper/sniper_sprite"]
+position = Vector2( 39.84, 0 )
+
+[node name="brazograndetrigger" type="Position2D" parent="sniper/sniper_sprite"]
+position = Vector2( 74.51, 0 )
+
+[node name="Position2D" type="Position2D" parent="sniper/sniper_sprite"]
+position = Vector2( 137.94, 0 )
+
 [node name="brazo" type="Position2D" parent="."]
 editor/display_folded = true
 visible = false
@@ -103,7 +152,7 @@ player = NodePath("..")
 position = Vector2( 54.205, -0.463299 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 
 [node name="bullet_spawn" type="Position2D" parent="brazo"]
 position = Vector2( 115.699, -0.585545 )
@@ -111,7 +160,7 @@ position = Vector2( 115.699, -0.585545 )
 [node name="sprite_cuerpo" type="Sprite" parent="."]
 rotation = 1.5708
 scale = Vector2( 0.268262, 0.268262 )
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.487671, 0 )
@@ -136,23 +185,22 @@ position = Vector2( 7.29761, -0.663422 )
 rotation = -1.57079
 shape = SubResource( 3 )
 
-[node name="UI" parent="." instance=ExtResource( 9 )]
-editor/display_folded = true
-script = ExtResource( 10 )
+[node name="UI" parent="." instance=ExtResource( 10 )]
+script = ExtResource( 11 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 
 [node name="sonidos" type="Node2D" parent="."]
-script = ExtResource( 11 )
+script = ExtResource( 12 )
 
 [node name="sonidoDisparo" type="AudioStreamPlayer" parent="sonidos"]
-stream = ExtResource( 12 )
-
-[node name="sonidoRecarga" type="AudioStreamPlayer" parent="sonidos"]
 stream = ExtResource( 13 )
 
-[node name="sonidoSinBalas" type="AudioStreamPlayer" parent="sonidos"]
+[node name="sonidoRecarga" type="AudioStreamPlayer" parent="sonidos"]
 stream = ExtResource( 14 )
+
+[node name="sonidoSinBalas" type="AudioStreamPlayer" parent="sonidos"]
+stream = ExtResource( 15 )
 
 [editable path="UI"]

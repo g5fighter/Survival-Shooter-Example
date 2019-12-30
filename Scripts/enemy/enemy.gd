@@ -1,13 +1,10 @@
 extends KinematicBody2D
 var health = 100
 var speed = 200
-var dstncToNode = 10
+var dstncToNode = 3
 var node
-var lastPos
 export (int) var distance
 onready var anim = get_node("anim")
-
-var playerFound = false
 
 func _ready():
 	add_to_group("enemy")
@@ -23,6 +20,7 @@ func hit(damage):
 func _physics_process(delta):
 	if(position.distance_to(node.global_position)>dstncToNode):
 		var dir = (node.global_position - global_position).normalized()
+# warning-ignore:return_value_discarded
 		move_and_collide(dir * speed * delta)
 		rotation = dir.angle()
 	if(health<=0):
