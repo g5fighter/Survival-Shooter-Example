@@ -3,6 +3,7 @@ extends Node2D
 var Player = preload("res://objetos/player.tscn")
 var Enemy = preload("res://objetos/enemy.tscn")
 var followedObject = preload("res://objetos/nodeToBeFollowed.tscn")
+var Arma = preload("res://objetos/Arma.tscn")
 #temporizadores
 var timer = null
 var roundTimer = null
@@ -35,6 +36,14 @@ func randomSpawn(tipo):
 		var my_random_number = int(round(rng.randf_range(0, spawnsEnemyNodes.size()-1)))
 		pos = spawnsEnemyNodes[my_random_number].global_position
 	return pos
+	
+func instantiate_gun(pos):
+	print_debug("Si")
+	rng.randomize()
+	var my_random_number = int(round(rng.randf_range(0, 2)))
+	var arma = Arma.instance()
+	self.add_child(arma)
+	arma.start(pos,my_random_number)
 
 func configure_timers():
 	timer = Timer.new()
@@ -66,6 +75,7 @@ func _instantiate_enemies():
 	enemy.start(spawn, objectFollowed)
 	spawnEnemy = false
 #
+# warning-ignore:unused_argument
 func _process(delta):
 	if(spawnEnemy):
 		timer.start()

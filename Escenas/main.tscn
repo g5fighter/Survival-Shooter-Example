@@ -16,7 +16,16 @@ __meta__ = {
 }
 
 [node name="CajaDeRecursos" parent="." instance=ExtResource( 2 )]
-position = Vector2( 323.911, 127.481 )
+position = Vector2( -229.355, -138.334 )
+
+[node name="CajaDeRecursos2" parent="." instance=ExtResource( 2 )]
+position = Vector2( -235.537, 325.297 )
+
+[node name="CajaDeRecursos3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 728.816, 371.66 )
+
+[node name="CajaDeRecursos4" parent="." instance=ExtResource( 2 )]
+position = Vector2( 806.088, -150.698 )
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
 script = ExtResource( 3 )

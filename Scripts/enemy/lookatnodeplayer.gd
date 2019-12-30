@@ -13,6 +13,7 @@ func searchPlayer():
 			wr = weakref(player_node)
 			playerFound = true
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+# warning-ignore:unused_argument
 func _process(delta):
 	if(player_node==null&&!playerFound):
 		searchPlayer()

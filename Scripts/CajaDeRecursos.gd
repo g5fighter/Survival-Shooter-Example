@@ -3,7 +3,8 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 var timer = null
-export (int) var typeOfBox = 0
+var typeOfBox = 1
+var typeOfGun = 0
 var estaRecogiendo = false
 var isPlayer = false
 var bodyEntering
@@ -33,13 +34,18 @@ func _ready():
 #func _process(delta):
 #	pass
 func on_timeout_complete():
-	bodyEntering.get_recursos()
-	node_parent.queue_free()
+	if(typeOfBox==0):
+		bodyEntering.get_recursos()
+		node_parent.queue_free()
+	elif(typeOfBox==1):
+		get_tree().get_root().get_node("MainScene").instantiate_gun(position)
+		node_parent.queue_free()
 
 
 func is_running():
    return timer.get_time_left() > 0
 
+# warning-ignore:unused_argument
 func _process(delta):
 	if(isPlayer):
 		if Input.is_action_pressed('takeObj'):
@@ -61,6 +67,7 @@ func _on_CajaDeRecursos_body_entered(body):
 		isPlayer = true
 
 
+# warning-ignore:unused_argument
 func _on_CajaDeRecursos_body_exited(body):
 	isPlayer = false
 	timer.stop()
