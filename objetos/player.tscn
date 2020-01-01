@@ -26,8 +26,8 @@ radius = 21.4813
 radius = 35.6208
 
 [node name="player" type="KinematicBody2D"]
+z_index = 1
 script = ExtResource( 1 )
-speed = 300
 lab = NodePath("UI/Control/Label")
 ui_manager = NodePath("UI")
 armaUno = NodePath("brazo")

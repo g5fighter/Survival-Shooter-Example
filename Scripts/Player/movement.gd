@@ -1,9 +1,11 @@
 extends KinematicBody2D
 
 # vida, velocidad, tipo de arma
-export (int) var health = 100
-export (int) var speed = 600
-export (int) var typeOfGun = 0
+var health = 100
+var speed = 400
+var typeOfGun = 0
+var shootType = 0
+var RafagaAmount = 0
 
 export (NodePath) var lab
 onready var ui_lab = get_node(lab)
@@ -49,16 +51,6 @@ onready var soundManager = $sonidos
 # objeto bullet
 var Bullet = preload("res://objetos/bestbullet.tscn")
 var fire = preload("res://objetos/fuego.tscn")
-
-# MATRIZ ARMAS
-var armas = [[2,0.1,4],[16,60,30],[16,60,30],[4,4,4],[4,4,4],[2,5,7],[10,5,40]]
-	# col 0: retardo de cada ramas
-	#col 1: cantidad de balas
-	#col 2: cantidad de balas actuales
-	#col 3: cantidad de cargadores
-	#col 4: cargadores actuales
-	#col 5:recharge gun delay
-	#col 6: gun damage
 	
 onready var node_Array = [[node_armaUnobulletspawn,node_armaDosbulletspawn,node_armaTresbulletspawn],[node_armaUnoRotDesv,node_armaDosRotDesv,node_armaTresRotDesv],[node_armaUno,node_armaDos,node_armaTres]]
 
@@ -74,10 +66,11 @@ var timerRchrgGun = null
 var bullet_delay = 0
 var recharge_delay = 0
 
-# bolleanos que permiten el disparo, recarga y cambio de arma
+# bolleanos que permiten el disparo, recarga y cambio de arma, y deteccion para disparo manual
 var can_shoot = true
 var can_change_gun = true
 var can_recharge_gun = true
+var pressing_shoot = false
 
 var inventario = [null,null,null,null,null]
 var index = 0
@@ -86,6 +79,7 @@ func _ready():
 	add_to_group("player")
 	node_ui_manager.inicializar_todo()
 	show_gun()
+	update_UI_Gun(-1)
 	if(inventario[index]!=null):
 		bullet_delay = inventario[index].bullet_delay
 		recharge_delay = inventario[index].recharge_delay
@@ -141,9 +135,18 @@ func get_input():
         # llamar funcion disparo
 		if (inventario[index]!=null):
 			if(can_shoot&&inventario[index].bulletAmount>0):
-	            shoot()
+				if(shootType==0):
+					shoot()
+				elif(shootType==1&&!pressing_shoot):
+					for x in range(0, RafagaAmount):
+						shoot()
+				elif(shootType==2 && !pressing_shoot):
+					shoot()
 			elif(inventario[index].bulletAmount==0):
 				soundManager._play(2)
+		pressing_shoot = true
+	else:
+		pressing_shoot = false
 	if Input.is_action_pressed('change_gun'):
 		if(can_change_gun):
 			changeGun()
@@ -162,7 +165,7 @@ func shoot():
 	var fireSprite = fire.instance()
 	
 	fireSprite.start(node_Array[0][typeOfGun].global_position, rotation + node_Array[1][typeOfGun].rotation)
-	bullet.start(node_Array[0][typeOfGun].global_position, rotation + node_Array[1][typeOfGun].rotation, armas[6][typeOfGun])
+	bullet.start(node_Array[0][typeOfGun].global_position, rotation + node_Array[1][typeOfGun].rotation, inventario[index].gunDamage)
 	
 	# añadimos en el arbol de nodos la bala
 	get_parent().add_child(bullet)
@@ -182,13 +185,19 @@ func changeGun():
 		index = 0
 	if(inventario[index]!=null):
 		config_gun()
+		update_UI_Gun(typeOfGun)
+	else:
+		update_UI_Gun(-1)
 	show_gun()
 	update_UI()
+
 	
 func config_gun():
 		bullet_delay = inventario[index].bullet_delay
 		timer.set_wait_time(bullet_delay)
 		typeOfGun=inventario[index].gunID
+		shootType=inventario[index].shootType
+		RafagaAmount=inventario[index].rafagAmount
 
 func get_damage(damage):
 	health -= damage
@@ -196,6 +205,7 @@ func get_damage(damage):
 	
 func get_recursos():
 	print_debug("funciona")
+	
 func get_gun(node):
 	if(inventario[index]==null):
 		inventario[index]=node
@@ -205,6 +215,8 @@ func get_gun(node):
 	config_gun()
 	show_gun()
 	node.take()
+	update_UI_Gun(typeOfGun)
+	update_UI()
 
 func rechargeGun():
 	can_recharge_gun = false
@@ -225,6 +237,9 @@ func update_UI():
 		$UI.update_info_gun(inventario[index].bulletAmount,inventario[index].cargadoresAmount)
 	else:
 		$UI.update_info_gun("N","N")
+
+func update_UI_Gun(num):
+	$UI.updateImage(num,index)
 
 # warning-ignore:unused_argument
 func _physics_process(delta):

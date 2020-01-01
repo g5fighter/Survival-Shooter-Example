@@ -57,5 +57,5 @@ custom_fonts/font = SubResource( 2 )
 text = "3"
 align = 3
 valign = 3
-[connection signal="body_entered" from="Area2D" to="." method="_on_CajaDeRecursos_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_CajaDeRecursos_body_exited"]
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_CajaDeRecursos_body_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_CajaDeRecursos_body_exited"]

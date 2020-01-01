@@ -7,7 +7,7 @@ var typeOfBox = 1
 var typeOfGun = 0
 var estaRecogiendo = false
 var isPlayer = false
-var bodyEntering
+var player_node
 
 export (NodePath) var lab
 onready var ui_lab = get_node(lab)
@@ -20,6 +20,16 @@ onready var ui_color_rect = get_node(colorRect)
 
 export (NodePath) var collisionShape
 onready var colShape = get_node(collisionShape)
+
+var playerFound = false
+
+func searchPlayer():
+	var players = get_tree().get_nodes_in_group("player")
+	for pl in players:
+		if(!playerFound):
+			player_node = pl
+			playerFound = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	timer = Timer.new()
@@ -35,7 +45,7 @@ func _ready():
 #	pass
 func on_timeout_complete():
 	if(typeOfBox==0):
-		bodyEntering.get_recursos()
+		player_node.get_recursos()
 		node_parent.queue_free()
 	elif(typeOfBox==1):
 		get_tree().get_root().get_node("MainScene").instantiate_gun(position)
@@ -47,6 +57,8 @@ func is_running():
 
 # warning-ignore:unused_argument
 func _process(delta):
+	if(player_node==null&&!playerFound):
+		searchPlayer()
 	if(isPlayer):
 		if Input.is_action_pressed('takeObj'):
 			estaRecogiendo = true
@@ -61,13 +73,11 @@ func _process(delta):
 		else:
 			ui_color_rect.hide()
 
-func _on_CajaDeRecursos_body_entered(body):
-	if(body.get_name()=="player"):
-		bodyEntering = body
-		isPlayer = true
+func _on_CajaDeRecursos_body_entered():
+	isPlayer = true
 
 
 # warning-ignore:unused_argument
-func _on_CajaDeRecursos_body_exited(body):
+func _on_CajaDeRecursos_body_exited():
 	isPlayer = false
 	timer.stop()
