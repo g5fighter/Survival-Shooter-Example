@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://objetos/UI/HealthBar/LifeBar.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/UI/Barra de vida/fondodetexto.svg" type="Texture" id=2]
-[ext_resource path="res://temas/inGameUITheme.tres" type="Theme" id=3]
+[ext_resource path="res://Sprites/UI/guns/ak.svg" type="Texture" id=3]
+[ext_resource path="res://Sprites/UI/guns/gun.svg" type="Texture" id=4]
+[ext_resource path="res://Sprites/UI/guns/sniper.svg" type="Texture" id=5]
+[ext_resource path="res://temas/inGameUITheme.tres" type="Theme" id=6]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
@@ -33,19 +36,55 @@ margin_top = -40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Control2"]
+[node name="Armas" type="NinePatchRect" parent="Control2"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -200.0
+margin_top = -100.0
+margin_right = 9.39
+rect_min_size = Vector2( 40, 0 )
+texture = ExtResource( 2 )
+
+[node name="AK" type="Sprite" parent="Control2/Armas"]
+position = Vector2( 100, 55.61 )
+scale = Vector2( -0.25, 0.25 )
+texture = ExtResource( 3 )
+
+[node name="Gun" type="Sprite" parent="Control2/Armas"]
+position = Vector2( 100, 55.61 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 4 )
+
+[node name="Sniper" type="Sprite" parent="Control2/Armas"]
+position = Vector2( 100, 55.61 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 5 )
+
+[node name="arma" type="Label" parent="Control2/Armas"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -59.79
+margin_top = -3.91
+margin_right = -9.78999
+margin_bottom = 33.09
+theme = ExtResource( 6 )
+text = "5/5"
+
+[node name="Balas" type="NinePatchRect" parent="Control2"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -40.0
-margin_top = -20.0
-margin_right = 40.0
-margin_bottom = 20.0
+margin_top = -120.0
+margin_right = 51.29
+margin_bottom = -80.0
 rect_min_size = Vector2( 40, 0 )
 texture = ExtResource( 2 )
 
-[node name="Label" type="Label" parent="Control2/NinePatchRect"]
+[node name="Label" type="Label" parent="Control2/Balas"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -54,7 +93,7 @@ margin_left = -32.0
 margin_top = -18.5
 margin_right = 32.0
 margin_bottom = 18.5
-theme = ExtResource( 3 )
+theme = ExtResource( 6 )
 text = "86/5"
 align = 1
 valign = 1
