@@ -4,6 +4,7 @@ var Player = preload("res://objetos/player.tscn")
 var Enemy = preload("res://objetos/enemy.tscn")
 var followedObject = preload("res://objetos/nodeToBeFollowed.tscn")
 var Arma = preload("res://objetos/Arma.tscn")
+var Cargador = preload("res://objetos/Cargador.tscn")
 #temporizadores
 var timer = null
 var roundTimer = null
@@ -18,10 +19,15 @@ var spawnedEnemies = 0
 var enemiesPerRound = 10
 var rondaActual = 1
 
+var player_node
+
+var playerFound = false
+var playerFree
 
 func _ready():
 	_instantiate_player() 
 	configure_timers()
+	searchPlayer()
 	
 func randomSpawn(tipo):
 	var pos
@@ -38,12 +44,18 @@ func randomSpawn(tipo):
 	return pos
 	
 func instantiate_gun(pos):
-	print_debug("Si")
 	rng.randomize()
 	var my_random_number = int(round(rng.randf_range(0, 2)))
 	var arma = Arma.instance()
 	self.add_child(arma)
 	arma.start(pos,my_random_number)
+
+func instantiate_charger(pos):
+	rng.randomize()
+	var my_random_number = int(round(rng.randf_range(0, 2)))
+	var cargador = Cargador.instance()
+	self.add_child(cargador)
+	cargador.start(pos,my_random_number)
 
 func configure_timers():
 	timer = Timer.new()
@@ -76,7 +88,16 @@ func _instantiate_enemies():
 	spawnEnemy = false
 #
 # warning-ignore:unused_argument
+func searchPlayer():
+	var players = get_tree().get_nodes_in_group("player")
+	for pl in players:
+		if(!playerFound):
+			player_node = pl
+			playerFree = weakref(player_node)
+			playerFound = true
 func _process(delta):
+	if(player_node==null&&!playerFound):
+		searchPlayer()
 	if(spawnEnemy):
 		timer.start()
 		_instantiate_enemies()
@@ -88,3 +109,12 @@ func _process(delta):
 		spawnedEnemies = 0
 		enemyDelay = enemyDelay*0.95
 		roundTimer.start()
+
+func isPlayerNear(n,dist):
+	var resultado = false
+	if playerFound==true&&playerFree.get_ref():
+		if n.global_position.distance_to(player_node.global_position)<dist:
+			resultado = true
+		else:
+			resultado = false
+	return resultado

@@ -15,10 +15,6 @@ font_data = ExtResource( 3 )
 [node name="KinematicBody2D" type="KinematicBody2D"]
 z_index = -1
 script = ExtResource( 1 )
-lab = NodePath("ColorRect/Label")
-parent = NodePath(".")
-colorRect = NodePath("ColorRect")
-collisionShape = NodePath("CollisionPolygon2D")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -43.5204, -43.6529, -43.3783, 42.6933, 43.7414, 42.9436, 43.9917, -43.6754 )

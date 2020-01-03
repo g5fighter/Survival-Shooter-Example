@@ -1,8 +1,5 @@
 extends HBoxContainer
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 var maximum = 100
 var current_health = 0
 # Called when the node enters the scene tree for the first time.

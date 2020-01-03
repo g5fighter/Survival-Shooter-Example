@@ -7,9 +7,6 @@ var velocity = Vector2()
 
 var bullet_damage = 0
 
-func _ready():
- pass
-
 #FUNCION QUE HACE COMENZAR LAS ACCIONES A LA BALA
 func start(pos, dir,damage):
     bullet_damage = damage
