@@ -92,6 +92,7 @@ position = Vector2( 74.51, 0 )
 position = Vector2( 137.94, 0 )
 
 [node name="sniper" type="Position2D" parent="."]
+editor/display_folded = true
 visible = false
 
 [node name="brazolargo" type="Position2D" parent="sniper"]

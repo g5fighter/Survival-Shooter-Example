@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/mainScript.gd" type="Script" id=1]
 [ext_resource path="res://objetos/CajaDeRecursos.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Navegacion2D/Navigation2D.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/UI/Pausa/Pause.gd" type="Script" id=4]
+[ext_resource path="res://temas/inGameUITheme.tres" type="Theme" id=5]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( -1326.63, -940.793, 3900.53, -905.384, 3612.84, 2254.82, -1424.01, 2316.78 )
@@ -23,11 +25,14 @@ position = Vector2( -235.537, 325.297 )
 
 [node name="CajaDeRecursos3" parent="." instance=ExtResource( 2 )]
 position = Vector2( 728.816, 371.66 )
+typeOfBox = 2
 
 [node name="CajaDeRecursos4" parent="." instance=ExtResource( 2 )]
 position = Vector2( 806.088, -150.698 )
+typeOfBox = 2
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
+editor/display_folded = true
 script = ExtResource( 3 )
 speed = 100
 
@@ -35,6 +40,7 @@ speed = 100
 navpoly = SubResource( 1 )
 
 [node name="Player Spawns" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="Spawn1" type="Position2D" parent="Player Spawns" groups=[
 "playerSpawn",
@@ -57,6 +63,7 @@ position = Vector2( -367.652, 432.723 )
 position = Vector2( 891.474, 488.033 )
 
 [node name="Enemy Spawns" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="Spawn1" type="Position2D" parent="Enemy Spawns" groups=[
 "enemySpawn",
@@ -77,3 +84,44 @@ position = Vector2( -3.25354, 214.735 )
 "enemySpawn",
 ]]
 position = Vector2( 520.569, 299.327 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Pause" type="Control" parent="CanvasLayer"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Pause"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.47451 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Pause/ColorRect"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -90.5
+margin_right = 90.5
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Pause/ColorRect/VBoxContainer"]
+margin_top = 258.0
+margin_right = 181.0
+margin_bottom = 295.0
+theme = ExtResource( 5 )
+text = "Game Paused"
+align = 1
+valign = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/Pause/ColorRect/VBoxContainer"]
+margin_top = 299.0
+margin_right = 181.0
+margin_bottom = 342.0
+theme = ExtResource( 5 )
+text = "Back"
+flat = true
+[connection signal="button_down" from="CanvasLayer/Pause/ColorRect/VBoxContainer/Button" to="CanvasLayer/Pause" method="changeEstate"]

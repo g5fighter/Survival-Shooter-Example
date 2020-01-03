@@ -16,11 +16,9 @@ func start(pos, followNode):
 func hit(damage):
 	health -= damage
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	if(position.distance_to(node.global_position)>dstncToNode):
 		var dir = (node.global_position - global_position).normalized()
-# warning-ignore:return_value_discarded
 		move_and_collide(dir * speed * delta)
 		rotation = dir.angle()
 	if(health<=0):

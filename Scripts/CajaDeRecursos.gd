@@ -1,25 +1,22 @@
 extends KinematicBody2D
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+
 var timer = null
-var typeOfBox = 1
+export (int) var typeOfBox = 1
 var typeOfGun = 0
 var estaRecogiendo = false
 var isPlayer = false
 var player_node
+var distance = 300
 
-export (NodePath) var lab
-onready var ui_lab = get_node(lab)
+onready var ui_lab = $ColorRect/Label
 
-export (NodePath) var parent
-onready var node_parent = get_node(parent)
+onready var node_parent = $"."
 
-export (NodePath) var colorRect
-onready var ui_color_rect = get_node(colorRect)
+onready var ui_color_rect = $ColorRect
 
-export (NodePath) var collisionShape
-onready var colShape = get_node(collisionShape)
+onready var colShape = $CollisionPolygon2D
+
+onready var gameScene = get_tree().get_root().get_node("MainScene")
 
 var playerFound = false
 
@@ -38,7 +35,7 @@ func _ready():
 	timer.connect("timeout", self,"on_timeout_complete")
 	add_child(timer)
 	add_to_group("obstacles")
-	get_tree().get_root().get_node("MainScene").find_node("Navigation2D")._obstacle(colShape,node_parent)
+	gameScene.find_node("Navigation2D")._obstacle(colShape,node_parent)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -48,8 +45,12 @@ func on_timeout_complete():
 		player_node.get_recursos()
 		node_parent.queue_free()
 	elif(typeOfBox==1):
-		get_tree().get_root().get_node("MainScene").instantiate_gun(position)
+		gameScene.instantiate_gun(position)
 		node_parent.queue_free()
+	elif(typeOfBox==2):
+		gameScene.instantiate_charger(position)
+		node_parent.queue_free()
+
 
 
 func is_running():
@@ -59,7 +60,7 @@ func is_running():
 func _process(delta):
 	if(player_node==null&&!playerFound):
 		searchPlayer()
-	if(isPlayer):
+	if(isPlayer&&gameScene.isPlayerNear(self,distance)):
 		if Input.is_action_pressed('takeObj'):
 			estaRecogiendo = true
 		else:

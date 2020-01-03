@@ -35,7 +35,7 @@ export (NodePath) var armaTresbulletspawn
 # warning-ignore:unused_class_variable
 onready var node_armaTresbulletspawn = get_node(armaTresbulletspawn)
 
-#desviaciones de arma a la hora de apuntar
+########desviaciones de arma a la hora de apuntar
 export (NodePath) var armaUnoRotDesv
 # warning-ignore:unused_class_variable
 onready var node_armaUnoRotDesv = get_node(armaUnoRotDesv)
@@ -73,7 +73,9 @@ var can_recharge_gun = true
 var pressing_shoot = false
 
 var inventario = [null,null,null,null,null]
+var inventarioObjetos = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
 var index = 0
+var indexObjetos = 0
 
 func _ready():
 	add_to_group("player")
@@ -151,10 +153,25 @@ func get_input():
 		if(can_change_gun):
 			changeGun()
 	if Input.is_action_pressed('recharge'):
-		if (inventario[index]!=null):
-			if(can_recharge_gun&&inventario[index].cargadoresAmount>0):
-				rechargeGun()
+		var cargadorNode = searchCargador(typeOfGun)
+		if(cargadorNode!=null):
+			if(can_recharge_gun&&cargadorNode.balasTotales>0):
+				rechargeGun(cargadorNode)
+			elif(cargadorNode.balasTotales<=0):
+				inventarioObjetos[search_node(cargadorNode)]=null
+				cargadorNode.queue_free()
+	if Input.is_action_pressed('run'):
+		speed = 600
+	else:
+		speed = 400
 	velocity = velocity.normalized() * speed
+
+func search_node(node):
+	var index = 0
+	for ob in inventarioObjetos:
+		if ob == node:
+			return index
+		index+=1
 
 #funcion disparo
 func shoot():  
@@ -205,11 +222,24 @@ func get_damage(damage):
 	
 func get_recursos():
 	print_debug("funciona")
-	
+
+func hayNullArray(array):
+	var hayNull = false
+	for el in array:
+		if el == null:
+			hayNull=true
+			break
+	return hayNull
+
 func get_gun(node):
-	if(inventario[index]==null):
-		inventario[index]=node
-	else:
+	if(hayNullArray(inventario)==true):
+		var temp = 0
+		for arm in inventario:
+			if(arm==null):
+				inventario[temp]=node
+				break
+			temp+=1
+	elif(hayNullArray(inventario)==false):
 		inventario[index].drop(position)
 		inventario[index]=node
 	config_gun()
@@ -217,14 +247,38 @@ func get_gun(node):
 	node.take()
 	update_UI_Gun(typeOfGun)
 	update_UI()
+	
+func get_charger(node):
+	indexObjetos = 0
+	for n in inventarioObjetos:
+		if n == null:
+			inventarioObjetos[indexObjetos]=node
+			node.take()
+			update_UI()
+			break
+		indexObjetos+=1
 
-func rechargeGun():
+
+func rechargeGun(node):
 	can_recharge_gun = false
 	recharge_delay = inventario[index].recharge_delay
 	timerRchrgGun.start()
+	node.recharge(inventario[index].maxBalas())
 	inventario[index].recharge()
 	update_UI()
 	soundManager._play(1)
+	
+func searchCargador(type):
+	var searchedNode = null
+	var arrayinv = []
+	arrayinv = inventarioObjetos.duplicate()
+	arrayinv.invert()
+	for i in arrayinv:
+		if i!=null:
+			if (i.objectID=='cargador'&&i.chargerID==type):
+				searchedNode = i
+				break
+	return searchedNode
 	
 func show_gun():
 	for nodeArma in  node_Array[2]:
@@ -234,12 +288,16 @@ func show_gun():
 
 func update_UI():
 	if(inventario[index]!=null):
-		$UI.update_info_gun(inventario[index].bulletAmount,inventario[index].cargadoresAmount)
+		var cargador = searchCargador(typeOfGun)
+		if(cargador!=null):
+			$UI.update_info_gun(inventario[index].bulletAmount,cargador.balasTotales)
+		else:
+			$UI.update_info_gun(inventario[index].bulletAmount,0)
 	else:
 		$UI.update_info_gun("N","N")
 
 func update_UI_Gun(num):
-	$UI.updateImage(num,index)
+	$UI.updateImage(num,index,inventario.size())
 
 # warning-ignore:unused_argument
 func _physics_process(delta):
