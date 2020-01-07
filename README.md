@@ -11,4 +11,3 @@ UI para el jugador
 Mapa  
 Modo infinito  
 Musica  
-Inventario  
