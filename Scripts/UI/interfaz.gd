@@ -19,3 +19,6 @@ func updateImage(num,index,inventSize):
 		sprt.hide()
 	if(num!=-1):
 		spriteArray[num].show()
+
+func mobileUI():
+	$Control2.rect_position.y = 160

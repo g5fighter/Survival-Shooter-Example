@@ -43,13 +43,13 @@ func _ready():
 func on_timeout_complete():
 	if(typeOfBox==0):
 		player_node.get_recursos()
-		node_parent.queue_free()
+		node_parent.call_deferred("queue_free")
 	elif(typeOfBox==1):
 		gameScene.instantiate_gun(position)
-		node_parent.queue_free()
+		node_parent.call_deferred("queue_free")
 	elif(typeOfBox==2):
 		gameScene.instantiate_charger(position)
-		node_parent.queue_free()
+		node_parent.call_deferred("queue_free")
 
 
 
@@ -73,12 +73,12 @@ func _process(delta):
 			ui_lab.set_text(str(int(timer.get_time_left())))
 		else:
 			ui_color_rect.hide()
-
-func _on_CajaDeRecursos_body_entered():
-	isPlayer = true
-
-
-# warning-ignore:unused_argument
-func _on_CajaDeRecursos_body_exited():
-	isPlayer = false
-	timer.stop()
+	
+func on_player_entered(body):
+	if(body == gameScene.player_node):
+		isPlayer = true
+	
+func on_player_exited(body):
+	if(body == gameScene.player_node):
+		isPlayer = false
+		timer.stop()

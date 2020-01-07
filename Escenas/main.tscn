@@ -117,11 +117,19 @@ text = "Game Paused"
 align = 1
 valign = 1
 
-[node name="Button" type="Button" parent="CanvasLayer/Pause/ColorRect/VBoxContainer"]
+[node name="Config" type="Button" parent="CanvasLayer/Pause/ColorRect/VBoxContainer"]
+margin_top = 299.0
+margin_right = 181.0
+margin_bottom = 342.0
+theme = ExtResource( 5 )
+text = "Configuration"
+flat = true
+
+[node name="Back" type="Button" parent="CanvasLayer/Pause/ColorRect/VBoxContainer"]
 margin_top = 299.0
 margin_right = 181.0
 margin_bottom = 342.0
 theme = ExtResource( 5 )
 text = "Back"
 flat = true
-[connection signal="button_down" from="CanvasLayer/Pause/ColorRect/VBoxContainer/Button" to="CanvasLayer/Pause" method="changeEstate"]
+[connection signal="button_down" from="CanvasLayer/Pause/ColorRect/VBoxContainer/Back" to="CanvasLayer/Pause" method="changeEstate"]

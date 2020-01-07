@@ -66,25 +66,23 @@ func recharge():
 	bulletAmount=armas[1][gunID]
 	
 func drop(pos):
+	taken = false
 	position=pos
 	$AnimationReciver/Sprites.show()
 	$AnimationPlayer.play("drop")
-	taken = false
 	
 func take():
 	$AnimationReciver/Sprites.hide()
 	ui_control.hide()
 	taken = true
 
+func _input(event):
+	if (!taken&&isPlayer&&event.is_action_pressed("takeObj")&&gameScene.isPlayerNear(self,distance)):
+		gameScene.player_node.get_gun(self)
 # warning-ignore:unused_argument
 func _process(delta):
-	if(!taken&&isPlayer&&Input.is_action_just_pressed('takeObj')&&gameScene.isPlayerNear(self,distance)):
-		gameScene.player_node.get_gun(self)
 	showUI()
 
-func _on_arma_body_entered():
-	isPlayer = true
-	showUI()
 
 func maxBalas():
 	return armas[1][gunID]
@@ -97,7 +95,18 @@ func showUI():
 	else:
 		ui_control.hide()
 	
+func _on_arma_body_entered():
+	showUI()
 
 func _on_arma_body_exited():
-	isPlayer = false
 	ui_control.hide()
+
+func on_player_entered(body):
+	if(body == gameScene.player_node):
+		isPlayer = true
+		_on_arma_body_entered()
+	
+func on_player_exited(body):
+	if(body == gameScene.player_node):
+		isPlayer = false
+		_on_arma_body_exited()

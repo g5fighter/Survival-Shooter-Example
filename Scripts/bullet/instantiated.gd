@@ -13,4 +13,4 @@ func start(pos, dir):
 	position = pos
 
 func on_timeout_complete():
-	queue_free()
+	call_deferred("queue_free")

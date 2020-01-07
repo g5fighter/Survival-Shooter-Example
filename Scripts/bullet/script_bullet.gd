@@ -20,7 +20,7 @@ func _physics_process(delta):
     if collision:
         if collision.collider.has_method("hit"):
             collision.collider.hit(bullet_damage)
-        queue_free()
+        call_deferred("queue_free")
 
 func _on_VisibilityNotifier2D_screen_exited():
-    queue_free()
+    call_deferred("queue_free")

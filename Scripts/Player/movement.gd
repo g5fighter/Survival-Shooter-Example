@@ -47,15 +47,19 @@ export (NodePath) var armaTresRotDesv
 onready var node_armaTresRotDesv = get_node(armaTresRotDesv)
 
 onready var soundManager = $sonidos
+onready var mobileUI = null
+onready var joystick = null
 
 # objeto bullet
 var Bullet = preload("res://objetos/bestbullet.tscn")
 var fire = preload("res://objetos/fuego.tscn")
+var mobileUInstatiate = preload("res://objetos/UI/mobile/mmobileUI.tscn")
 	
 onready var node_Array = [[node_armaUnobulletspawn,node_armaDosbulletspawn,node_armaTresbulletspawn],[node_armaUnoRotDesv,node_armaDosRotDesv,node_armaTresRotDesv],[node_armaUno,node_armaDos,node_armaTres]]
 
 # vector desplacamiento
 var velocity = Vector2()
+var direction = Vector2()
 
 # temporizadores de arma para disparar, recarga y cooldown
 var timer = null
@@ -63,15 +67,20 @@ var timerChngGun = null
 var timerRchrgGun = null
 
 #retardo: de disparar y recargar
-var bullet_delay = 0
-var recharge_delay = 0
+var bullet_delay = 0.1
+var recharge_delay = 0.1
+var changeGun_delay = 0.1
 
 # bolleanos que permiten el disparo, recarga y cambio de arma, y deteccion para disparo manual
 var can_shoot = true
 var can_change_gun = true
 var can_recharge_gun = true
-var pressing_shoot = false
 
+var pressing_shoot = false
+var mobile_input = false
+
+var use_joystick = false
+############### INVENTARIO #####################
 var inventario = [null,null,null,null,null]
 var inventarioObjetos = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
 var index = 0
@@ -83,10 +92,19 @@ func _ready():
 	show_gun()
 	update_UI_Gun(-1)
 	if(inventario[index]!=null):
-		bullet_delay = inventario[index].bullet_delay
-		recharge_delay = inventario[index].recharge_delay
-	configure_timers()
+		config_gun()
 	update_UI()
+	configure_timers()
+	if OS.get_name() == "Android":
+		var mob = mobileUInstatiate.instance()
+		$UI.add_child(mob)
+		mobileUI = mob
+		joystick = mobileUI.get_node("joystick")
+		mobile_input = true
+	if(mobile_input):
+		mobileUI.show()
+		node_ui_manager.mobileUI()
+		
 
 func start(pos):
     position = pos
@@ -100,7 +118,7 @@ func configure_timers():
 	add_child(timer)
 	timerChngGun = Timer.new()
 	timerChngGun.set_one_shot(true)
-	timerChngGun.set_wait_time(0.1)
+	timerChngGun.set_wait_time(changeGun_delay)
 	timerChngGun.connect("timeout", self,"on_guntimer_complete")
 	add_child(timerChngGun)
 	timerRchrgGun = Timer.new()
@@ -119,59 +137,86 @@ func on_guntimer_complete():
 func on_rechargetimer_complete():
 	can_recharge_gun = true
 
-# funcion que se ejecuta en el process y comprueba un input
-func get_input():
-	
-	# mirar al raton
-	look_at(get_global_mouse_position())
-	velocity = Vector2()
-	if Input.is_action_pressed('right'):
-        velocity.x += 1
-	if Input.is_action_pressed('left'):
-        velocity.x -= 1
-	if Input.is_action_pressed('down'):
-        velocity.y += 1
-	if Input.is_action_pressed('up'):
-        velocity.y -= 1
-	if Input.is_action_pressed('click'):
-        # llamar funcion disparo
-		if (inventario[index]!=null):
-			if(can_shoot&&inventario[index].bulletAmount>0):
-				if(shootType==0):
-					shoot()
-				elif(shootType==1&&!pressing_shoot):
-					for x in range(0, RafagaAmount):
-						shoot()
-				elif(shootType==2 && !pressing_shoot):
-					shoot()
-			elif(inventario[index].bulletAmount==0):
-				soundManager._play(2)
-		pressing_shoot = true
-	else:
-		pressing_shoot = false
-	if Input.is_action_pressed('change_gun'):
+func _input(event):
+	if (Input.is_action_pressed('dir_right')||Input.is_action_pressed('dir_left')||Input.is_action_pressed('dir_down')||Input.is_action_pressed('dir_up'))and not use_joystick:
+		use_joystick = true
+	if event.is_action_pressed('change_gun'):
 		if(can_change_gun):
 			changeGun()
-	if Input.is_action_pressed('recharge'):
-		var cargadorNode = searchCargador(typeOfGun)
-		if(cargadorNode!=null):
-			if(can_recharge_gun&&cargadorNode.balasTotales>0):
-				rechargeGun(cargadorNode)
-			elif(cargadorNode.balasTotales<=0):
-				inventarioObjetos[search_node(cargadorNode)]=null
-				cargadorNode.queue_free()
+	if event.is_action_pressed('recharge'):
+		if (inventario[index]!=null):
+			generalRechare()
+
+# funcion que se ejecuta en el process y comprueba un input
+func get_input():
+	velocity = Vector2()
+	direction = Vector2()
+	if Input.is_action_pressed('right'):
+		velocity.x += 1
+	if Input.is_action_pressed('left'):
+		 velocity.x -= 1
+	if Input.is_action_pressed('down'):
+		velocity.y += 1
+	if Input.is_action_pressed('up'):
+		velocity.y -= 1
 	if Input.is_action_pressed('run'):
 		speed = 600
 	else:
 		speed = 400
-	velocity = velocity.normalized() * speed
+
+	if(mobile_input):
+		velocity = joystick.get_movement() * speed
+	else:
+		velocity = velocity.normalized() * speed
+
+	if mobile_input:
+		if (velocity.x!=0||velocity.y!=0)and not pressing_shoot:
+			rotation = velocity.angle()
+	elif use_joystick:
+		direction.x = Input.get_joy_axis(0,2)
+		direction.y = Input.get_joy_axis(0, 3)
+		if(direction.x!=0||direction.y!=0):
+			rotation = direction.angle()
+	else:
+		look_at(get_global_mouse_position())
+	if Input.is_action_pressed('click'):
+		generalShoot()
+		pressing_shoot = true
+	else:
+		pressing_shoot = false
 
 func search_node(node):
-	var index = 0
+	var tmp = 0
 	for ob in inventarioObjetos:
 		if ob == node:
-			return index
-		index+=1
+			return tmp
+		tmp+=1
+
+func generalShoot():
+	if (inventario[index]!=null):
+		if(mobile_input):
+			if(search_for_near_enemie()!=null):
+				look_at(search_for_near_enemie().global_position)
+		if(can_shoot&&inventario[index].bulletAmount>0):
+			if(shootType==0):
+				shoot()
+			elif(shootType==1&&!pressing_shoot):
+				for x in range(0, RafagaAmount):
+					shoot()
+			elif(shootType==2 && !pressing_shoot):
+				shoot()
+		elif(inventario[index].bulletAmount==0):
+			soundManager._play(2)
+			
+func generalRechare():
+	var cargadorNode = searchCargador(typeOfGun)
+	if(cargadorNode!=null):
+		if(can_recharge_gun&&cargadorNode.balasTotales>0):
+			rechargeGun(cargadorNode)
+		elif(cargadorNode.balasTotales<=0):
+			inventarioObjetos[search_node(cargadorNode)]=null
+			cargadorNode.call_deferred("queue_free")
+			
 
 #funcion disparo
 func shoot():  
@@ -202,7 +247,7 @@ func changeGun():
 		index = 0
 	if(inventario[index]!=null):
 		config_gun()
-		update_UI_Gun(typeOfGun)
+		update_UI_Gun()
 	else:
 		update_UI_Gun(-1)
 	show_gun()
@@ -211,6 +256,7 @@ func changeGun():
 	
 func config_gun():
 		bullet_delay = inventario[index].bullet_delay
+		print_debug(bullet_delay)
 		timer.set_wait_time(bullet_delay)
 		typeOfGun=inventario[index].gunID
 		shootType=inventario[index].shootType
@@ -242,10 +288,11 @@ func get_gun(node):
 	elif(hayNullArray(inventario)==false):
 		inventario[index].drop(position)
 		inventario[index]=node
-	config_gun()
-	show_gun()
+	if(inventario[index]!=null):
+		config_gun()
+		show_gun()
 	node.take()
-	update_UI_Gun(typeOfGun)
+	update_UI_Gun()
 	update_UI()
 	
 func get_charger(node):
@@ -296,12 +343,26 @@ func update_UI():
 	else:
 		$UI.update_info_gun("N","N")
 
-func update_UI_Gun(num):
+func update_UI_Gun(num = typeOfGun):
 	$UI.updateImage(num,index,inventario.size())
+
+func search_for_near_enemie():
+	var enemies = get_tree().get_nodes_in_group("enemy")
+	var distance
+	var my_enemie
+	var ind = 0
+	for en in enemies:
+		if ind == 0:
+			distance = global_position.distance_to(en.global_position)
+		if global_position.distance_to(en.global_position)<=distance:
+			my_enemie = en
+		ind+=1
+	return my_enemie
+
 
 # warning-ignore:unused_argument
 func _physics_process(delta):
     get_input()
     velocity = move_and_slide(velocity)
-    if(health<=0): queue_free()
-    ui_lab.set_text("Arma Actual:"+str(typeOfGun)+" Retardo de arma:"+str(bullet_delay)+" Se puede deisparar:"+str(can_shoot))
+    if(health<=0): call_deferred("queue_free")
+    ui_lab.set_text("typeOfGun:"+str(typeOfGun)+" bullet_delay:"+str(bullet_delay)+" can_shoot:"+str(can_shoot)+" click:"+str(Input.is_action_pressed('click'))+" pressin shoot"+str(pressing_shoot))

@@ -2,6 +2,7 @@ extends KinematicBody2D
 var health = 100
 var speed = 200
 var dstncToNode = 3
+var golpeado = false
 var node
 export (int) var distance
 onready var anim = get_node("anim")
@@ -22,8 +23,10 @@ func _physics_process(delta):
 		move_and_collide(dir * speed * delta)
 		rotation = dir.angle()
 	if(health<=0):
-		node.queue_free()
-		queue_free()
+		node.call_deferred("queue_free")
+		call_deferred("queue_free")
+	if(not anim.is_playing()):
+		golpeado = false
 
 func play_anim_golpear():
 	if(not anim.is_playing()):
@@ -31,4 +34,6 @@ func play_anim_golpear():
 
 func _on_Area2D_body_entered(body):
 	if(body.get_name() == "player"):
-		body.get_damage(20)
+		if not golpeado:
+			body.get_damage(20)
+			golpeado = true
