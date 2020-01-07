@@ -25,11 +25,10 @@ func _physics_process(delta):
 	if(health<=0):
 		node.call_deferred("queue_free")
 		call_deferred("queue_free")
-	if(not anim.is_playing()):
-		golpeado = false
 
 func play_anim_golpear():
 	if(not anim.is_playing()):
+		golpeado = false
 		anim.play("brazo golpeando")
 
 func _on_Area2D_body_entered(body):

@@ -1,5 +1,6 @@
 extends Node2D
 
+var objectID = 'arma'
 # MATRIZ ARMAS
 var armas = [[0.3,0.1,3],[16,60,7],[2,5,7],[10,5,60],[2,0,2],[0,0,0]]
 	# fil 0: Pistola
@@ -102,11 +103,9 @@ func _on_arma_body_exited():
 	ui_control.hide()
 
 func on_player_entered(body):
-	if(body == gameScene.player_node):
 		isPlayer = true
 		_on_arma_body_entered()
 	
 func on_player_exited(body):
-	if(body == gameScene.player_node):
 		isPlayer = false
 		_on_arma_body_exited()

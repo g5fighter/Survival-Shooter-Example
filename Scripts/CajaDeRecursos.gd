@@ -75,10 +75,8 @@ func _process(delta):
 			ui_color_rect.hide()
 	
 func on_player_entered(body):
-	if(body == gameScene.player_node):
 		isPlayer = true
 	
 func on_player_exited(body):
-	if(body == gameScene.player_node):
 		isPlayer = false
 		timer.stop()

@@ -104,7 +104,7 @@ func _ready():
 	if(mobile_input):
 		mobileUI.show()
 		node_ui_manager.mobileUI()
-		
+	$Inventario.start(self)
 
 func start(pos):
     position = pos
@@ -146,6 +146,9 @@ func _input(event):
 	if event.is_action_pressed('recharge'):
 		if (inventario[index]!=null):
 			generalRechare()
+	if event.is_action_pressed("inventario"):
+		$Inventario.changeVisibility()
+		can_shoot = not $Inventario/PanelContainer.visible
 
 # funcion que se ejecuta en el process y comprueba un input
 func get_input():
@@ -256,7 +259,6 @@ func changeGun():
 	
 func config_gun():
 		bullet_delay = inventario[index].bullet_delay
-		print_debug(bullet_delay)
 		timer.set_wait_time(bullet_delay)
 		typeOfGun=inventario[index].gunID
 		shootType=inventario[index].shootType
@@ -276,6 +278,14 @@ func hayNullArray(array):
 			hayNull=true
 			break
 	return hayNull
+
+func change_gun(ind,type):
+	if(type=='arma'):
+		inventario[ind].drop(position)
+		inventario[ind]=null
+	if(type=='cargador'):
+		inventarioObjetos[ind].drop(position)
+		inventarioObjetos[ind]=null
 
 func get_gun(node):
 	if(hayNullArray(inventario)==true):
