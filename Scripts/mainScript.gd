@@ -12,7 +12,7 @@ var roundTimer = null
 var enemyDelay = 10
 var roundDelay = 20
 
-var spawnEnemy = true
+export (bool) var spawnEnemy = true
 var rng = RandomNumberGenerator.new()
 
 var spawnedEnemies = 0
@@ -34,25 +34,27 @@ func randomSpawn(tipo):
 	if (tipo == 0):
 		var spawnsPlayerNodes = get_tree().get_nodes_in_group("playerSpawn")
 		rng.randomize()
-		var my_random_number = int(round(rng.randf_range(0, spawnsPlayerNodes.size()-1)))
+		var my_random_number = rng.randi_range(0, spawnsPlayerNodes.size()-1)
 		pos = spawnsPlayerNodes[my_random_number].global_position
 	elif(tipo == 1):
 		var spawnsEnemyNodes = get_tree().get_nodes_in_group("enemySpawn")
 		rng.randomize()
-		var my_random_number = int(round(rng.randf_range(0, spawnsEnemyNodes.size()-1)))
+		var my_random_number = rng.randi_range(0, spawnsEnemyNodes.size()-1)
 		pos = spawnsEnemyNodes[my_random_number].global_position
 	return pos
 	
 func instantiate_gun(pos):
+	rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var my_random_number = int(round(rng.randf_range(0, 2)))
+	var my_random_number = rng.randi_range(0, 2)
 	var arma = Arma.instance()
 	self.add_child(arma)
 	arma.start(pos,my_random_number)
 
 func instantiate_charger(pos):
+	rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var my_random_number = int(round(rng.randf_range(0, 2)))
+	var my_random_number = rng.randi_range(0, 2)
 	var cargador = Cargador.instance()
 	self.add_child(cargador)
 	cargador.start(pos,my_random_number)

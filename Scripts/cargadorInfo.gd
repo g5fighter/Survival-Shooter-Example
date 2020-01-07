@@ -1,5 +1,6 @@
 extends Node2D
 
+# warning-ignore:unused_class_variable
 var objectID = 'cargador'
 var chargerID = -1
 
@@ -9,9 +10,6 @@ var maxCargadores = 4
 var balasTotales = 0
 
 var distance = 300
-
-var playerFound = false
-var player_node = null
 
 var taken = false
 var isPlayer = false
@@ -26,12 +24,6 @@ func start(pos,num):
 	configureCharger(num)
 	drop(pos)
 	
-func searchPlayer():
-	var players = get_tree().get_nodes_in_group("player")
-	for pl in players:
-		if(!playerFound):
-			player_node = pl
-			playerFound = true
 # Called when the node enters the scene tree for the first time.
 func configureCharger(num):
 	chargerID = num
@@ -53,10 +45,8 @@ func drop(pos):
 	
 # warning-ignore:unused_argument
 func _process(delta):
-	if(player_node==null&&!playerFound):
-		searchPlayer()
 	if(!taken&&isPlayer&&Input.is_action_just_pressed('takeObj')&&gameScene.isPlayerNear(self,distance)):
-		player_node.get_charger(self)
+		gameScene.player_node.get_charger(self)
 	
 func showUI():
 	if(!taken&&gameScene.isPlayerNear(self,distance)):
@@ -64,9 +54,16 @@ func showUI():
 		ui_lab.set_text("Press E to take")
 		
 func _on_arma_body_entered():
-	isPlayer = true
 	showUI()
 	
 func _on_arma_body_exited():
-	isPlayer = false
 	ui_color_rect.hide()
+
+func _on_body_entered(body):
+	if body == gameScene.player_node:
+		isPlayer = true
+		_on_arma_body_entered()
+func _on_body_exited(body):
+	if body == gameScene.player_node:
+		isPlayer = false
+		_on_arma_body_exited()

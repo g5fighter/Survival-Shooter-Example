@@ -42,10 +42,8 @@ armaTresRotDesv = NodePath("sniper/sniper_sprite")
 
 [node name="Aka" type="Position2D" parent="."]
 editor/display_folded = true
-visible = false
 
 [node name="brazolargo" type="Position2D" parent="Aka"]
-editor/display_folded = true
 position = Vector2( 17.74, -48.69 )
 script = ExtResource( 2 )
 lab = NodePath("../ak_sprite/brazograndetrigger")
@@ -57,7 +55,6 @@ scale = Vector2( 0.268, 0.268 )
 texture = ExtResource( 3 )
 
 [node name="minibrazo" type="Position2D" parent="Aka"]
-editor/display_folded = true
 position = Vector2( 17.74, 48.69 )
 script = ExtResource( 2 )
 lab = NodePath("../ak_sprite/manopequeñapos")
@@ -188,6 +185,10 @@ shape = SubResource( 3 )
 
 [node name="UI" parent="." instance=ExtResource( 10 )]
 script = ExtResource( 11 )
+
+[node name="Control2" parent="UI" index="1"]
+editor/display_folded = true
+margin_bottom = -0.00012207
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true

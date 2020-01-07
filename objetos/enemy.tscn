@@ -65,7 +65,6 @@ scale = Vector2( 0.28, 0.28 )
 texture = ExtResource( 2 )
 
 [node name="Brazo" type="Position2D" parent="Oso"]
-editor/display_folded = true
 visible = false
 position = Vector2( 70, 25 )
 rotation = -1.23933

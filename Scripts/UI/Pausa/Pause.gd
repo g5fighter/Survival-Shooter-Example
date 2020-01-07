@@ -1,7 +1,7 @@
 extends Control
 
 func _input(event):
-	if Input.is_action_pressed("pause"):
+	if event.is_action_pressed("pause"):
 		changeEstate()
 
 func changeEstate():

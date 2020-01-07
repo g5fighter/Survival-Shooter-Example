@@ -5,7 +5,7 @@
 [ext_resource path="res://Fuentes/GlacialIndifference-Regular.otf" type="DynamicFontData" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 60, 60 )
+extents = Vector2( 90, 90 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 48
@@ -53,5 +53,5 @@ custom_fonts/font = SubResource( 2 )
 text = "3"
 align = 3
 valign = 3
-[connection signal="mouse_entered" from="Area2D" to="." method="_on_CajaDeRecursos_body_entered"]
-[connection signal="mouse_exited" from="Area2D" to="." method="_on_CajaDeRecursos_body_exited"]
+[connection signal="body_entered" from="Area2D" to="." method="on_player_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="on_player_exited"]

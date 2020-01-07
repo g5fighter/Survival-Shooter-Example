@@ -7,7 +7,7 @@
 [ext_resource path="res://temas/message.tres" type="Theme" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 24.4214, 24.6221 )
+extents = Vector2( 50, 50 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "drop"
@@ -62,7 +62,6 @@ scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 4 )
 
 [node name="Area2D" type="Area2D" parent="AnimationReciver"]
-editor/display_folded = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimationReciver/Area2D"]
 shape = SubResource( 1 )
@@ -85,5 +84,7 @@ valign = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/drop = SubResource( 2 )
+[connection signal="body_entered" from="AnimationReciver/Area2D" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="AnimationReciver/Area2D" to="." method="_on_body_exited"]
 [connection signal="mouse_entered" from="AnimationReciver/Area2D" to="." method="_on_arma_body_entered"]
 [connection signal="mouse_exited" from="AnimationReciver/Area2D" to="." method="_on_arma_body_exited"]

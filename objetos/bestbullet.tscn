@@ -3,7 +3,6 @@
 [ext_resource path="res://Scripts/bullet/script_bullet.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/guns/simple/bullet.svg" type="Texture" id=2]
 
-
 [sub_resource type="CircleShape2D" id=1]
 radius = 6.65012
 
