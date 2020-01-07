@@ -60,10 +60,8 @@ func _on_arma_body_exited():
 	ui_color_rect.hide()
 
 func _on_body_entered(body):
-	if body == gameScene.player_node:
 		isPlayer = true
 		_on_arma_body_entered()
 func _on_body_exited(body):
-	if body == gameScene.player_node:
 		isPlayer = false
 		_on_arma_body_exited()

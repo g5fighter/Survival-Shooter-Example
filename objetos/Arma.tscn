@@ -62,6 +62,7 @@ texture = ExtResource( 4 )
 
 [node name="Area2D" type="Area2D" parent="AnimationReciver"]
 scale = Vector2( 1.5, 1.5 )
+collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimationReciver/Area2D"]
 shape = SubResource( 1 )

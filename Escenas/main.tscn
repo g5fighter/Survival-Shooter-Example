@@ -16,6 +16,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_horizontal_guides_": [  ]
 }
+spawnEnemy = false
 
 [node name="CajaDeRecursos" parent="." instance=ExtResource( 2 )]
 position = Vector2( -229.355, -138.334 )

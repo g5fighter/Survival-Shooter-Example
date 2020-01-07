@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/Player/movement.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Player/lookatnode.gd" type="Script" id=2]
@@ -11,10 +11,8 @@
 [ext_resource path="res://Sprites/persona.svg" type="Texture" id=9]
 [ext_resource path="res://objetos/interfaz.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scripts/UI/interfaz.gd" type="Script" id=11]
-[ext_resource path="res://Scripts/Player/soundManager.gd" type="Script" id=12]
-[ext_resource path="res://Sounds/Gun/disparar.wav" type="AudioStream" id=13]
-[ext_resource path="res://Sounds/Gun/recarga.wav" type="AudioStream" id=14]
-[ext_resource path="res://Sounds/Gun/sinBalas.wav" type="AudioStream" id=15]
+[ext_resource path="res://objetos/Sonido/sonidos.tscn" type="PackedScene" id=12]
+[ext_resource path="res://objetos/UI/Inventario/Inventario.tscn" type="PackedScene" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 49.7425, 21.702 )
@@ -27,6 +25,7 @@ radius = 35.6208
 
 [node name="player" type="KinematicBody2D"]
 z_index = 1
+collision_mask = 15
 script = ExtResource( 1 )
 lab = NodePath("UI/Control/Label")
 ui_manager = NodePath("UI")
@@ -112,7 +111,6 @@ lab = NodePath("../sniper_sprite/manopequeñapos")
 position = Vector2( 27.213, 0.36644 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
-z_index = -1
 texture = ExtResource( 4 )
 
 [node name="sniper_sprite" type="Position2D" parent="sniper"]
@@ -126,6 +124,7 @@ player = NodePath("../..")
 position = Vector2( 67.7412, -0.291992 )
 rotation = 1.5708
 scale = Vector2( 0.205267, 0.205267 )
+z_index = 1
 texture = ExtResource( 7 )
 
 [node name="manopequeñapos" type="Position2D" parent="sniper/sniper_sprite"]
@@ -184,6 +183,7 @@ rotation = -1.57079
 shape = SubResource( 3 )
 
 [node name="UI" parent="." instance=ExtResource( 10 )]
+editor/display_folded = true
 script = ExtResource( 11 )
 
 [node name="Control2" parent="UI" index="1"]
@@ -193,16 +193,8 @@ margin_bottom = -0.00012207
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 
-[node name="sonidos" type="Node2D" parent="."]
-script = ExtResource( 12 )
+[node name="sonidos" parent="." instance=ExtResource( 12 )]
 
-[node name="sonidoDisparo" type="AudioStreamPlayer" parent="sonidos"]
-stream = ExtResource( 13 )
-
-[node name="sonidoRecarga" type="AudioStreamPlayer" parent="sonidos"]
-stream = ExtResource( 14 )
-
-[node name="sonidoSinBalas" type="AudioStreamPlayer" parent="sonidos"]
-stream = ExtResource( 15 )
+[node name="Inventario" parent="." instance=ExtResource( 13 )]
 
 [editable path="UI"]
