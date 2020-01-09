@@ -1,28 +1,145 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/UI/Inventario/Item.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/UI/guns/gun.svg" type="Texture" id=2]
-[ext_resource path="res://Sprites/UI/guns/ak.svg" type="Texture" id=3]
-[ext_resource path="res://Sprites/UI/guns/sniper.svg" type="Texture" id=4]
-[ext_resource path="res://Sprites/UI/guns/gunCharger.svg" type="Texture" id=5]
-[ext_resource path="res://Sprites/UI/guns/akCharger.svg" type="Texture" id=6]
+[ext_resource path="res://Sprites/UI/guns/gunCharger.svg" type="Texture" id=3]
+[ext_resource path="res://Sprites/UI/guns/ak.svg" type="Texture" id=4]
+[ext_resource path="res://Sprites/UI/guns/akCharger.svg" type="Texture" id=5]
+[ext_resource path="res://Sprites/UI/guns/sniper.svg" type="Texture" id=6]
 [ext_resource path="res://Sprites/UI/guns/sniperCharger.svg" type="Texture" id=7]
+[ext_resource path="res://Fuentes/GlacialIndifference-Regular.otf" type="DynamicFontData" id=8]
+[ext_resource path="res://Sprites/UI/mobile/invisible button.png" type="Texture" id=9]
+
+[sub_resource type="DynamicFont" id=1]
+size = 13
+font_data = ExtResource( 8 )
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -924.0
-margin_bottom = -500.0
+margin_right = -1180.0
+margin_bottom = -620.0
 rect_min_size = Vector2( 100, 100 )
 script = ExtResource( 1 )
 
-[node name="Button" type="Button" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 100, 100 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.0470588, 0.0470588, 0.0823529, 1 )
+
+[node name="Button" type="Button" parent="ColorRect"]
+editor/display_folded = true
 margin_right = 100.0
 margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+flat = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/Button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Images" type="CenterContainer" parent="ColorRect/Button/VBoxContainer"]
+margin_right = 100.0
+margin_bottom = 80.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="gun" type="TextureRect" parent="ColorRect/Button/VBoxContainer/Images"]
+margin_left = 10.0
+margin_right = 90.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+
+[node name="gunCharger" type="TextureRect" parent="ColorRect/Button/VBoxContainer/Images"]
+margin_left = 10.0
+margin_right = 90.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+
+[node name="ak" type="TextureRect" parent="ColorRect/Button/VBoxContainer/Images"]
+margin_left = 10.0
+margin_right = 90.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+
+[node name="akCharger" type="TextureRect" parent="ColorRect/Button/VBoxContainer/Images"]
+margin_left = 10.0
+margin_right = 90.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 6
+
+[node name="sniper" type="TextureRect" parent="ColorRect/Button/VBoxContainer/Images"]
+margin_left = 10.0
+margin_right = 90.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 6
+
+[node name="sniperCharger" type="TextureRect" parent="ColorRect/Button/VBoxContainer/Images"]
+margin_left = 10.0
+margin_right = 90.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6
+
+[node name="CenterContainer2" type="CenterContainer" parent="ColorRect/Button/VBoxContainer"]
+margin_top = 84.0
+margin_right = 100.0
+margin_bottom = 101.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="ColorRect/Button/VBoxContainer/CenterContainer2"]
+margin_left = 37.0
+margin_right = 62.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_fonts/font = SubResource( 1 )
+text = "Hola"
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="ColorRect"]
+normal = ExtResource( 9 )
 
 [node name="MiniMenu" type="Control" parent="."]
-editor/display_folded = true
-visible = false
 
 [node name="Node" type="VBoxContainer" parent="MiniMenu"]
 
@@ -30,40 +147,12 @@ visible = false
 margin_right = 43.0
 margin_bottom = 20.0
 text = "Drop"
+flat = true
 
-[node name="Images" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-
-[node name="gun" type="Sprite" parent="Images"]
-position = Vector2( 50, 50 )
-scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 2 )
-
-[node name="ak" type="Sprite" parent="Images"]
-position = Vector2( 50, 50 )
-scale = Vector2( -0.1, 0.1 )
-texture = ExtResource( 3 )
-
-[node name="sniper" type="Sprite" parent="Images"]
-position = Vector2( 50, 50 )
-scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-
-[node name="gunCharger" type="Sprite" parent="Images"]
-position = Vector2( 50, 50 )
-scale = Vector2( 0.07, 0.07 )
-texture = ExtResource( 5 )
-
-[node name="akCharger" type="Sprite" parent="Images"]
-position = Vector2( 50, 50 )
-scale = Vector2( 0.08, 0.08 )
-texture = ExtResource( 6 )
-
-[node name="sniperCharger" type="Sprite" parent="Images"]
-position = Vector2( 50, 50 )
-scale = Vector2( 0.08, 0.08 )
-texture = ExtResource( 7 )
-[connection signal="button_down" from="Button" to="." method="showMenu"]
+[node name="TouchScreenButton" type="TouchScreenButton" parent="MiniMenu/Node/Button"]
+scale = Vector2( 0.43, 0.2 )
+normal = ExtResource( 9 )
+[connection signal="button_down" from="ColorRect/Button" to="." method="showMenu"]
+[connection signal="pressed" from="ColorRect/TouchScreenButton" to="." method="showMenu"]
 [connection signal="button_down" from="MiniMenu/Node/Button" to="." method="drop"]
+[connection signal="pressed" from="MiniMenu/Node/Button/TouchScreenButton" to="." method="drop"]

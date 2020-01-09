@@ -183,11 +183,12 @@ rotation = -1.57079
 shape = SubResource( 3 )
 
 [node name="UI" parent="." instance=ExtResource( 10 )]
-editor/display_folded = true
 script = ExtResource( 11 )
 
-[node name="Control2" parent="UI" index="1"]
+[node name="Control" parent="UI" index="0"]
 editor/display_folded = true
+
+[node name="Control2" parent="UI" index="1"]
 margin_bottom = -0.00012207
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -198,3 +199,5 @@ current = true
 [node name="Inventario" parent="." instance=ExtResource( 13 )]
 
 [editable path="UI"]
+
+[editable path="Inventario"]

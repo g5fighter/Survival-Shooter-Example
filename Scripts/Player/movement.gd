@@ -78,6 +78,7 @@ var can_recharge_gun = true
 
 var pressing_shoot = false
 var mobile_input = false
+var ui_mode = false
 
 var use_joystick = false
 ############### INVENTARIO #####################
@@ -148,7 +149,7 @@ func _input(event):
 			generalRechare()
 	if event.is_action_pressed("inventario"):
 		$Inventario.changeVisibility()
-		can_shoot = not $Inventario/PanelContainer.visible
+		ui_mode = $Inventario/Fondo.visible
 
 # funcion que se ejecuta en el process y comprueba un input
 func get_input():
@@ -182,11 +183,12 @@ func get_input():
 			rotation = direction.angle()
 	else:
 		look_at(get_global_mouse_position())
-	if Input.is_action_pressed('click'):
-		generalShoot()
-		pressing_shoot = true
-	else:
-		pressing_shoot = false
+	if !ui_mode:
+		if Input.is_action_pressed('click'):
+			generalShoot()
+			pressing_shoot = true
+		else:
+			pressing_shoot = false
 
 func search_node(node):
 	var tmp = 0
@@ -354,7 +356,10 @@ func update_UI():
 		$UI.update_info_gun("N","N")
 
 func update_UI_Gun(num = typeOfGun):
-	$UI.updateImage(num,index,inventario.size())
+	if inventario[index]==null:
+		$UI.updateImage(-1,index,inventario.size())
+	else:
+		$UI.updateImage(num,index,inventario.size())
 
 func search_for_near_enemie():
 	var enemies = get_tree().get_nodes_in_group("enemy")
@@ -372,7 +377,7 @@ func search_for_near_enemie():
 
 # warning-ignore:unused_argument
 func _physics_process(delta):
-    get_input()
-    velocity = move_and_slide(velocity)
-    if(health<=0): call_deferred("queue_free")
-    ui_lab.set_text("typeOfGun:"+str(typeOfGun)+" bullet_delay:"+str(bullet_delay)+" can_shoot:"+str(can_shoot)+" click:"+str(Input.is_action_pressed('click'))+" pressin shoot"+str(pressing_shoot))
+	get_input()
+	velocity = move_and_slide(velocity)
+	if(health<=0): call_deferred("queue_free")
+	ui_lab.set_text("typeOfGun:"+str(typeOfGun)+" bullet_delay:"+str(bullet_delay)+" can_shoot:"+str(can_shoot))
