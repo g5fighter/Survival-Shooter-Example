@@ -16,3 +16,6 @@ UI para el jugador
 Mapa  
 Modo infinito  
 Musica  
+
+##Datos
+Desarrollado en Godot 3.1.2
