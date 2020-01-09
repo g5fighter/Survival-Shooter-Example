@@ -1,5 +1,7 @@
 extends Control
 
+onready var images = $ColorRect/Button/VBoxContainer/Images
+
 var player = null
 var nodoAdjunto = null
 var UImanager = null
@@ -19,7 +21,7 @@ func drop():
 	player.change_gun(index,nodoAdjunto.objectID)
 	player.show_gun()
 	player.update_UI()
-	player.update_UI_Gun(-1)
+	player.update_UI_Gun()
 	UImanager.update_UI()
 
 func showMenu():
@@ -27,20 +29,22 @@ func showMenu():
 	$MiniMenu.visible = not isVisible
 
 func update_UI():
-	for N in $Images.get_children():
+	for N in images.get_children():
 		N.hide()
 	if(nodoAdjunto!=null):
 		if nodoAdjunto.objectID == 'arma':
+			$ColorRect/Button/VBoxContainer/CenterContainer2/Label.set_text(nodoAdjunto.gunNameText)
 			if nodoAdjunto.gunID == 0:
-				$Images/gun.show()
+				images.get_node("gun").show()
 			elif nodoAdjunto.gunID == 1:
-				$Images/ak.show()
+				images.get_node("ak").show()
 			elif nodoAdjunto.gunID == 2:
-				$Images/sniper.show()
+				images.get_node("sniper").show()
 		elif nodoAdjunto.objectID == 'cargador':
+			$ColorRect/Button/VBoxContainer/CenterContainer2/Label.set_text("Charger")
 			if nodoAdjunto.chargerID == 0:
-				$Images/gunCharger.show()
+				images.get_node("gunCharger").show()
 			elif nodoAdjunto.chargerID == 1:
-				$Images/akCharger.show()
+				images.get_node("akCharger").show()
 			elif nodoAdjunto.chargerID == 2:
-				$Images/sniperCharger.show()
+				images.get_node("sniperCharger").show()

@@ -112,6 +112,13 @@ func _process(delta):
 		enemyDelay = enemyDelay*0.95
 		roundTimer.start()
 
+func restart_level():
+	$CanvasLayer/Pause.changeEstate()
+	get_tree().reload_current_scene()
+	
+func close_game():
+	get_tree().quit()
+
 func isPlayerNear(n,dist):
 	var resultado = false
 	if playerFound==true&&playerFree.get_ref():

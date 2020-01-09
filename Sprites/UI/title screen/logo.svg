@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="139.36626mm"
+   height="39.851517mm"
+   viewBox="0 0 139.36626 39.851517"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="C:\Users\grmap\Documents\GodotProjects\Prueba\Sprites\UI\title screen\logo.png"
+   inkscape:export-xdpi="196.83388"
+   inkscape:export-ydpi="196.83388">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="-44.704989"
+     inkscape:cy="54.341509"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-7.6268438,-172.07424)">
+    <g
+       id="g1426"
+       transform="matrix(0.11721314,0.11721314,-0.11721314,0.11721314,40.110054,154.92803)">
+      <path
+         id="path1417"
+         style="fill:#ad6c44;fill-opacity:1;stroke:#6b2c01;stroke-width:3.66499996;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 88.987175,357.1391 c -5.332362,-1.87273 -11.014658,-3.27887 -14.103657,-8.14275 l 14.521796,-96.45237 15.240186,-4.08359 15.24019,4.08359 14.5218,96.45237 c -2.93924,4.22452 -8.49664,6.2049 -14.10366,8.14275 z"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccccccc" />
+      <path
+         sodipodi:nodetypes="sccccssccccss"
+         inkscape:connector-curvature="0"
+         d="m 151.86023,249.29562 c 4.90862,-5.2695 1.60888,-14.12242 0,-22.79251 -2.1513,-4.38637 -2.80031,-8.39717 -7.7903,-13.49321 -0.0333,-12.96979 -1.37309,-24.63312 0,-39.00932 3.00925,-3.62784 5.59081,-7.25569 6.28361,-10.88353 4.85589,-9.30503 5.80739,-19.59389 0,-26.45834 -27.51038,-32.51778 -62.688379,-33.37309 -90.714289,0 -5.782334,6.88558 -4.855894,17.15331 0,26.45834 0.692803,3.62784 3.274359,7.25569 6.283611,10.88353 1.373093,14.3762 0.03331,26.03953 0,39.00932 -4.989988,5.09604 -5.639004,9.10684 -7.790304,13.49321 -1.608882,8.67009 -4.891901,17.50748 0,22.79251 28.422684,30.70682 65.807322,29.97306 93.727672,0 z"
+         style="fill:#c87137;fill-opacity:1;stroke:#542100;stroke-width:2.2650001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path4530" />
+      <g
+         transform="translate(1.5653964e-6,-57.671717)"
+         inkscape:label="Capa 1"
+         id="layer1-2">
+        <path
+           id="path5088"
+           style="fill:#deaa87;stroke:#82614b;stroke-width:3.66499996;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 88.987172,183.9434 c -5.332362,-1.87273 -11.014658,-3.27887 -14.103657,-8.14275 -1.473751,-7.80133 -3.078323,-15.55905 0,-24.87774 4.768709,-2.83357 8.106881,-6.44024 14.521796,-8.38417 v -25.39855 l 15.240189,-4.08359 15.24019,4.08359 v 25.39855 c 4.54761,2.20875 9.61519,5.45743 14.5218,8.38417 3.93808,10.14579 2.63192,17.82371 0,24.87774 -2.93924,4.22452 -8.49664,6.2049 -14.10366,8.14275 -10.43889,0 -20.877771,0 -31.316658,0 z"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccccccccc" />
+      </g>
+    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot1428"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,0,94.68191)"><flowRegion
+         id="flowRegion1430"><rect
+           id="rect1432"
+           width="399.51532"
+           height="152.02795"
+           x="195.86858"
+           y="310.74686" /></flowRegion><flowPara
+         id="flowPara1434"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:48px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start">CALL OF ORNITORRINCOS</flowPara></flowRoot>  </g>
+</svg>

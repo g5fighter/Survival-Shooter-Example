@@ -1,0 +1,83 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/UI/titleScene/TitleScreen.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/UI/title screen/logo.png" type="Texture" id=2]
+[ext_resource path="res://objetos/UI/titleScreen/NewGameButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objetos/UI/titleScreen/CamapinButton.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objetos/UI/titleScreen/OptionsButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://temas/TitleScreen/glacial_24.tres" type="DynamicFont" id=6]
+[ext_resource path="res://objetos/UI/fade/FAdeIn.tscn" type="PackedScene" id=7]
+
+[node name="TitleScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="Menu" type="VBoxContainer" parent="."]
+margin_left = 120.0
+margin_top = 80.0
+margin_right = 1160.0
+margin_bottom = 640.0
+
+[node name="Logo" type="TextureRect" parent="Menu"]
+margin_right = 1080.0
+margin_bottom = 309.0
+texture = ExtResource( 2 )
+stretch_mode = 4
+
+[node name="CenterRow" type="HBoxContainer" parent="Menu"]
+margin_top = 313.0
+margin_right = 1080.0
+margin_bottom = 533.0
+size_flags_vertical = 3
+
+[node name="Buttons" type="VBoxContainer" parent="Menu/CenterRow"]
+margin_right = 538.0
+margin_bottom = 220.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 20
+alignment = 1
+
+[node name="NewGameButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 3 )]
+margin_right = 538.0
+margin_bottom = 60.0
+scene_to_load = "res://Escenas/main.tscn"
+
+[node name="CamapinButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 4 )]
+margin_top = 80.0
+margin_right = 538.0
+margin_bottom = 140.0
+
+[node name="OptionsButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 5 )]
+margin_top = 160.0
+margin_right = 538.0
+margin_bottom = 220.0
+
+[node name="CenterContainer" type="CenterContainer" parent="Menu/CenterRow"]
+editor/display_folded = true
+margin_left = 542.0
+margin_right = 1080.0
+margin_bottom = 220.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="Menu/CenterRow/CenterContainer"]
+margin_left = 269.0
+margin_top = 110.0
+margin_right = 269.0
+margin_bottom = 110.0
+
+[node name="VersionLabel" type="Label" parent="Menu"]
+margin_top = 537.0
+margin_right = 1080.0
+margin_bottom = 598.0
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 6 )
+text = "ACM UPM
+Alpha 21.0							Autor: g5fighter"
+valign = 1
+
+[node name="FAdeIn" parent="." instance=ExtResource( 7 )]
+visible = false
+[connection signal="fade_finished" from="FAdeIn" to="." method="_on_FAdeIn_fade_finished"]
