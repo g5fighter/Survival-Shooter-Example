@@ -17,5 +17,5 @@ Mapa
 Modo infinito  
 Musica  
 
-##Datos
+##Datos  
 Desarrollado en Godot 3.1.2
