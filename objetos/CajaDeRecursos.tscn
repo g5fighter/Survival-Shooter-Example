@@ -13,7 +13,6 @@ outline_size = 1
 font_data = ExtResource( 3 )
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
-z_index = -1
 collision_layer = 12
 collision_mask = 3
 script = ExtResource( 1 )
@@ -25,6 +24,7 @@ polygon = PoolVector2Array( -43.5204, -43.6529, -43.3783, 42.6933, 43.7414, 42.9
 
 [node name="Sprite" type="Sprite" parent="Area2D"]
 scale = Vector2( 0.15, 0.15 )
+z_index = -1
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]

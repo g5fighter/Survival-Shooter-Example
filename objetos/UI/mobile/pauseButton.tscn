@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Sprites/UI/mobile/pause.svg" type="Texture" id=1]
+
+[node name="pauseButton" type="TouchScreenButton"]
+position = Vector2( 10, 10 )
+scale = Vector2( 0.1, 0.1 )
+normal = ExtResource( 1 )
+action = "pause"

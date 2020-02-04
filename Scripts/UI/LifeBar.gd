@@ -13,4 +13,4 @@ func _on_Interface_health_updated(new_health):
 	$TextureProgress.value = current_health
 	
 func update_count_text(value):
-	$Contador/Label.text = str(round(value))
+	$TextureProgress/Label.text = str(round(value))

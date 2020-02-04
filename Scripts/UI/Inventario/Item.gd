@@ -10,6 +10,9 @@ var index = -1
 func _ready():
 	update_UI()
 
+func put_focus():
+	$ColorRect/Button.grab_focus()
+
 func start(nodoPadre,nodo,num,manager):
 	player = nodoPadre
 	nodoAdjunto = nodo

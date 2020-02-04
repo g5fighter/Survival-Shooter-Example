@@ -7,9 +7,6 @@ var navPolyInstance
 
 onready var gameScene = get_tree().get_root().get_node("MainScene")
 
-func _ready():
-	navPolyInstance = $NavigationPolygonInstance 
-
 func _physics_process(delta):
 	if(gameScene.playerFree.get_ref()):
 		for enemy in get_tree().get_nodes_in_group("follow"):
@@ -23,14 +20,10 @@ func _physics_process(delta):
 			if (enemy.position.distance_to(gameScene.player_node.position) <= enemy.distance):
 				enemy.play_anim_golpear()
 
-# Called when the node enters the scene tree for the first time.
 func _nueva_posicion(pos_inicial,pos_final):
-	path = self.get_simple_path(pos_inicial,pos_final) # Replace with function body.
+	path = self.get_simple_path(pos_inicial,pos_final)
 	path.remove(0)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 func _seguir_ruta(distancia, enemigo):
 	var ultima_pos = enemigo.position
 	if enemigo.position.distance_to(gameScene.player_node.position) >= enemigo.distance:
@@ -57,5 +50,3 @@ func _obstacle(nodeCollShape, parentNode):
 	navPolyInstance.get_navigation_polygon().make_polygons_from_outlines()
 	navPolyInstance.enabled = false
 	navPolyInstance.enabled = true
-	update()
-

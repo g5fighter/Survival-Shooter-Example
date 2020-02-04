@@ -40,7 +40,6 @@ armaDosRotDesv = NodePath("Aka/ak_sprite")
 armaTresRotDesv = NodePath("sniper/sniper_sprite")
 
 [node name="Aka" type="Position2D" parent="."]
-editor/display_folded = true
 
 [node name="brazolargo" type="Position2D" parent="Aka"]
 position = Vector2( 17.74, -48.69 )
@@ -62,7 +61,6 @@ lab = NodePath("../ak_sprite/manopequeñapos")
 position = Vector2( 27.213, 0.36644 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
-z_index = -1
 texture = ExtResource( 4 )
 
 [node name="ak_sprite" type="Position2D" parent="Aka"]
@@ -76,6 +74,7 @@ player = NodePath("../..")
 position = Vector2( 67.7412, -0.291992 )
 rotation = 1.5708
 scale = Vector2( 0.205267, 0.205267 )
+z_index = 1
 texture = ExtResource( 6 )
 
 [node name="manopequeñapos" type="Position2D" parent="Aka/ak_sprite"]
@@ -88,7 +87,6 @@ position = Vector2( 74.51, 0 )
 position = Vector2( 137.94, 0 )
 
 [node name="sniper" type="Position2D" parent="."]
-editor/display_folded = true
 visible = false
 
 [node name="brazolargo" type="Position2D" parent="sniper"]
@@ -137,7 +135,6 @@ position = Vector2( 74.51, 0 )
 position = Vector2( 137.94, 0 )
 
 [node name="brazo" type="Position2D" parent="."]
-editor/display_folded = true
 visible = false
 position = Vector2( 0, 50.0353 )
 script = ExtResource( 5 )
@@ -185,9 +182,6 @@ shape = SubResource( 3 )
 [node name="UI" parent="." instance=ExtResource( 10 )]
 script = ExtResource( 11 )
 
-[node name="Control" parent="UI" index="0"]
-editor/display_folded = true
-
 [node name="Control2" parent="UI" index="1"]
 margin_bottom = -0.00012207
 
@@ -197,6 +191,7 @@ current = true
 [node name="sonidos" parent="." instance=ExtResource( 12 )]
 
 [node name="Inventario" parent="." instance=ExtResource( 13 )]
+[connection signal="button_down" from="Inventario/Fondo/VBoxContainer/ColorRect/HBoxContainer5/Button" to="Inventario" method="changeVisibility"]
 
 [editable path="UI"]
 

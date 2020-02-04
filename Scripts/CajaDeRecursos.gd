@@ -18,16 +18,7 @@ onready var colShape = $CollisionPolygon2D
 
 onready var gameScene = get_tree().get_root().get_node("MainScene")
 
-var playerFound = false
 
-func searchPlayer():
-	var players = get_tree().get_nodes_in_group("player")
-	for pl in players:
-		if(!playerFound):
-			player_node = pl
-			playerFound = true
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	timer = Timer.new()
 	timer.set_one_shot(true)
@@ -35,21 +26,21 @@ func _ready():
 	timer.connect("timeout", self,"on_timeout_complete")
 	add_child(timer)
 	add_to_group("obstacles")
+
+
+func make_obstacle():
 	gameScene.find_node("Navigation2D")._obstacle(colShape,node_parent)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 func on_timeout_complete():
 	if(typeOfBox==0):
 		player_node.get_recursos()
-		node_parent.call_deferred("queue_free")
+		node_parent.queue_free()
 	elif(typeOfBox==1):
 		gameScene.instantiate_gun(position)
-		node_parent.call_deferred("queue_free")
+		node_parent.queue_free()
 	elif(typeOfBox==2):
 		gameScene.instantiate_charger(position)
-		node_parent.call_deferred("queue_free")
+		node_parent.queue_free()
 
 
 
@@ -58,8 +49,6 @@ func is_running():
 
 # warning-ignore:unused_argument
 func _process(delta):
-	if(player_node==null&&!playerFound):
-		searchPlayer()
 	if(isPlayer&&gameScene.isPlayerNear(self,distance)):
 		if Input.is_action_pressed('takeObj'):
 			estaRecogiendo = true

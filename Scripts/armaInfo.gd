@@ -2,7 +2,7 @@ extends Node2D
 
 var objectID = 'arma'
 # MATRIZ ARMAS
-var armas = [[0.3,0.1,3],[16,60,7],[2,5,7],[10,5,60],[2,0,2],[0,0,0]]
+var armas = [[0.3,0.1,2],[16,60,7],[2,5,7],[10,5,60],[2,0,2],[0,0,0]]
 	# fil 0: Pistola
 	# fil 1: AK
 	# fil 2: Sniper

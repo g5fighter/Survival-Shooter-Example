@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/UI/Inventario/Item.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/UI/guns/gun.svg" type="Texture" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://Sprites/UI/guns/sniper.svg" type="Texture" id=6]
 [ext_resource path="res://Sprites/UI/guns/sniperCharger.svg" type="Texture" id=7]
 [ext_resource path="res://Fuentes/GlacialIndifference-Regular.otf" type="DynamicFontData" id=8]
-[ext_resource path="res://Sprites/UI/mobile/invisible button.png" type="Texture" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 size = 13
@@ -21,6 +20,9 @@ margin_right = -1180.0
 margin_bottom = -620.0
 rect_min_size = Vector2( 100, 100 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -31,7 +33,6 @@ size_flags_vertical = 3
 color = Color( 0.0470588, 0.0470588, 0.0823529, 1 )
 
 [node name="Button" type="Button" parent="ColorRect"]
-editor/display_folded = true
 margin_right = 100.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 100, 100 )
@@ -136,10 +137,8 @@ size_flags_vertical = 6
 custom_fonts/font = SubResource( 1 )
 text = "Hola"
 
-[node name="TouchScreenButton" type="TouchScreenButton" parent="ColorRect"]
-normal = ExtResource( 9 )
-
 [node name="MiniMenu" type="Control" parent="."]
+visible = false
 
 [node name="Node" type="VBoxContainer" parent="MiniMenu"]
 
@@ -148,11 +147,5 @@ margin_right = 43.0
 margin_bottom = 20.0
 text = "Drop"
 flat = true
-
-[node name="TouchScreenButton" type="TouchScreenButton" parent="MiniMenu/Node/Button"]
-scale = Vector2( 0.43, 0.2 )
-normal = ExtResource( 9 )
 [connection signal="button_down" from="ColorRect/Button" to="." method="showMenu"]
-[connection signal="pressed" from="ColorRect/TouchScreenButton" to="." method="showMenu"]
 [connection signal="button_down" from="MiniMenu/Node/Button" to="." method="drop"]
-[connection signal="pressed" from="MiniMenu/Node/Button/TouchScreenButton" to="." method="drop"]

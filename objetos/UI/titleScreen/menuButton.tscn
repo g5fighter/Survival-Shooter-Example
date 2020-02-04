@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/UI/titleScene/menuButton.gd" type="Script" id=1]
 [ext_resource path="res://temas/TitleScreen/titleScreen.tres" type="Theme" id=2]
-[ext_resource path="res://Sprites/UI/mobile/invisible button.png" type="Texture" id=3]
 
 [node name="MenuButton" type="Button"]
 margin_right = 1080.0
@@ -19,7 +18,3 @@ custom_colors/font_color_shadow = Color( 0.917647, 0.423529, 0.027451, 1 )
 custom_constants/shadow_offset_x = 0
 custom_constants/shadow_offset_y = 5
 text = "Label"
-
-[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
-scale = Vector2( 3.6, 0.6 )
-normal = ExtResource( 3 )

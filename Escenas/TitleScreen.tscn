@@ -4,14 +4,17 @@
 [ext_resource path="res://Sprites/UI/title screen/logo.png" type="Texture" id=2]
 [ext_resource path="res://objetos/UI/titleScreen/NewGameButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://objetos/UI/titleScreen/CamapinButton.tscn" type="PackedScene" id=4]
-[ext_resource path="res://objetos/UI/titleScreen/OptionsButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://temas/TitleScreen/titleScreen.tres" type="Theme" id=5]
 [ext_resource path="res://temas/TitleScreen/glacial_24.tres" type="DynamicFont" id=6]
-[ext_resource path="res://objetos/UI/fade/FAdeIn.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objetos/UI/Conf/Configuracion.tscn" type="PackedScene" id=7]
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Menu" type="VBoxContainer" parent="."]
 margin_left = 120.0
@@ -49,13 +52,27 @@ margin_top = 80.0
 margin_right = 538.0
 margin_bottom = 140.0
 
-[node name="OptionsButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 5 )]
+[node name="SettingsButton" type="Button" parent="Menu/CenterRow/Buttons"]
 margin_top = 160.0
 margin_right = 538.0
 margin_bottom = 220.0
+rect_min_size = Vector2( 360, 60 )
+flat = true
+
+[node name="Label" type="Label" parent="Menu/CenterRow/Buttons/SettingsButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 542.0
+theme = ExtResource( 5 )
+custom_colors/font_color_shadow = Color( 0.917647, 0.423529, 0.027451, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 5
+text = "Settings"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="CenterContainer" type="CenterContainer" parent="Menu/CenterRow"]
-editor/display_folded = true
 margin_left = 542.0
 margin_right = 1080.0
 margin_bottom = 220.0
@@ -75,9 +92,8 @@ margin_bottom = 598.0
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 6 )
 text = "ACM UPM
-Alpha 21.0							Autor: g5fighter"
+Alpha 22.0                              Autor: g5fighter"
 valign = 1
 
-[node name="FAdeIn" parent="." instance=ExtResource( 7 )]
-visible = false
-[connection signal="fade_finished" from="FAdeIn" to="." method="_on_FAdeIn_fade_finished"]
+[node name="Configuracion" parent="." instance=ExtResource( 7 )]
+[connection signal="button_down" from="Menu/CenterRow/Buttons/SettingsButton" to="Configuracion" method="show_conf"]
