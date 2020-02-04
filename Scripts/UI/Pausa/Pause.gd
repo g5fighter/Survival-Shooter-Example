@@ -9,8 +9,8 @@ func changeEstate():
 	get_tree().paused = new_state
 	visible = new_state
 	if visible:
-		$ColorRect/VBoxContainer/Back.grab_focus()
+		$ColorRect/VBoxContainer/BackButton.grab_focus()
 	
 func return_to_title():
 	changeEstate()
-	get_tree().change_scene("res://Escenas/TitleScreen.tscn")
+	Global.transition_scene("res://Escenas/TitleScreen.tscn")

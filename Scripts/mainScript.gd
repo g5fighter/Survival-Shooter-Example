@@ -5,6 +5,7 @@ var Enemy = preload("res://objetos/enemy.tscn")
 var followedObject = preload("res://objetos/nodeToBeFollowed.tscn")
 var Arma = preload("res://objetos/Arma.tscn")
 var Cargador = preload("res://objetos/Cargador.tscn")
+var nav = preload("res://objetos/nav/NavigationPolygonInstance.tscn")
 #temporizadores
 var timer = null
 var roundTimer = null
@@ -28,7 +29,10 @@ func _ready():
 	_instantiate_player() 
 	configure_timers()
 	searchPlayer()
-	
+	for n in get_tree().get_nodes_in_group("obstacles"):
+		n.make_obstacle()
+
+
 func randomSpawn(tipo):
 	var pos
 	if (tipo == 0):
@@ -113,11 +117,11 @@ func _process(delta):
 		roundTimer.start()
 
 func restart_level():
-	$CanvasLayer/Pause.changeEstate()
-	get_tree().reload_current_scene()
+	$UI/Pause.changeEstate()
+	Global.transition_scene("res://Escenas/main.tscn")
 	
 func close_game():
-	get_tree().quit()
+	Global.close_game()
 
 func isPlayerNear(n,dist):
 	var resultado = false

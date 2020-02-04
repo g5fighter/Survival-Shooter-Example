@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/UI/Inventario/Inventario.gd" type="Script" id=1]
+[ext_resource path="res://temas/TitleScreen/glacial_24.tres" type="DynamicFont" id=2]
+[ext_resource path="res://temas/inGameUITheme.tres" type="Theme" id=3]
 
 [node name="Inventario" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -9,13 +11,56 @@ script = ExtResource( 1 )
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
 color = Color( 0, 0, 0, 0.435294 )
 
-[node name="GridContainer" type="GridContainer" parent="Fondo"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Fondo"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 40.0
-margin_top = 40.0
-margin_right = -40.0
-margin_bottom = -40.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Fondo/VBoxContainer"]
+margin_right = 1280.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 1280, 50 )
+size_flags_horizontal = 2
+color = Color( 0, 0, 0, 1 )
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="Fondo/VBoxContainer/ColorRect"]
+margin_right = 178.0
+margin_bottom = 43.0
+size_flags_horizontal = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Fondo/VBoxContainer/ColorRect/HBoxContainer5"]
+margin_top = 1.0
+margin_right = 120.0
+margin_bottom = 41.0
+rect_min_size = Vector2( 120, 40 )
+custom_fonts/font = ExtResource( 2 )
+text = "Inventario"
+align = 1
+valign = 1
+
+[node name="Button" type="Button" parent="Fondo/VBoxContainer/ColorRect/HBoxContainer5"]
+margin_left = 124.0
+margin_right = 198.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 74, 43 )
+theme = ExtResource( 3 )
+text = "Back"
+
+[node name="GridContainer" type="GridContainer" parent="Fondo/VBoxContainer"]
+margin_top = 54.0
+margin_bottom = 54.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
 columns = 5
+[connection signal="button_up" from="Fondo/VBoxContainer/ColorRect/HBoxContainer5/Button" to="." method="button_back"]

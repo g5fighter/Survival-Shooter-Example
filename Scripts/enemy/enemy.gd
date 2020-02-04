@@ -23,8 +23,8 @@ func _physics_process(delta):
 		move_and_collide(dir * speed * delta)
 		rotation = dir.angle()
 	if(health<=0):
-		node.call_deferred("queue_free")
-		call_deferred("queue_free")
+		node.queue_free()
+		queue_free()
 
 func play_anim_golpear():
 	if(not anim.is_playing()):

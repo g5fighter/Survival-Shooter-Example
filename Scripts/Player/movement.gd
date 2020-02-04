@@ -77,10 +77,6 @@ var can_change_gun = true
 var can_recharge_gun = true
 
 var pressing_shoot = false
-var mobile_input = false
-var ui_mode = false
-
-var use_joystick = false
 ############### INVENTARIO #####################
 var inventario = [null,null,null,null,null]
 var inventarioObjetos = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
@@ -88,6 +84,8 @@ var index = 0
 var indexObjetos = 0
 
 func _ready():
+	Global.connect("use_touch", self,"instantiate_ui_mobile")
+	Global.connect("delete_touch", self,"destroy_ui_mobile")
 	add_to_group("player")
 	node_ui_manager.inicializar_todo()
 	show_gun()
@@ -96,20 +94,24 @@ func _ready():
 		config_gun()
 	update_UI()
 	configure_timers()
-	if OS.get_name() == "Android":
-		var mob = mobileUInstatiate.instance()
-		$UI.add_child(mob)
-		mobileUI = mob
-		joystick = mobileUI.get_node("joystick")
-		mobile_input = true
-	if(mobile_input):
-		mobileUI.show()
-		node_ui_manager.mobileUI()
+	if Global.touch_controls:
+		instantiate_ui_mobile()
+	node_ui_manager.mobileUI(Global.touch_controls)
 	$Inventario.start(self)
 
 func start(pos):
-    position = pos
+	position = pos
 
+func instantiate_ui_mobile():
+	var mob = mobileUInstatiate.instance()
+	$UI.add_child(mob)
+	mobileUI = mob
+	joystick = mobileUI.get_joystick()
+	
+func destroy_ui_mobile():
+	mobileUI.queue_free()
+	mobileUI = null
+	joystick = null
 #configurar los temporizadores
 func configure_timers():
 	timer = Timer.new()
@@ -139,8 +141,6 @@ func on_rechargetimer_complete():
 	can_recharge_gun = true
 
 func _input(event):
-	if (Input.is_action_pressed('dir_right')||Input.is_action_pressed('dir_left')||Input.is_action_pressed('dir_down')||Input.is_action_pressed('dir_up'))and not use_joystick:
-		use_joystick = true
 	if event.is_action_pressed('change_gun'):
 		if(can_change_gun):
 			changeGun()
@@ -148,8 +148,7 @@ func _input(event):
 		if (inventario[index]!=null):
 			generalRechare()
 	if event.is_action_pressed("inventario"):
-		$Inventario.changeVisibility()
-		ui_mode = $Inventario/Fondo.visible
+		Global.set_ui_mode($Inventario.changeVisibility())
 
 # funcion que se ejecuta en el process y comprueba un input
 func get_input():
@@ -168,23 +167,27 @@ func get_input():
 	else:
 		speed = 400
 
-	if(mobile_input):
-		velocity = joystick.get_movement() * speed
+	if(Global.touch_controls):
+		if !Global.ui_mode:
+			velocity = joystick.get_movement() * speed
 	else:
 		velocity = velocity.normalized() * speed
 
-	if mobile_input:
+	if Global.touch_controls:
 		if (velocity.x!=0||velocity.y!=0)and not pressing_shoot:
 			rotation = velocity.angle()
-	elif use_joystick:
+	elif Global.use_gamepad:
 		direction.x = Input.get_joy_axis(0,2)
 		direction.y = Input.get_joy_axis(0, 3)
 		if(direction.x!=0||direction.y!=0):
 			rotation = direction.angle()
 	else:
 		look_at(get_global_mouse_position())
-	if !ui_mode:
-		if Input.is_action_pressed('click'):
+	if !Global.ui_mode:
+		if Input.is_action_pressed('click')&&!Global.touch_controls:
+			generalShoot()
+			pressing_shoot = true
+		elif Input.is_action_pressed('click_mob'):
 			generalShoot()
 			pressing_shoot = true
 		else:
@@ -199,7 +202,7 @@ func search_node(node):
 
 func generalShoot():
 	if (inventario[index]!=null):
-		if(mobile_input):
+		if(Global.touch_controls):
 			if(search_for_near_enemie()!=null):
 				look_at(search_for_near_enemie().global_position)
 		if(can_shoot&&inventario[index].bulletAmount>0):
@@ -220,7 +223,7 @@ func generalRechare():
 			rechargeGun(cargadorNode)
 		elif(cargadorNode.balasTotales<=0):
 			inventarioObjetos[search_node(cargadorNode)]=null
-			cargadorNode.call_deferred("queue_free")
+			cargadorNode.queue_free()
 			
 
 #funcion disparo
@@ -379,5 +382,7 @@ func search_for_near_enemie():
 func _physics_process(delta):
 	get_input()
 	velocity = move_and_slide(velocity)
-	if(health<=0): call_deferred("queue_free")
+	if mobileUI != null:
+		mobileUI.changeVisiblity(!Global.ui_mode)
+	if(health<=0): queue_free()
 	ui_lab.set_text("typeOfGun:"+str(typeOfGun)+" bullet_delay:"+str(bullet_delay)+" can_shoot:"+str(can_shoot))

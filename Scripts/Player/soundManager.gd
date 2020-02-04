@@ -8,4 +8,3 @@ func _play(sound):
 		$sonidoRecarga.play()
 	elif (sound == 2):
 		$sonidoSinBalas.play()
-

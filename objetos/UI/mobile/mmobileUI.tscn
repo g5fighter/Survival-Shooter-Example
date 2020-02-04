@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://objetos/UI/mobile/joystick.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Sprites/UI/mobile/pause.svg" type="Texture" id=2]
 [ext_resource path="res://Sprites/UI/mobile/shootPressed.svg" type="Texture" id=3]
 [ext_resource path="res://Sprites/UI/mobile/shoot.svg" type="Texture" id=4]
 [ext_resource path="res://Sprites/UI/mobile/recharge.svg" type="Texture" id=5]
@@ -10,47 +9,54 @@
 [ext_resource path="res://Sprites/UI/mobile/changeGunPressed.svg" type="Texture" id=8]
 [ext_resource path="res://Sprites/UI/mobile/pick.svg" type="Texture" id=9]
 [ext_resource path="res://Sprites/UI/mobile/pickPressed.svg" type="Texture" id=10]
+[ext_resource path="res://Sprites/UI/mobile/inventarioPressed.svg" type="Texture" id=11]
+[ext_resource path="res://Sprites/UI/mobile/inventario.svg" type="Texture" id=12]
+[ext_resource path="res://Scripts/UI/mobile/mmobileUI.gd" type="Script" id=13]
 
-[node name="mmobileUI" type="Control"]
+[node name="mmobileUI" type="CanvasLayer"]
+script = ExtResource( 13 )
+
+[node name="Control" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="joystick" parent="." instance=ExtResource( 1 )]
+[node name="joystick" parent="Control" instance=ExtResource( 1 )]
 position = Vector2( 160, 539.9 )
 
-[node name="Pause" type="TouchScreenButton" parent="."]
-position = Vector2( 10, 10 )
-scale = Vector2( 0.1, 0.1 )
-normal = ExtResource( 2 )
-pressed = ExtResource( 3 )
-action = "pause"
-
-[node name="Shoot" type="TouchScreenButton" parent="."]
+[node name="Shoot" type="TouchScreenButton" parent="Control"]
 position = Vector2( 1070, 512.2 )
 scale = Vector2( 0.3, 0.3 )
 normal = ExtResource( 4 )
 pressed = ExtResource( 3 )
-action = "click"
+action = "click_mob"
 
-[node name="Recharge" type="TouchScreenButton" parent="."]
+[node name="Recharge" type="TouchScreenButton" parent="Control"]
 position = Vector2( 1160, 392.2 )
 scale = Vector2( 0.15, 0.15 )
 normal = ExtResource( 5 )
 pressed = ExtResource( 6 )
 action = "recharge"
 
-[node name="changeGun" type="TouchScreenButton" parent="."]
+[node name="changeGun" type="TouchScreenButton" parent="Control"]
 position = Vector2( 1030, 412.2 )
 scale = Vector2( 0.15, 0.15 )
 normal = ExtResource( 7 )
 pressed = ExtResource( 8 )
 action = "change_gun"
 
-[node name="take" type="TouchScreenButton" parent="."]
+[node name="take" type="TouchScreenButton" parent="Control"]
 position = Vector2( 950, 512.2 )
 scale = Vector2( 0.15, 0.15 )
 normal = ExtResource( 9 )
 pressed = ExtResource( 10 )
 action = "takeObj"
 
-[editable path="joystick"]
+[node name="inventario" type="TouchScreenButton" parent="Control"]
+position = Vector2( 1160, 270 )
+scale = Vector2( 0.15, 0.15 )
+normal = ExtResource( 12 )
+pressed = ExtResource( 11 )
+action = "inventario"

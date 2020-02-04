@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://temas/inGameUITheme.tres" type="Theme" id=1]
-[ext_resource path="res://Sprites/UI/mobile/invisible button.png" type="Texture" id=2]
 
 [node name="PauseButton" type="Button"]
 margin_right = 190.0
@@ -10,7 +9,3 @@ rect_min_size = Vector2( 190, 43 )
 theme = ExtResource( 1 )
 text = "Texto"
 flat = true
-
-[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
-scale = Vector2( 1.9, 0.43 )
-normal = ExtResource( 2 )
