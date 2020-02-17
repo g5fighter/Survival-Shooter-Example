@@ -18,4 +18,5 @@ Modo infinito
 Musica  
 
 ## Datos  
-Desarrollado en Godot 3.1.2
+Iniciado en Godot 3.1.2
+Continuado en Godot 3.2
