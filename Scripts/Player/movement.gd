@@ -3,48 +3,26 @@ extends KinematicBody2D
 # vida, velocidad, tipo de arma
 var health = 100
 var speed = 400
+
+var typeOfWeapon = 0
+
 var typeOfGun = 0
 var shootType = 0
 var RafagaAmount = 0
 
-export (NodePath) var lab
-onready var ui_lab = get_node(lab)
+onready var ui_lab = get_node("UI/Control/Label")
 
-export (NodePath) var ui_manager
-onready var node_ui_manager = get_node(ui_manager)
+onready var node_ui_manager = get_node("UI")
 
-#nodos de las diferentes armas
-export (NodePath) var armaUno
-# warning-ignore:unused_class_variable
-onready var node_armaUno = get_node(armaUno)
-export (NodePath) var armaDos
-# warning-ignore:unused_class_variable
-onready var node_armaDos = get_node(armaDos)
-export (NodePath) var armaTres
-# warning-ignore:unused_class_variable
-onready var node_armaTres = get_node(armaTres)
+################# NODOS DE LAS ARMAS
+onready var node_armaUno = get_node("pistol")
+onready var node_armaDos = get_node("Aka")
+onready var node_armaTres = get_node("sniper")
 
-#nodos donde se spawnean las diferentes balas
-export (NodePath) var armaUnobulletspawn
-# warning-ignore:unused_class_variable
-onready var node_armaUnobulletspawn = get_node(armaUnobulletspawn)
-export (NodePath) var armaDosbulletspawn
-# warning-ignore:unused_class_variable
-onready var node_armaDosbulletspawn = get_node(armaDosbulletspawn)
-export (NodePath) var armaTresbulletspawn
-# warning-ignore:unused_class_variable
-onready var node_armaTresbulletspawn = get_node(armaTresbulletspawn)
+onready var animation_player = $AnimationPlayer
 
-########desviaciones de arma a la hora de apuntar
-export (NodePath) var armaUnoRotDesv
-# warning-ignore:unused_class_variable
-onready var node_armaUnoRotDesv = get_node(armaUnoRotDesv)
-export (NodePath) var armaDosRotDesv
-# warning-ignore:unused_class_variable
-onready var node_armaDosRotDesv = get_node(armaDosRotDesv)
-export (NodePath) var armaTresRotDesv
-# warning-ignore:unused_class_variable
-onready var node_armaTresRotDesv = get_node(armaTresRotDesv)
+onready var node_Array = [node_armaUno,node_armaDos,node_armaTres]
+onready var Cac_Array = [$ArmasCaCNodo/Sarten,$ArmasCaCNodo/Espada,$ArmasCaCNodo/Tridente,$ArmasCaCNodo/Palanca,$ArmasCaCNodo/Palanca]
 
 onready var soundManager = $sonidos
 onready var mobileUI = null
@@ -54,8 +32,7 @@ onready var joystick = null
 var Bullet = preload("res://objetos/bestbullet.tscn")
 var fire = preload("res://objetos/fuego.tscn")
 var mobileUInstatiate = preload("res://objetos/UI/mobile/mmobileUI.tscn")
-	
-onready var node_Array = [[node_armaUnobulletspawn,node_armaDosbulletspawn,node_armaTresbulletspawn],[node_armaUnoRotDesv,node_armaDosRotDesv,node_armaTresRotDesv],[node_armaUno,node_armaDos,node_armaTres]]
+
 
 # vector desplacamiento
 var velocity = Vector2()
@@ -65,11 +42,16 @@ var direction = Vector2()
 var timer = null
 var timerChngGun = null
 var timerRchrgGun = null
+var healthTimer = null
+var recuperarTimer = null
 
 #retardo: de disparar y recargar
 var bullet_delay = 0.1
 var recharge_delay = 0.1
 var changeGun_delay = 0.1
+
+var healthDelay = 15
+var recuperarDelay = 1
 
 # bolleanos que permiten el disparo, recarga y cambio de arma, y deteccion para disparo manual
 var can_shoot = true
@@ -89,9 +71,8 @@ func _ready():
 	add_to_group("player")
 	node_ui_manager.inicializar_todo()
 	show_gun()
-	update_UI_Gun(-1)
-	if(inventario[index]!=null):
-		config_gun()
+	show_weapon()
+	config_weapon()
 	update_UI()
 	configure_timers()
 	if Global.touch_controls:
@@ -99,7 +80,7 @@ func _ready():
 	node_ui_manager.mobileUI(Global.touch_controls)
 	$Inventario.start(self)
 
-func start(pos):
+func start(pos: Vector2):
 	position = pos
 
 func instantiate_ui_mobile():
@@ -112,6 +93,7 @@ func destroy_ui_mobile():
 	mobileUI.queue_free()
 	mobileUI = null
 	joystick = null
+
 #configurar los temporizadores
 func configure_timers():
 	timer = Timer.new()
@@ -119,16 +101,30 @@ func configure_timers():
 	timer.set_wait_time(bullet_delay)
 	timer.connect("timeout", self,"on_timeout_complete")
 	add_child(timer)
+	
 	timerChngGun = Timer.new()
 	timerChngGun.set_one_shot(true)
 	timerChngGun.set_wait_time(changeGun_delay)
 	timerChngGun.connect("timeout", self,"on_guntimer_complete")
 	add_child(timerChngGun)
+	
 	timerRchrgGun = Timer.new()
 	timerRchrgGun.set_one_shot(true)
 	timerRchrgGun.set_wait_time(recharge_delay)
 	timerRchrgGun.connect("timeout", self,"on_rechargetimer_complete")
 	add_child(timerRchrgGun)
+	
+	healthTimer = Timer.new()
+	healthTimer.set_one_shot(true)
+	healthTimer.set_wait_time(healthDelay)
+	healthTimer.connect("timeout", self,"on_healthtimer_complete")
+	add_child(healthTimer)
+	
+	recuperarTimer = Timer.new()
+	recuperarTimer.set_one_shot(true)
+	recuperarTimer.set_wait_time(recuperarDelay)
+	recuperarTimer.connect("timeout", self,"on_recuperarTimer_complete")
+	add_child(recuperarTimer)
 
 # funciones para cuando terminan los temporizadores #
 func on_timeout_complete():
@@ -139,6 +135,17 @@ func on_guntimer_complete():
 
 func on_rechargetimer_complete():
 	can_recharge_gun = true
+	
+func on_healthtimer_complete():
+	recuperarTimer.start()
+
+func on_recuperarTimer_complete():
+	health+=5
+	if health>100:
+		health = 100
+	node_ui_manager.update_health_things(health)
+	if health<100:
+		recuperarTimer.start()
 
 func _input(event):
 	if event.is_action_pressed('change_gun'):
@@ -146,9 +153,24 @@ func _input(event):
 			changeGun()
 	if event.is_action_pressed('recharge'):
 		if (inventario[index]!=null):
-			generalRechare()
+			generalRecharge()
 	if event.is_action_pressed("inventario"):
 		Global.set_ui_mode($Inventario.changeVisibility())
+	if event.is_action_pressed("arma1"):
+		if(can_change_gun):
+			changeSpecificGun(0)
+	if event.is_action_pressed("arma2"):
+		if(can_change_gun):
+			changeSpecificGun(1)
+	if event.is_action_pressed("arma3"):
+		if(can_change_gun):
+			changeSpecificGun(2)
+	if event.is_action_pressed("arma4"):
+		if(can_change_gun):
+			changeSpecificGun(3)
+	if event.is_action_pressed("arma5"):
+		if(can_change_gun):
+			changeSpecificGun(4)
 
 # funcion que se ejecuta en el process y comprueba un input
 func get_input():
@@ -193,7 +215,7 @@ func get_input():
 		else:
 			pressing_shoot = false
 
-func search_node(node):
+func search_node(node: Node):
 	var tmp = 0
 	for ob in inventarioObjetos:
 		if ob == node:
@@ -202,40 +224,52 @@ func search_node(node):
 
 func generalShoot():
 	if (inventario[index]!=null):
-		if(Global.touch_controls):
-			if(search_for_near_enemie()!=null):
-				look_at(search_for_near_enemie().global_position)
-		if(can_shoot&&inventario[index].bulletAmount>0):
-			if(shootType==0):
-				shoot()
-			elif(shootType==1&&!pressing_shoot):
-				for x in range(0, RafagaAmount):
+		if(typeOfWeapon==0):
+			if(Global.touch_controls):
+				if(search_for_near_enemie()!=null):
+					look_at(search_for_near_enemie().global_position)
+			if(can_shoot&&inventario[index].bulletAmount>0):
+				if(shootType==0):
 					shoot()
-			elif(shootType==2 && !pressing_shoot):
-				shoot()
-		elif(inventario[index].bulletAmount==0):
-			soundManager._play(2)
-			
-func generalRechare():
-	var cargadorNode = searchCargador(typeOfGun)
+				elif(shootType==1&&!pressing_shoot):
+					for _x in range(0, RafagaAmount):
+						shoot()
+				elif(shootType==2 && !pressing_shoot):
+					shoot()
+			elif(inventario[index].bulletAmount==0):
+				soundManager._play(2)
+		elif(typeOfWeapon==1):
+			if !animation_player.is_playing():
+				if inventario[index].weaponID == 0:
+					animation_player.play("ataqueSarten")
+				if inventario[index].weaponID == 1:
+					animation_player.play("ataqueEspada")
+				if inventario[index].weaponID == 2:
+					animation_player.play("ataqueTridente")
+				if inventario[index].weaponID == 3:
+					animation_player.play("ataquePalanca")
+		
+func generalRecharge():
+	var cargadorNode = searchCargador()
 	if(cargadorNode!=null):
 		if(can_recharge_gun&&cargadorNode.balasTotales>0):
 			rechargeGun(cargadorNode)
-		elif(cargadorNode.balasTotales<=0):
-			inventarioObjetos[search_node(cargadorNode)]=null
-			cargadorNode.queue_free()
-			
+			if(cargadorNode.balasTotales<=0):
+				inventarioObjetos[search_node(cargadorNode)]=null
+				cargadorNode.queue_free()
+		update_UI()
 
 #funcion disparo
 func shoot():  
-	typeOfGun = inventario[index].gunID  
 	inventario[index].restAmmo()
+	
 	# variable que instancia la bala
 	var bullet = Bullet.instance()
 	var fireSprite = fire.instance()
 	
-	fireSprite.start(node_Array[0][typeOfGun].global_position, rotation + node_Array[1][typeOfGun].rotation)
-	bullet.start(node_Array[0][typeOfGun].global_position, rotation + node_Array[1][typeOfGun].rotation, inventario[index].gunDamage)
+	# starteamos los objetos
+	fireSprite.start(node_Array[typeOfGun].get_bullet_spawn().global_position, node_Array[typeOfGun].get_Rot_Desv().global_rotation)
+	bullet.start(node_Array[typeOfGun].get_bullet_spawn().global_position, node_Array[typeOfGun].get_Rot_Desv().global_rotation, inventario[index].gunDamage)
 	
 	# añadimos en el arbol de nodos la bala
 	get_parent().add_child(bullet)
@@ -253,30 +287,45 @@ func changeGun():
 	index += 1
 	if(index>=inventario.size()):
 		index = 0
-	if(inventario[index]!=null):
-		config_gun()
-		update_UI_Gun()
-	else:
-		update_UI_Gun(-1)
+	config_weapon()
 	show_gun()
+	show_weapon()
 	update_UI()
 
+func changeSpecificGun(ind: int):
+	can_change_gun = false
+	timerChngGun.start()
+	timer.stop()
+	can_shoot = true
+	index = ind
+	config_weapon()
+	show_gun()
+	show_weapon()
+	update_UI()
 	
 func config_gun():
-		bullet_delay = inventario[index].bullet_delay
-		timer.set_wait_time(bullet_delay)
-		typeOfGun=inventario[index].gunID
-		shootType=inventario[index].shootType
-		RafagaAmount=inventario[index].rafagAmount
+	typeOfWeapon = 0
+	bullet_delay = inventario[index].bullet_delay
+	timer.set_wait_time(bullet_delay)
+	typeOfGun=inventario[index].gunID
+	shootType=inventario[index].shootType
+	RafagaAmount=inventario[index].rafagAmount
 
-func get_damage(damage):
+func config_weapon():
+	if(inventario[index]!=null):
+		if inventario[index].objectID == 'arma':
+			config_gun()
+		if inventario[index].objectID == 'armacac':
+			typeOfWeapon = 1
+
+func get_damage(damage: int):
 	health -= damage
 	node_ui_manager.update_health_things(health)
-	
-func get_recursos():
-	print_debug("funciona")
+	if(health<=0): queue_free()
+	healthTimer.start()
+	recuperarTimer.stop()
 
-func hayNullArray(array):
+func hayNullArray(array: Array):
 	var hayNull = false
 	for el in array:
 		if el == null:
@@ -284,15 +333,15 @@ func hayNullArray(array):
 			break
 	return hayNull
 
-func change_gun(ind,type):
-	if(type=='arma'):
+func change_gun(ind: int,obj: String):
+	if(obj=='arma'):
 		inventario[ind].drop(position)
 		inventario[ind]=null
-	if(type=='cargador'):
+	if(obj=='cargador'):
 		inventarioObjetos[ind].drop(position)
 		inventarioObjetos[ind]=null
 
-func get_gun(node):
+func get_weapon(node: Node):
 	if(hayNullArray(inventario)==true):
 		var temp = 0
 		for arm in inventario:
@@ -303,14 +352,28 @@ func get_gun(node):
 	elif(hayNullArray(inventario)==false):
 		inventario[index].drop(position)
 		inventario[index]=node
-	if(inventario[index]!=null):
-		config_gun()
-		show_gun()
+	config_weapon()
+	show_weapon()
 	node.take()
-	update_UI_Gun()
+	update_UI()
+
+func get_gun(node: Node):
+	if(hayNullArray(inventario)==true):
+		var temp = 0
+		for arm in inventario:
+			if(arm==null):
+				inventario[temp]=node
+				break
+			temp+=1
+	elif(hayNullArray(inventario)==false):
+		inventario[index].drop(position)
+		inventario[index]=node
+	config_weapon()
+	show_gun()
+	node.take()
 	update_UI()
 	
-func get_charger(node):
+func get_charger(node: Node):
 	indexObjetos = 0
 	for n in inventarioObjetos:
 		if n == null:
@@ -321,16 +384,15 @@ func get_charger(node):
 		indexObjetos+=1
 
 
-func rechargeGun(node):
+func rechargeGun(node: Node):
 	can_recharge_gun = false
 	recharge_delay = inventario[index].recharge_delay
 	timerRchrgGun.start()
 	node.recharge(inventario[index].maxBalas())
 	inventario[index].recharge()
-	update_UI()
 	soundManager._play(1)
 	
-func searchCargador(type):
+func searchCargador(type: int = typeOfGun):
 	var searchedNode = null
 	var arrayinv = []
 	arrayinv = inventarioObjetos.duplicate()
@@ -343,26 +405,39 @@ func searchCargador(type):
 	return searchedNode
 	
 func show_gun():
-	for nodeArma in  node_Array[2]:
+	for nodeArma in  node_Array:
 		nodeArma.hide()
-	if(inventario[index]!=null):
-		node_Array[2][typeOfGun].show()
+	if(inventario[index]!=null&&typeOfWeapon==0):
+		node_Array[typeOfGun].show()
+
+func show_weapon():
+	for nodeWeapon in Cac_Array:
+		nodeWeapon.hide()
+	if(inventario[index]!=null&&typeOfWeapon==1):
+		Cac_Array[inventario[index].weaponID].show()
 
 func update_UI():
 	if(inventario[index]!=null):
-		var cargador = searchCargador(typeOfGun)
-		if(cargador!=null):
-			$UI.update_info_gun(inventario[index].bulletAmount,cargador.balasTotales)
-		else:
-			$UI.update_info_gun(inventario[index].bulletAmount,0)
+		if(typeOfWeapon==0):
+			var cargador = searchCargador()
+			if(cargador!=null):
+				$UI.update_info_gun(inventario[index].bulletAmount,cargador.balasTotales)
+			else:
+				$UI.update_info_gun(inventario[index].bulletAmount,0)
+		elif(typeOfWeapon==1):
+			$UI.update_info_gun("N","N")
 	else:
 		$UI.update_info_gun("N","N")
-
-func update_UI_Gun(num = typeOfGun):
+	update_UI_Weapon()
+		
+func update_UI_Weapon(num: int = typeOfGun):
 	if inventario[index]==null:
-		$UI.updateImage(-1,index,inventario.size())
+		$UI.updateImage(-1,index,inventario.size(),-1)
 	else:
-		$UI.updateImage(num,index,inventario.size())
+		if typeOfWeapon == 0:
+			$UI.updateImage(num,index,inventario.size(),typeOfWeapon)
+		if(typeOfWeapon==1):
+			$UI.updateImage(inventario[index].weaponID,index,inventario.size(),typeOfWeapon)
 
 func search_for_near_enemie():
 	var enemies = get_tree().get_nodes_in_group("enemy")
@@ -377,12 +452,12 @@ func search_for_near_enemie():
 		ind+=1
 	return my_enemie
 
-
-# warning-ignore:unused_argument
-func _physics_process(delta):
+func _physics_process(_delta):
 	get_input()
 	velocity = move_and_slide(velocity)
-	if mobileUI != null:
-		mobileUI.changeVisiblity(!Global.ui_mode)
-	if(health<=0): queue_free()
 	ui_lab.set_text("typeOfGun:"+str(typeOfGun)+" bullet_delay:"+str(bullet_delay)+" can_shoot:"+str(can_shoot))
+
+
+func _on_enemy_entered(body):
+	if body.has_method("hit"):
+		body.hit(inventario[index].weaponDamage)

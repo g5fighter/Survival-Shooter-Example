@@ -6,8 +6,7 @@ var distance2Mouse
 export (NodePath) var player
 onready var player_node = get_node(player)
 
-# warning-ignore:unused_argument
-func _process(delta):
+func _process(_delta):
 	if(Input.is_action_pressed('click_mob')&&Global.touch_controls):
 		if(player_node.search_for_near_enemie()!=null):
 			look_at(player_node.search_for_near_enemie().global_position)

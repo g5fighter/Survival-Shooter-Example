@@ -1,6 +1,10 @@
 extends Control
 
 func _ready():
+	hide()
+	if Global.touch_controls:
+		$ColorRect/VBoxContainer/fullScreenToggle.hide()
+	$ColorRect/VBoxContainer/fullScreenToggle.pressed = OS.window_fullscreen
 	$ColorRect/VBoxContainer/touchScreenButtonsCheck.pressed = Global.touch_controls
 	$ColorRect/VBoxContainer/gamepadControlCheck.pressed = Global.use_gamepad
 	for sl in get_tree().get_nodes_in_group("slider"):
@@ -24,4 +28,8 @@ func show_conf():
 	show()
 
 func save_settings():
-	Settings.save_game()
+	Settings.save_game('conf')
+	$ColorRect/PopupPanel.popup()
+
+func toggle_fullscreen(cond):
+	OS.window_fullscreen = cond

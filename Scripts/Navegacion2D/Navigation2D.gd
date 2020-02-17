@@ -14,9 +14,9 @@ func _physics_process(delta):
 			var distance = speed*delta
 			if(enemy.position.distance_to(enemy.followedNode.global_position)<50):
 				_seguir_ruta(distance, enemy)
-			else:
-				distance = speed/5*delta
-				_seguir_ruta(distance, enemy)
+#			else:
+#				distance = speed/5*delta
+#				_seguir_ruta(distance, enemy)
 			if (enemy.position.distance_to(gameScene.player_node.position) <= enemy.distance):
 				enemy.play_anim_golpear()
 
@@ -27,8 +27,7 @@ func _nueva_posicion(pos_inicial,pos_final):
 func _seguir_ruta(distancia, enemigo):
 	var ultima_pos = enemigo.position
 	if enemigo.position.distance_to(gameScene.player_node.position) >= enemigo.distance:
-# warning-ignore:unused_variable
-		for i in range(path.size()):
+		for _i in range(path.size()):
 			var distancia_al_final = ultima_pos.distance_to(path[0])
 			if distancia <= distancia_al_final:
 				enemigo.position = ultima_pos.linear_interpolate(path[0],distancia/distancia_al_final)

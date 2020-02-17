@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scripts/mainScript.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Navegacion2D/Navigation2D.gd" type="Script" id=2]
@@ -13,6 +13,42 @@
 [ext_resource path="res://objetos/UI/pause/ExitButton.tscn" type="PackedScene" id=11]
 [ext_resource path="res://objetos/UI/Conf/Configuracion.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scripts/UI/UImanager.gd" type="Script" id=13]
+[ext_resource path="res://Scripts/UI/InfoEnPantalla_Ronda.gd" type="Script" id=14]
+[ext_resource path="res://temas/TitleScreen/glacial_bold_80.tres" type="DynamicFont" id=15]
+[ext_resource path="res://temas/font_30.tres" type="DynamicFont" id=16]
+[ext_resource path="res://temas/TitleScreen/glacial_50.tres" type="DynamicFont" id=17]
+[ext_resource path="res://Scripts/UI/DieMessage/DieMessage.gd" type="Script" id=18]
+
+[sub_resource type="Animation" id=1]
+resource_name = "aparecer"
+tracks/0/type = "value"
+tracks/0/path = NodePath("UI/InfoEnPantalla:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -720 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "desparecer"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("UI/InfoEnPantalla:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 2, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -720 ) ]
+}
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 1 )
@@ -39,6 +75,10 @@ typeOfBox = 2
 [node name="CajaDeRecursos4" parent="." instance=ExtResource( 4 )]
 position = Vector2( 806.088, -150.698 )
 typeOfBox = 2
+
+[node name="CajaDeRecursos5" parent="." instance=ExtResource( 4 )]
+position = Vector2( 221.629, 101.586 )
+typeOfBox = 0
 
 [node name="Player Spawns" type="Node2D" parent="."]
 
@@ -139,8 +179,126 @@ margin_bottom = 496.0
 
 [node name="Configuracion" parent="UI" instance=ExtResource( 12 )]
 pause_mode = 2
+
+[node name="InfoEnPantalla" type="Control" parent="UI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -720.0
+margin_bottom = -720.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/InfoEnPantalla"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 2
+custom_fonts/font = ExtResource( 15 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+text = "H"
+align = 1
+valign = 1
+
+[node name="Label" type="Label" parent="UI"]
+margin_left = 400.0
+margin_right = 566.0
+margin_bottom = 14.0
+text = "ijhbijhvluyjhvkuyjhcvkujcv"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DieMessage" type="Control" parent="UI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+script = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/DieMessage"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+color = Color( 0.160784, 0.0313726, 0.0313726, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/DieMessage/ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="UI/DieMessage/ColorRect/VBoxContainer"]
+margin_top = 188.0
+margin_right = 1280.0
+margin_bottom = 284.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 15 )
+text = "You died"
+align = 1
+valign = 1
+
+[node name="StatsaTitle" type="Label" parent="UI/DieMessage/ColorRect/VBoxContainer"]
+margin_top = 288.0
+margin_right = 1280.0
+margin_bottom = 349.0
+custom_fonts/font = ExtResource( 17 )
+text = "Stats"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/DieMessage/ColorRect/VBoxContainer"]
+margin_top = 353.0
+margin_right = 1280.0
+margin_bottom = 390.0
+custom_fonts/font = ExtResource( 16 )
+text = "Example text"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RestartButton" parent="UI/DieMessage/ColorRect/VBoxContainer" instance=ExtResource( 9 )]
+margin_top = 394.0
+margin_right = 1280.0
+margin_bottom = 437.0
+
+[node name="MainMenuButton" parent="UI/DieMessage/ColorRect/VBoxContainer" instance=ExtResource( 10 )]
+margin_top = 441.0
+margin_right = 1280.0
+margin_bottom = 484.0
+
+[node name="ExitButton" parent="UI/DieMessage/ColorRect/VBoxContainer" instance=ExtResource( 11 )]
+margin_top = 488.0
+margin_right = 1280.0
+margin_bottom = 531.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/aparecer = SubResource( 1 )
+anims/desparecer = SubResource( 2 )
 [connection signal="button_down" from="UI/Pause/ColorRect/VBoxContainer/ConfigButton" to="UI/Configuracion" method="show_conf"]
 [connection signal="button_down" from="UI/Pause/ColorRect/VBoxContainer/BackButton" to="UI/Pause" method="changeEstate"]
 [connection signal="button_down" from="UI/Pause/ColorRect/VBoxContainer/RestartButton" to="." method="restart_level"]
 [connection signal="button_down" from="UI/Pause/ColorRect/VBoxContainer/MainMenuButton" to="UI/Pause" method="return_to_title"]
 [connection signal="button_down" from="UI/Pause/ColorRect/VBoxContainer/ExitButton" to="." method="close_game"]
+[connection signal="button_down" from="UI/DieMessage/ColorRect/VBoxContainer/RestartButton" to="." method="restart_level"]
+[connection signal="button_down" from="UI/DieMessage/ColorRect/VBoxContainer/MainMenuButton" to="UI/Pause" method="return_to_title"]
+[connection signal="button_down" from="UI/DieMessage/ColorRect/VBoxContainer/ExitButton" to="." method="close_game"]
+[connection signal="animation_finished" from="AnimationPlayer" to="UI/InfoEnPantalla" method="_on_animation_finished"]

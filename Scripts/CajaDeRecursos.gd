@@ -2,15 +2,13 @@ extends KinematicBody2D
 
 var timer = null
 export (int) var typeOfBox = 1
+var typeOfWeapon = 0
 var typeOfGun = 0
 var estaRecogiendo = false
-var isPlayer = false
-var player_node
+var isPlayer = null
 var distance = 300
 
 onready var ui_lab = $ColorRect/Label
-
-onready var node_parent = $"."
 
 onready var ui_color_rect = $ColorRect
 
@@ -29,27 +27,24 @@ func _ready():
 
 
 func make_obstacle():
-	gameScene.find_node("Navigation2D")._obstacle(colShape,node_parent)
+	gameScene.find_node("Navigation2D")._obstacle(colShape,self)
 
 func on_timeout_complete():
 	if(typeOfBox==0):
-		player_node.get_recursos()
-		node_parent.queue_free()
+		gameScene.instantiate_weapon(position)
+		queue_free()
 	elif(typeOfBox==1):
 		gameScene.instantiate_gun(position)
-		node_parent.queue_free()
+		queue_free()
 	elif(typeOfBox==2):
 		gameScene.instantiate_charger(position)
-		node_parent.queue_free()
-
-
+		queue_free()
 
 func is_running():
    return timer.get_time_left() > 0
 
-# warning-ignore:unused_argument
-func _process(delta):
-	if(isPlayer&&gameScene.isPlayerNear(self,distance)):
+func _process(_delta):
+	if((isPlayer!=null)&&gameScene.isPlayerNear(self,distance)):
 		if Input.is_action_pressed('takeObj'):
 			estaRecogiendo = true
 		else:
@@ -64,8 +59,8 @@ func _process(delta):
 			ui_color_rect.hide()
 	
 func on_player_entered(body):
-		isPlayer = true
+		isPlayer = body
 	
-func on_player_exited(body):
-		isPlayer = false
+func on_player_exited(_body):
+		isPlayer = null
 		timer.stop()

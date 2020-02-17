@@ -73,7 +73,6 @@ margin_right = 40.0
 margin_bottom = 70.0
 
 [node name="ColorRect" type="ColorRect" parent="AnimationReciver/UI"]
-editor/display_folded = true
 margin_left = 30.91
 margin_top = -0.36
 margin_right = 130.91
@@ -90,7 +89,6 @@ align = 3
 valign = 3
 
 [node name="Info" type="ColorRect" parent="AnimationReciver/UI"]
-editor/display_folded = true
 margin_left = 31.0
 margin_top = -146.0
 margin_right = 184.0
@@ -115,5 +113,3 @@ autowrap = true
 anims/drop = SubResource( 2 )
 [connection signal="body_entered" from="AnimationReciver/Area2D" to="." method="on_player_entered"]
 [connection signal="body_exited" from="AnimationReciver/Area2D" to="." method="on_player_exited"]
-[connection signal="mouse_entered" from="AnimationReciver/Area2D" to="." method="_on_arma_body_entered"]
-[connection signal="mouse_exited" from="AnimationReciver/Area2D" to="." method="_on_arma_body_exited"]

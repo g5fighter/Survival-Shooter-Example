@@ -92,7 +92,7 @@ margin_bottom = 598.0
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 6 )
 text = "ACM UPM
-Alpha 22.0                              Autor: g5fighter"
+Alpha 23.0                              Autor: g5fighter"
 valign = 1
 
 [node name="Configuracion" parent="." instance=ExtResource( 7 )]

@@ -1,6 +1,5 @@
 extends Node2D
 
-# warning-ignore:unused_class_variable
 var objectID = 'cargador'
 var chargerID = -1
 
@@ -12,7 +11,7 @@ var balasTotales = 0
 var distance = 300
 
 var taken = false
-var isPlayer = false
+var isPlayer = null
 
 onready var gameScene = get_tree().get_root().get_node("MainScene")
 onready var ui_lab = $AnimationReciver/ColorRect/Label
@@ -43,25 +42,22 @@ func drop(pos):
 	$AnimationPlayer.play("drop")
 	taken = false
 	
-# warning-ignore:unused_argument
-func _process(delta):
-	if(!taken&&isPlayer&&Input.is_action_just_pressed('takeObj')&&gameScene.isPlayerNear(self,distance)):
-		gameScene.player_node.get_charger(self)
+
+func _input(event):
+	if event.is_action_pressed('takeObj'):
+		if(isPlayer!=null):
+			if(!taken&&gameScene.isPlayerNear(self,distance)):
+				isPlayer.get_charger(self)
 	
 func showUI():
 	if(!taken&&gameScene.isPlayerNear(self,distance)):
 		ui_color_rect.show()
 		ui_lab.set_text("Press E to take")
-		
-func _on_arma_body_entered():
-	showUI()
-	
-func _on_arma_body_exited():
-	ui_color_rect.hide()
+
 
 func _on_body_entered(body):
-		isPlayer = true
-		_on_arma_body_entered()
-func _on_body_exited(body):
-		isPlayer = false
-		_on_arma_body_exited()
+	isPlayer = body
+	showUI()
+func _on_body_exited(_body):
+	isPlayer = null
+	ui_color_rect.hide()

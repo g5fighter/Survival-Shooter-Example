@@ -30,7 +30,7 @@ var shootType = 0
 var rafagAmount = 0
 
 var taken = false
-var isPlayer = false
+var isPlayer = null
 
 var distance = 300
 
@@ -42,13 +42,13 @@ onready var gameScene = get_tree().get_root().get_node("MainScene")
 
 onready var images = [$AnimationReciver/Sprites/Gun,$AnimationReciver/Sprites/Aka,$AnimationReciver/Sprites/Sniper]
 
-func start(pos,num):
+func start(pos: Vector2,num: int):
 	position=pos
 	configureGun(num)
 	drop(pos)
 	
 # Called when the node enters the scene tree for the first time.
-func configureGun(num):
+func configureGun(num: int):
 	gunID = num
 	bullet_delay = armas[0][gunID]
 	bulletAmount = armas[1][gunID]
@@ -78,12 +78,8 @@ func take():
 	taken = true
 
 func _input(event):
-	if (!taken&&isPlayer&&event.is_action_pressed("takeObj")&&gameScene.isPlayerNear(self,distance)):
-		gameScene.player_node.get_gun(self)
-# warning-ignore:unused_argument
-func _process(delta):
-	showUI()
-
+	if (!taken&&(isPlayer!=null)&&event.is_action_pressed("takeObj")&&gameScene.isPlayerNear(self,distance)):
+		isPlayer.get_gun(self)
 
 func maxBalas():
 	return armas[1][gunID]
@@ -96,16 +92,10 @@ func showUI():
 	else:
 		ui_control.hide()
 	
-func _on_arma_body_entered():
-	showUI()
-
-func _on_arma_body_exited():
-	ui_control.hide()
-
 func on_player_entered(body):
-		isPlayer = true
-		_on_arma_body_entered()
+	isPlayer = body
+	showUI()
 	
-func on_player_exited(body):
-		isPlayer = false
-		_on_arma_body_exited()
+func on_player_exited(_body):
+	isPlayer = null
+	ui_control.hide()
