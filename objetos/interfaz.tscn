@@ -10,8 +10,13 @@
 [node name="CanvasLayer" type="CanvasLayer"]
 
 [node name="Control" type="Control" parent="."]
+margin_left = 10.0
+margin_top = 10.0
 margin_right = 40.0
 margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label" type="Label" parent="Control"]
 margin_left = 10.0
@@ -73,6 +78,9 @@ margin_right = -9.78999
 margin_bottom = 33.09
 theme = ExtResource( 6 )
 text = "5/5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Balas" type="NinePatchRect" parent="Control2"]
 anchor_left = 0.5

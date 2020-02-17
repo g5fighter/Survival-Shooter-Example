@@ -1,0 +1,130 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Scripts/armaInfoCaC.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/UI/armas/CaC/sarten.svg" type="Texture" id=2]
+[ext_resource path="res://Sprites/UI/armas/CaC/tridente.svg" type="Texture" id=3]
+[ext_resource path="res://Sprites/UI/armas/CaC/palanca.svg" type="Texture" id=4]
+[ext_resource path="res://temas/message.tres" type="Theme" id=5]
+[ext_resource path="res://Sprites/UI/armas/CaC/espada.svg" type="Texture" id=6]
+[ext_resource path="res://Sprites/UI/armas/CaC/extintor.svg" type="Texture" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 40, 40 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "drop"
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimationReciver:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.3, 1.3 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimationReciver:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -10 ), Vector2( 0, -30 ) ]
+}
+
+[node name="ArmaCAC" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="AnimationReciver" type="Node2D" parent="."]
+
+[node name="Sprites" type="Node2D" parent="AnimationReciver"]
+scale = Vector2( 1.5, 1.5 )
+
+[node name="Sarten" type="Sprite" parent="AnimationReciver/Sprites"]
+visible = false
+scale = Vector2( 0.08, 0.08 )
+texture = ExtResource( 2 )
+
+[node name="Espada" type="Sprite" parent="AnimationReciver/Sprites"]
+visible = false
+scale = Vector2( 0.08, 0.08 )
+texture = ExtResource( 6 )
+
+[node name="Tridente" type="Sprite" parent="AnimationReciver/Sprites"]
+visible = false
+scale = Vector2( 0.08, 0.08 )
+texture = ExtResource( 3 )
+
+[node name="Palanca" type="Sprite" parent="AnimationReciver/Sprites"]
+visible = false
+scale = Vector2( 0.08, 0.08 )
+texture = ExtResource( 4 )
+
+[node name="Extintor" type="Sprite" parent="AnimationReciver/Sprites"]
+visible = false
+scale = Vector2( 0.08, 0.08 )
+texture = ExtResource( 7 )
+
+[node name="Area2D" type="Area2D" parent="AnimationReciver"]
+scale = Vector2( 1.5, 1.5 )
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimationReciver/Area2D"]
+shape = SubResource( 1 )
+
+[node name="UI" type="Control" parent="AnimationReciver"]
+margin_top = 30.0
+margin_right = 40.0
+margin_bottom = 70.0
+
+[node name="ColorRect" type="ColorRect" parent="AnimationReciver/UI"]
+margin_left = 30.91
+margin_top = -0.36
+margin_right = 130.91
+margin_bottom = 29.64
+rect_rotation = -0.108574
+color = Color( 0, 0, 0, 0.568627 )
+
+[node name="Label" type="Label" parent="AnimationReciver/UI/ColorRect"]
+anchor_bottom = 1.0
+margin_right = 8.0
+theme = ExtResource( 5 )
+text = "Press E to take"
+align = 3
+valign = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Info" type="ColorRect" parent="AnimationReciver/UI"]
+margin_left = 31.0
+margin_top = -94.0
+margin_right = 184.0
+margin_bottom = -27.0
+rect_rotation = -0.108574
+color = Color( 0, 0, 0, 0.568627 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="AnimationReciver/UI/Info"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 5 )
+text = "Info:
+-Type:
+-Damage:"
+align = 3
+valign = 3
+autowrap = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/drop = SubResource( 2 )
+[connection signal="body_entered" from="AnimationReciver/Area2D" to="." method="on_player_entered"]
+[connection signal="body_exited" from="AnimationReciver/Area2D" to="." method="on_player_exited"]

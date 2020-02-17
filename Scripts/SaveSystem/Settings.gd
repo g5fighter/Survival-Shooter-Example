@@ -1,22 +1,33 @@
 
 extends Node
 
-const SAVE_PATH = "res://save.json"
-
+const SAVE_PATH = "user://game.data"
+const SETTINGS_PATH = "user://conf.data"
 
 func _ready():
-	load_game()
+	load_game(SETTINGS_PATH)
+	load_game(SAVE_PATH)
 
 
-func save_game():
+
+func save_game(type: String):
 	# Open the existing save file or create a new one in write mode
 	var save_file = File.new()
-	save_file.open(SAVE_PATH, File.WRITE)
+	if type == 'conf':
+		save_file.open(SETTINGS_PATH, File.WRITE)
+	if type == 'game':
+		save_file.open(SAVE_PATH, File.WRITE)
+
 
 
 	# All the nodes to save are in a group called "persistent" (set in the editor, in the node tab of the inspector)
 	var save_dict = {}
-	var nodes_to_save = get_tree().get_nodes_in_group("persistent")
+	var nodes_to_save
+	if type == 'conf':
+		nodes_to_save = get_tree().get_nodes_in_group("persistent_conf")
+	if type == 'game':
+		nodes_to_save = get_tree().get_nodes_in_group("persistent_game")
+	
 	
 	for node in nodes_to_save:
 	
@@ -28,13 +39,13 @@ func save_game():
 	save_file.close()
 
 
-func load_game():
+func load_game(path):
 	# When we load a file, we must check that it exists before we try to open it or it'll crash the game
 	var save_file = File.new()
-	if not save_file.file_exists(SAVE_PATH):
+	if not save_file.file_exists(path):
 		print("The save file does not exist.")
 		return
-	save_file.open(SAVE_PATH, File.READ)
+	save_file.open(path, File.READ)
 
 	# parse file data - convert the JSON back to a dictionary
 	var data = {}

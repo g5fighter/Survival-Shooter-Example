@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/enemy/enemy.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/enemigos/animales/oso/oso.svg" type="Texture" id=2]
@@ -48,9 +48,12 @@ tracks/2/keys = {
 "values": [ true, false, false, true ]
 }
 
+[sub_resource type="CircleShape2D" id=3]
+radius = 40.9207
+
 [node name="enemy" type="KinematicBody2D"]
 collision_layer = 2
-collision_mask = 5
+collision_mask = 7
 script = ExtResource( 1 )
 distance = 160
 
@@ -87,16 +90,34 @@ shape = SubResource( 1 )
 disabled = true
 
 [node name="Cabeza" type="Position2D" parent="Oso"]
-editor/display_folded = true
 position = Vector2( 80.39, 0 )
 script = ExtResource( 4 )
 
 [node name="sprite_cabeza" type="Sprite" parent="Oso/Cabeza"]
-position = Vector2( 31.61, -3.55271e-013 )
+position = Vector2( 31.61, -3.55271e-13 )
 rotation = 1.5708
 scale = Vector2( 0.28, 0.28 )
 texture = ExtResource( 5 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
 "anims/brazo golpeando" = SubResource( 2 )
+
+[node name="DetectorDerecho" type="Area2D" parent="."]
+position = Vector2( 90, 50 )
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectorDerecho"]
+shape = SubResource( 3 )
+
+[node name="DetectorIzquierdo" type="Area2D" parent="."]
+position = Vector2( 90, -50 )
+collision_layer = 16
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectorIzquierdo"]
+shape = SubResource( 3 )
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PoolVector2Array( 0, 0, 120, 0 )
 [connection signal="body_entered" from="Oso/Brazo/Area2D" to="." method="_on_Area2D_body_entered"]

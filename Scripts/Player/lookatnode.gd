@@ -1,9 +1,8 @@
 extends Position2D
 
-export (NodePath) var lab
-onready var ui_lab = get_node(lab)
+export (NodePath) var node_path
+onready var node_obj = get_node(node_path)
 
-# warning-ignore:unused_argument
-func _process(delta):
-	look_at(ui_lab.global_position)
+func _process(_delta):
+	look_at(node_obj.global_position)
 

@@ -5,6 +5,7 @@ var Enemy = preload("res://objetos/enemy.tscn")
 var followedObject = preload("res://objetos/nodeToBeFollowed.tscn")
 var Arma = preload("res://objetos/Arma.tscn")
 var Cargador = preload("res://objetos/Cargador.tscn")
+var Cac = preload("res://objetos/ArmaCaC.tscn")
 var nav = preload("res://objetos/nav/NavigationPolygonInstance.tscn")
 #temporizadores
 var timer = null
@@ -31,9 +32,12 @@ func _ready():
 	searchPlayer()
 	for n in get_tree().get_nodes_in_group("obstacles"):
 		n.make_obstacle()
+	$UI/InfoEnPantalla.start($AnimationPlayer)
+	$UI/InfoEnPantalla.set_message('Ronda '+str(rondaActual))
+	Stats.actual_Rounds=rondaActual
 
 
-func randomSpawn(tipo):
+func randomSpawn(tipo:int):
 	var pos
 	if (tipo == 0):
 		var spawnsPlayerNodes = get_tree().get_nodes_in_group("playerSpawn")
@@ -47,7 +51,7 @@ func randomSpawn(tipo):
 		pos = spawnsEnemyNodes[my_random_number].global_position
 	return pos
 	
-func instantiate_gun(pos):
+func instantiate_gun(pos:Vector2):
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
 	var my_random_number = rng.randi_range(0, 2)
@@ -55,13 +59,21 @@ func instantiate_gun(pos):
 	self.add_child(arma)
 	arma.start(pos,my_random_number)
 
-func instantiate_charger(pos):
+func instantiate_charger(pos:Vector2):
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
 	var my_random_number = rng.randi_range(0, 2)
 	var cargador = Cargador.instance()
 	self.add_child(cargador)
 	cargador.start(pos,my_random_number)
+
+func instantiate_weapon(pos:Vector2):
+	rng = RandomNumberGenerator.new()
+	rng.randomize()
+	var my_random_number = rng.randi_range(0, 3)
+	var cac = Cac.instance()
+	self.add_child(cac)
+	cac.start(pos,my_random_number)
 
 func configure_timers():
 	timer = Timer.new()
@@ -72,17 +84,21 @@ func configure_timers():
 	roundTimer = Timer.new()
 	roundTimer.set_one_shot(true)
 	roundTimer.set_wait_time(roundDelay)
-	roundTimer.connect("timeout", self,"on_timeout_complete")
+	roundTimer.connect("timeout", self,"on_roundtimeout_complete")
 	add_child(roundTimer)
 	
 func on_timeout_complete():
 	spawnEnemy = true
 
+func on_roundtimeout_complete():
+	on_timeout_complete()
+	$UI/InfoEnPantalla.set_message('Ronda '+str(rondaActual))
+
 func _instantiate_player():
 	var player = Player.instance()
 	self.add_child(player)
 	player.start(randomSpawn(0))
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _instantiate_enemies():
 	var objectFollowed = followedObject.instance()
 	var enemy = Enemy.instance()
@@ -92,8 +108,8 @@ func _instantiate_enemies():
 	objectFollowed.start(spawn, enemy, enemy.distance)
 	enemy.start(spawn, objectFollowed)
 	spawnEnemy = false
-#
-# warning-ignore:unused_argument
+	spawnedEnemies+=1
+
 func searchPlayer():
 	var players = get_tree().get_nodes_in_group("player")
 	for pl in players:
@@ -101,7 +117,8 @@ func searchPlayer():
 			player_node = pl
 			playerFree = weakref(player_node)
 			playerFound = true
-func _process(delta):
+
+func _process(_delta):
 	if(player_node==null&&!playerFound):
 		searchPlayer()
 	if(spawnEnemy):
@@ -109,13 +126,18 @@ func _process(delta):
 		_instantiate_enemies()
 	if(spawnedEnemies==enemiesPerRound):
 		rondaActual+=1
+		Stats.actual_Rounds=rondaActual
 		spawnEnemy = false
 		enemiesPerRound+=enemiesPerRound/2
 		enemiesPerRound = round(enemiesPerRound)
 		spawnedEnemies = 0
 		enemyDelay = enemyDelay*0.95
 		roundTimer.start()
-
+	$UI/Label.set_text("spnEnemy"+str(spawnedEnemies)+"enmperrnd"+str(enemiesPerRound))
+	if !playerFree.get_ref():
+		if !$UI/DieMessage.visible:
+			$UI/DieMessage.start()
+	
 func restart_level():
 	$UI/Pause.changeEstate()
 	Global.transition_scene("res://Escenas/main.tscn")
@@ -123,7 +145,7 @@ func restart_level():
 func close_game():
 	Global.close_game()
 
-func isPlayerNear(n,dist):
+func isPlayerNear(n:Node,dist:int):
 	var resultado = false
 	if playerFound==true&&playerFree.get_ref():
 		if n.global_position.distance_to(player_node.global_position)<dist:
