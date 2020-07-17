@@ -3,7 +3,7 @@ extends CanvasLayer
 func _ready():
 	Global.connect("ui_mode_changed",self,"changeVisiblity",[!Global.ui_mode])
 
-func changeVisiblity(visibility):
+func changeVisiblity(visibility:bool):
 	$Control.visible = visibility
 
 func get_joystick():

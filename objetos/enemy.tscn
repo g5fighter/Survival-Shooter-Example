@@ -5,6 +5,7 @@
 [ext_resource path="res://Sprites/enemigos/animales/oso/mano.svg" type="Texture" id=3]
 [ext_resource path="res://Scripts/enemy/lookatnodeplayer.gd" type="Script" id=4]
 [ext_resource path="res://Sprites/enemigos/animales/oso/mcCabesa.svg" type="Texture" id=5]
+[ext_resource path="res://Sprites/enemigos/animales/oso/cola.svg" type="Texture" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 18.2133
@@ -47,9 +48,6 @@ tracks/2/keys = {
 "update": 1,
 "values": [ true, false, false, true ]
 }
-
-[sub_resource type="CircleShape2D" id=3]
-radius = 40.9207
 
 [node name="enemy" type="KinematicBody2D"]
 collision_layer = 2
@@ -99,24 +97,15 @@ rotation = 1.5708
 scale = Vector2( 0.28, 0.28 )
 texture = ExtResource( 5 )
 
+[node name="Sprite_cola" type="Sprite" parent="Oso"]
+position = Vector2( -115.113, 0 )
+rotation = 1.5708
+scale = Vector2( 0.3, 0.3 )
+z_index = -1
+texture = ExtResource( 6 )
+
 [node name="anim" type="AnimationPlayer" parent="."]
 "anims/brazo golpeando" = SubResource( 2 )
-
-[node name="DetectorDerecho" type="Area2D" parent="."]
-position = Vector2( 90, 50 )
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectorDerecho"]
-shape = SubResource( 3 )
-
-[node name="DetectorIzquierdo" type="Area2D" parent="."]
-position = Vector2( 90, -50 )
-collision_layer = 16
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectorIzquierdo"]
-shape = SubResource( 3 )
 
 [node name="Line2D" type="Line2D" parent="."]
 points = PoolVector2Array( 0, 0, 120, 0 )

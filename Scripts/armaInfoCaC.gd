@@ -30,19 +30,19 @@ onready var gameScene = get_tree().get_root().get_node("MainScene")
 
 onready var images = [node_sprites.get_node("Sarten"),node_sprites.get_node("Espada"),node_sprites.get_node("Tridente"),node_sprites.get_node("Palanca"),node_sprites.get_node("Extintor")]
 
-func start(pos,num):
+func start(pos:Vector2,num:int):
 	position=pos
 	configureweapon(num)
 	drop(pos)
 	
 # Called when the node enters the scene tree for the first time.
-func configureweapon(num):
+func configureweapon(num:int):
 	weaponID = num
 	weaponDamage = armas[weaponID]
 	weaponNameText = weaponName[weaponID]
 	images[weaponID].show()
 	
-func drop(pos):
+func drop(pos:Vector2):
 	taken = false
 	position=pos
 	node_sprites.show()

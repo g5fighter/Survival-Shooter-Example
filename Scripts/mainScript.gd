@@ -14,6 +14,9 @@ var roundTimer = null
 var enemyDelay = 10
 var roundDelay = 20
 
+var cantidadPistolas = 4
+var cantidadArmasCaC = 4
+
 export (bool) var spawnEnemy = true
 var rng = RandomNumberGenerator.new()
 
@@ -54,7 +57,7 @@ func randomSpawn(tipo:int):
 func instantiate_gun(pos:Vector2):
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var my_random_number = rng.randi_range(0, 2)
+	var my_random_number = rng.randi_range(0, cantidadPistolas)
 	var arma = Arma.instance()
 	self.add_child(arma)
 	arma.start(pos,my_random_number)
@@ -70,7 +73,7 @@ func instantiate_charger(pos:Vector2):
 func instantiate_weapon(pos:Vector2):
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var my_random_number = rng.randi_range(0, 3)
+	var my_random_number = rng.randi_range(0, cantidadArmasCaC)
 	var cac = Cac.instance()
 	self.add_child(cac)
 	cac.start(pos,my_random_number)
@@ -106,7 +109,7 @@ func _instantiate_enemies():
 	self.add_child(enemy)
 	var spawn = randomSpawn(1)
 	objectFollowed.start(spawn, enemy, enemy.distance)
-	enemy.start(spawn, objectFollowed)
+	enemy.start(spawn, objectFollowed,0)
 	spawnEnemy = false
 	spawnedEnemies+=1
 
@@ -132,6 +135,7 @@ func _process(_delta):
 		enemiesPerRound = round(enemiesPerRound)
 		spawnedEnemies = 0
 		enemyDelay = enemyDelay*0.95
+		timer.set_wait_time(enemyDelay)
 		roundTimer.start()
 	$UI/Label.set_text("spnEnemy"+str(spawnedEnemies)+"enmperrnd"+str(enemiesPerRound))
 	if !playerFree.get_ref():

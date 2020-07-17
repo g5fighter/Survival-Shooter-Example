@@ -25,6 +25,7 @@ func _ready():
 	timer = Timer.new()
 	timer.set_one_shot(true)
 	add_child(timer)
+	time_start = OS.get_unix_time()
 
 func add_stats():
 	add_kill(actual_kills)

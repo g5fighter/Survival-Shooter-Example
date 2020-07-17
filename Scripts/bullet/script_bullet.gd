@@ -8,7 +8,7 @@ var velocity = Vector2()
 var bullet_damage = 0
 
 #FUNCION QUE HACE COMENZAR LAS ACCIONES A LA BALA
-func start(pos, dir,damage):
+func start(pos:Vector2, dir,damage:int):
 	bullet_damage = damage
 	rotation = dir
 	position = pos

@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-onready var spriteArray = [$Control2/Armas/Gun,$Control2/Armas/AK,$Control2/Armas/Sniper]
+onready var spriteArray = [$Control2/Armas/Gun,$Control2/Armas/AK,$Control2/Armas/Sniper,$Control2/Armas/Escopeta]
 onready var spriteArrayCac = [$Control2/Armas/Cac/Sarten,$Control2/Armas/Cac/Espada,$Control2/Armas/Cac/Tridente,$Control2/Armas/Cac/Palanca,$Control2/Armas/Cac/Extintor]
 
 func _ready():
