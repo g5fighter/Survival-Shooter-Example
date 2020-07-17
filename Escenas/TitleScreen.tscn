@@ -91,7 +91,7 @@ margin_right = 1080.0
 margin_bottom = 566.0
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 6 )
-text = "Alpha 23.0                              Autor: g5fighter"
+text = "Alpha 24.0                              Autor: g5fighter"
 valign = 1
 
 [node name="Configuracion" parent="." instance=ExtResource( 7 )]
