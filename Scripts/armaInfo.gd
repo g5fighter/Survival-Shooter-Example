@@ -2,7 +2,7 @@ extends Node2D
 
 var objectID = 'arma'
 # MATRIZ ARMAS
-var armas = [[0.3,0.1,2],[16,60,7],[2,5,7],[10,5,60],[2,0,2],[0,0,0]]
+var armas = [[0.3,0.1,2,4],[16,60,7,6],[2,5,7,15],[10,5,60,100],[2,0,2,2],[0,0,0,0]]
 	# fil 0: Pistola
 	# fil 1: AK
 	# fil 2: Sniper
@@ -13,7 +13,7 @@ var armas = [[0.3,0.1,2],[16,60,7],[2,5,7],[10,5,60],[2,0,2],[0,0,0]]
 	# col 4: 0=>Automatica 1=>Rafagas 2=>Semiautomatica
 	# col 5: rafaga
 	
-var gunName = [['gun','ak','sniper'],['auto','rafagas','semiauto']]
+var gunName = [['gun','ak','sniper','escopeta'],['auto','rafagas','semiauto']]
 var gunNameText = ""
 var gunTypeText = ""
 var bulletAmount = 0
@@ -40,7 +40,7 @@ onready var ui_info = $AnimationReciver/UI/Info/Label
 
 onready var gameScene = get_tree().get_root().get_node("MainScene")
 
-onready var images = [$AnimationReciver/Sprites/Gun,$AnimationReciver/Sprites/Aka,$AnimationReciver/Sprites/Sniper]
+onready var images = [$AnimationReciver/Sprites/Gun,$AnimationReciver/Sprites/Aka,$AnimationReciver/Sprites/Sniper,$AnimationReciver/Sprites/Escopeta]
 
 func start(pos: Vector2,num: int):
 	position=pos
@@ -66,7 +66,7 @@ func restAmmo():
 func recharge():
 	bulletAmount=armas[1][gunID]
 	
-func drop(pos):
+func drop(pos: Vector2):
 	taken = false
 	position=pos
 	$AnimationReciver/Sprites.show()

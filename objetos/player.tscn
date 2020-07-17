@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Scripts/Player/movement.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Player/lookatnode.gd" type="Script" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://Sprites/guns/Cac_sarten/sarten_en_brazo_atk.svg" type="Texture" id=25]
 [ext_resource path="res://Sprites/guns/Cac_tridente/tridente_en_brazo_atk.svg" type="Texture" id=26]
 [ext_resource path="res://Sprites/guns/Cac_tridente/tridente_en_brazo.svg" type="Texture" id=27]
+[ext_resource path="res://Sprites/guns/escopeta/escopeta.svg" type="Texture" id=28]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 6.65033
@@ -48,7 +49,7 @@ radius = 35.6208
 resource_name = "ataqueEspada"
 length = 0.3
 tracks/0/type = "value"
-tracks/0/path = NodePath("ArmasCaCNodo/Espada/EspadaAtque:rotation_degrees")
+tracks/0/path = NodePath("Armas/ArmasCaCNodo/Espada/EspadaAtque:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -60,7 +61,7 @@ tracks/0/keys = {
 "values": [ 30.7, -70.2 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("ArmasCaCNodo/Espada/EspadaAtque:visible")
+tracks/1/path = NodePath("Armas/ArmasCaCNodo/Espada/EspadaAtque:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -72,7 +73,7 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ArmasCaCNodo/Espada/EspadaIdle:visible")
+tracks/2/path = NodePath("Armas/ArmasCaCNodo/Espada/EspadaIdle:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -84,7 +85,7 @@ tracks/2/keys = {
 "values": [ false, true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ArmasCaCNodo/Espada/EspadaAtque/Area2D/CollisionShape2D:disabled")
+tracks/3/path = NodePath("Armas/ArmasCaCNodo/Espada/EspadaAtque/Area2D/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -99,7 +100,7 @@ tracks/3/keys = {
 [sub_resource type="Animation" id=7]
 length = 0.3
 tracks/0/type = "value"
-tracks/0/path = NodePath("ArmasCaCNodo/Palanca/PalancaAtque:rotation_degrees")
+tracks/0/path = NodePath("Armas/ArmasCaCNodo/Palanca/PalancaAtque:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -111,7 +112,7 @@ tracks/0/keys = {
 "values": [ 30.7, -70.2 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("ArmasCaCNodo/Palanca/PalancaAtque:visible")
+tracks/1/path = NodePath("Armas/ArmasCaCNodo/Palanca/PalancaAtque:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -123,7 +124,7 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ArmasCaCNodo/Palanca/PalancaIdle/Sprite:visible")
+tracks/2/path = NodePath("Armas/ArmasCaCNodo/Palanca/PalancaIdle/Sprite:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -135,7 +136,7 @@ tracks/2/keys = {
 "values": [ false, true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ArmasCaCNodo/Palanca/PalancaAtque/Area2D/CollisionShape2D:disabled")
+tracks/3/path = NodePath("Armas/ArmasCaCNodo/Palanca/PalancaAtque/Area2D/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -151,7 +152,7 @@ tracks/3/keys = {
 resource_name = "ataqueSarten"
 length = 0.3
 tracks/0/type = "value"
-tracks/0/path = NodePath("ArmasCaCNodo/Sarten/SartenAtque:visible")
+tracks/0/path = NodePath("Armas/ArmasCaCNodo/Sarten/SartenAtque:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -163,7 +164,7 @@ tracks/0/keys = {
 "values": [ true, false ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("ArmasCaCNodo/Sarten/SartenAtque/Area2D/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Armas/ArmasCaCNodo/Sarten/SartenAtque/Area2D/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -175,7 +176,7 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ArmasCaCNodo/Sarten/SartenAtque/Area2D/CollisionShape2D2:disabled")
+tracks/2/path = NodePath("Armas/ArmasCaCNodo/Sarten/SartenAtque/Area2D/CollisionShape2D2:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -187,7 +188,7 @@ tracks/2/keys = {
 "values": [ false, true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ArmasCaCNodo/Sarten/SartenIdle:visible")
+tracks/3/path = NodePath("Armas/ArmasCaCNodo/Sarten/SartenIdle:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -199,7 +200,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("ArmasCaCNodo/Sarten/SartenAtque:rotation_degrees")
+tracks/4/path = NodePath("Armas/ArmasCaCNodo/Sarten/SartenAtque:rotation_degrees")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -215,7 +216,7 @@ tracks/4/keys = {
 resource_name = "ataqueTridente"
 length = 0.3
 tracks/0/type = "value"
-tracks/0/path = NodePath("ArmasCaCNodo/Tridente/TridenteAtque:rotation_degrees")
+tracks/0/path = NodePath("Armas/ArmasCaCNodo/Tridente/TridenteAtque:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -227,7 +228,7 @@ tracks/0/keys = {
 "values": [ 30.7, -70.1999 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("ArmasCaCNodo/Tridente/TridenteAtque:visible")
+tracks/1/path = NodePath("Armas/ArmasCaCNodo/Tridente/TridenteAtque:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -239,7 +240,7 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ArmasCaCNodo/Tridente/TridenteIdle:visible")
+tracks/2/path = NodePath("Armas/ArmasCaCNodo/Tridente/TridenteIdle:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -251,7 +252,7 @@ tracks/2/keys = {
 "values": [ false, true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ArmasCaCNodo/Tridente/TridenteAtque/Area2D/CollisionShape2D:disabled")
+tracks/3/path = NodePath("Armas/ArmasCaCNodo/Tridente/TridenteAtque/Area2D/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -268,255 +269,309 @@ z_index = 1
 collision_mask = 15
 script = ExtResource( 1 )
 
-[node name="pistol" type="Position2D" parent="."]
+[node name="Armas" type="Node2D" parent="."]
+
+[node name="Guns" type="Node2D" parent="Armas"]
+
+[node name="pistol" type="Position2D" parent="Armas/Guns"]
 script = ExtResource( 14 )
 path_bulletspawn = NodePath("brazo/bullet_spawn")
 path_RotDesv = NodePath("brazo")
 
-[node name="brazo" type="Position2D" parent="pistol"]
+[node name="brazo" type="Position2D" parent="Armas/Guns/pistol"]
 position = Vector2( 0, 50.0353 )
 script = ExtResource( 5 )
 notRotate = true
 distance = 115
 player = NodePath("..")
 
-[node name="simple" type="Sprite" parent="pistol/brazo"]
+[node name="simple" type="Sprite" parent="Armas/Guns/pistol/brazo"]
 position = Vector2( 54.205, -0.463299 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
 texture = ExtResource( 8 )
 
-[node name="bullet_spawn" type="Position2D" parent="pistol/brazo"]
+[node name="bullet_spawn" type="Position2D" parent="Armas/Guns/pistol/brazo"]
 position = Vector2( 115.699, -0.585545 )
 
-[node name="Aka" type="Position2D" parent="."]
+[node name="Aka" type="Position2D" parent="Armas/Guns"]
 script = ExtResource( 14 )
 path_bulletspawn = NodePath("ak_sprite/Position2D")
 path_RotDesv = NodePath("ak_sprite")
 
-[node name="brazolargo" type="Position2D" parent="Aka"]
+[node name="brazolargo" type="Position2D" parent="Armas/Guns/Aka"]
 position = Vector2( 17.74, -48.69 )
 script = ExtResource( 2 )
 node_path = NodePath("../ak_sprite/brazograndetrigger")
 
-[node name="Sprite" type="Sprite" parent="Aka/brazolargo"]
+[node name="Sprite" type="Sprite" parent="Armas/Guns/Aka/brazolargo"]
 position = Vector2( 52.622, 0 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
 texture = ExtResource( 3 )
 
-[node name="minibrazo" type="Position2D" parent="Aka"]
+[node name="minibrazo" type="Position2D" parent="Armas/Guns/Aka"]
 position = Vector2( 17.74, 48.69 )
 script = ExtResource( 2 )
 node_path = NodePath("../ak_sprite/manopequeñapos")
 
-[node name="Sprite2" type="Sprite" parent="Aka/minibrazo"]
+[node name="Sprite2" type="Sprite" parent="Armas/Guns/Aka/minibrazo"]
 position = Vector2( 27.213, 0.36644 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
 texture = ExtResource( 4 )
 
-[node name="ak_sprite" type="Position2D" parent="Aka"]
+[node name="ak_sprite" type="Position2D" parent="Armas/Guns/Aka"]
 position = Vector2( 25.01, 36.625 )
 script = ExtResource( 5 )
 notRotate = true
 distance = 160
 player = NodePath("../..")
 
-[node name="Sprite" type="Sprite" parent="Aka/ak_sprite"]
+[node name="Sprite" type="Sprite" parent="Armas/Guns/Aka/ak_sprite"]
 position = Vector2( 67.7412, -0.291992 )
 rotation = 1.5708
 scale = Vector2( 0.205267, 0.205267 )
 z_index = 1
 texture = ExtResource( 6 )
 
-[node name="manopequeñapos" type="Position2D" parent="Aka/ak_sprite"]
+[node name="manopequeñapos" type="Position2D" parent="Armas/Guns/Aka/ak_sprite"]
 position = Vector2( 39.84, 0 )
 
-[node name="brazograndetrigger" type="Position2D" parent="Aka/ak_sprite"]
+[node name="brazograndetrigger" type="Position2D" parent="Armas/Guns/Aka/ak_sprite"]
 position = Vector2( 74.51, 0 )
 
-[node name="Position2D" type="Position2D" parent="Aka/ak_sprite"]
+[node name="Position2D" type="Position2D" parent="Armas/Guns/Aka/ak_sprite"]
 position = Vector2( 137.94, 0 )
 
-[node name="sniper" type="Position2D" parent="."]
+[node name="sniper" type="Position2D" parent="Armas/Guns"]
 script = ExtResource( 14 )
 path_bulletspawn = NodePath("sniper_sprite/Position2D")
 path_RotDesv = NodePath("sniper_sprite")
 
-[node name="brazolargo" type="Position2D" parent="sniper"]
+[node name="brazolargo" type="Position2D" parent="Armas/Guns/sniper"]
 position = Vector2( 17.74, -48.69 )
 script = ExtResource( 2 )
 node_path = NodePath("../sniper_sprite/brazograndetrigger")
 
-[node name="Sprite" type="Sprite" parent="sniper/brazolargo"]
+[node name="Sprite" type="Sprite" parent="Armas/Guns/sniper/brazolargo"]
 position = Vector2( 52.622, 0 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
 texture = ExtResource( 3 )
 
-[node name="minibrazo" type="Position2D" parent="sniper"]
+[node name="minibrazo" type="Position2D" parent="Armas/Guns/sniper"]
 position = Vector2( 17.74, 48.69 )
 script = ExtResource( 2 )
 node_path = NodePath("../sniper_sprite/manopequeñapos")
 
-[node name="Sprite2" type="Sprite" parent="sniper/minibrazo"]
+[node name="Sprite2" type="Sprite" parent="Armas/Guns/sniper/minibrazo"]
 position = Vector2( 27.213, 0.36644 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
 texture = ExtResource( 4 )
 
-[node name="sniper_sprite" type="Position2D" parent="sniper"]
+[node name="sniper_sprite" type="Position2D" parent="Armas/Guns/sniper"]
 position = Vector2( 25.01, 36.625 )
 script = ExtResource( 5 )
 notRotate = true
 distance = 160
-player = NodePath("../..")
+player = NodePath("../../../..")
 
-[node name="Sprite" type="Sprite" parent="sniper/sniper_sprite"]
+[node name="Sprite" type="Sprite" parent="Armas/Guns/sniper/sniper_sprite"]
 position = Vector2( 67.7412, -0.291992 )
 rotation = 1.5708
 scale = Vector2( 0.205267, 0.205267 )
 z_index = 1
 texture = ExtResource( 7 )
 
-[node name="manopequeñapos" type="Position2D" parent="sniper/sniper_sprite"]
+[node name="manopequeñapos" type="Position2D" parent="Armas/Guns/sniper/sniper_sprite"]
 position = Vector2( 39.84, 0 )
 
-[node name="brazograndetrigger" type="Position2D" parent="sniper/sniper_sprite"]
+[node name="brazograndetrigger" type="Position2D" parent="Armas/Guns/sniper/sniper_sprite"]
 position = Vector2( 74.51, 0 )
 
-[node name="Position2D" type="Position2D" parent="sniper/sniper_sprite"]
+[node name="Position2D" type="Position2D" parent="Armas/Guns/sniper/sniper_sprite"]
 position = Vector2( 137.94, 0 )
 
-[node name="ArmasCaCNodo" type="Position2D" parent="."]
+[node name="escopeta" type="Position2D" parent="Armas/Guns"]
+script = ExtResource( 14 )
+path_bulletspawn = NodePath("escopeta_sprite/Position2D")
+path_RotDesv = NodePath("escopeta_sprite")
 
-[node name="Palanca" type="Position2D" parent="ArmasCaCNodo"]
+[node name="brazolargo" type="Position2D" parent="Armas/Guns/escopeta"]
+position = Vector2( 17.74, -48.69 )
+script = ExtResource( 2 )
+node_path = NodePath("../escopeta_sprite/brazograndetrigger")
 
-[node name="PalancaIdle" type="Position2D" parent="ArmasCaCNodo/Palanca"]
+[node name="Sprite" type="Sprite" parent="Armas/Guns/escopeta/brazolargo"]
+position = Vector2( 52.622, 0 )
+rotation = 1.5708
+scale = Vector2( 0.268, 0.268 )
+texture = ExtResource( 3 )
+
+[node name="minibrazo" type="Position2D" parent="Armas/Guns/escopeta"]
+position = Vector2( 17.74, 48.69 )
+script = ExtResource( 2 )
+node_path = NodePath("../../Aka/ak_sprite/manopequeñapos")
+
+[node name="Sprite2" type="Sprite" parent="Armas/Guns/escopeta/minibrazo"]
+position = Vector2( 27.213, 0.36644 )
+rotation = 1.5708
+scale = Vector2( 0.268, 0.268 )
+texture = ExtResource( 4 )
+
+[node name="escopeta_sprite" type="Position2D" parent="Armas/Guns/escopeta"]
+position = Vector2( 25.01, 36.625 )
+script = ExtResource( 5 )
+notRotate = true
+distance = 160
+player = NodePath("../../../..")
+
+[node name="Sprite" type="Sprite" parent="Armas/Guns/escopeta/escopeta_sprite"]
+position = Vector2( 67.7412, -0.291992 )
+rotation = 1.5708
+scale = Vector2( 0.205267, 0.205267 )
+z_index = 1
+texture = ExtResource( 28 )
+
+[node name="manopequeñapos" type="Position2D" parent="Armas/Guns/escopeta/escopeta_sprite"]
+position = Vector2( 39.84, 0 )
+
+[node name="brazograndetrigger" type="Position2D" parent="Armas/Guns/escopeta/escopeta_sprite"]
+position = Vector2( 74.51, 0 )
+
+[node name="Position2D" type="Position2D" parent="Armas/Guns/escopeta/escopeta_sprite"]
+position = Vector2( 137.94, 0 )
+
+[node name="ArmasCaCNodo" type="Position2D" parent="Armas"]
+
+[node name="Palanca" type="Position2D" parent="Armas/ArmasCaCNodo"]
+
+[node name="PalancaIdle" type="Position2D" parent="Armas/ArmasCaCNodo/Palanca"]
 position = Vector2( 17.74, 48.69 )
 
-[node name="Sprite" type="Sprite" parent="ArmasCaCNodo/Palanca/PalancaIdle"]
+[node name="Sprite" type="Sprite" parent="Armas/ArmasCaCNodo/Palanca/PalancaIdle"]
 position = Vector2( 30, 0 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
 z_index = 1
 texture = ExtResource( 15 )
 
-[node name="PalancaAtque" type="Position2D" parent="ArmasCaCNodo/Palanca"]
+[node name="PalancaAtque" type="Position2D" parent="Armas/ArmasCaCNodo/Palanca"]
 visible = false
 position = Vector2( 17.74, 48.69 )
 rotation = -1.22522
 
-[node name="Sprite" type="Sprite" parent="ArmasCaCNodo/Palanca/PalancaAtque"]
+[node name="Sprite" type="Sprite" parent="Armas/ArmasCaCNodo/Palanca/PalancaAtque"]
 position = Vector2( 30, 0 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
 texture = ExtResource( 16 )
 
-[node name="Area2D" type="Area2D" parent="ArmasCaCNodo/Palanca/PalancaAtque"]
+[node name="Area2D" type="Area2D" parent="Armas/ArmasCaCNodo/Palanca/PalancaAtque"]
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ArmasCaCNodo/Palanca/PalancaAtque/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Armas/ArmasCaCNodo/Palanca/PalancaAtque/Area2D"]
 position = Vector2( 100, 0 )
 scale = Vector2( 10, 1 )
 shape = SubResource( 1 )
 disabled = true
 
-[node name="Espada" type="Position2D" parent="ArmasCaCNodo"]
+[node name="Espada" type="Position2D" parent="Armas/ArmasCaCNodo"]
 
-[node name="EspadaIdle" type="Position2D" parent="ArmasCaCNodo/Espada"]
+[node name="EspadaIdle" type="Position2D" parent="Armas/ArmasCaCNodo/Espada"]
 position = Vector2( 17.74, 48.69 )
 
-[node name="Sprite" type="Sprite" parent="ArmasCaCNodo/Espada/EspadaIdle"]
+[node name="Sprite" type="Sprite" parent="Armas/ArmasCaCNodo/Espada/EspadaIdle"]
 position = Vector2( 30, 0 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
 texture = ExtResource( 23 )
 
-[node name="EspadaAtque" type="Position2D" parent="ArmasCaCNodo/Espada"]
+[node name="EspadaAtque" type="Position2D" parent="Armas/ArmasCaCNodo/Espada"]
 visible = false
 position = Vector2( 17.74, 48.69 )
 rotation = -1.22522
 
-[node name="Sprite" type="Sprite" parent="ArmasCaCNodo/Espada/EspadaAtque"]
+[node name="Sprite" type="Sprite" parent="Armas/ArmasCaCNodo/Espada/EspadaAtque"]
 position = Vector2( 30, 0 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
 texture = ExtResource( 22 )
 
-[node name="Area2D" type="Area2D" parent="ArmasCaCNodo/Espada/EspadaAtque"]
+[node name="Area2D" type="Area2D" parent="Armas/ArmasCaCNodo/Espada/EspadaAtque"]
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ArmasCaCNodo/Espada/EspadaAtque/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Armas/ArmasCaCNodo/Espada/EspadaAtque/Area2D"]
 position = Vector2( 100, 0 )
 scale = Vector2( 10, 1 )
 shape = SubResource( 1 )
 disabled = true
 
-[node name="Tridente" type="Position2D" parent="ArmasCaCNodo"]
+[node name="Tridente" type="Position2D" parent="Armas/ArmasCaCNodo"]
 
-[node name="TridenteIdle" type="Position2D" parent="ArmasCaCNodo/Tridente"]
+[node name="TridenteIdle" type="Position2D" parent="Armas/ArmasCaCNodo/Tridente"]
 position = Vector2( 17.74, 48.69 )
 
-[node name="Sprite" type="Sprite" parent="ArmasCaCNodo/Tridente/TridenteIdle"]
+[node name="Sprite" type="Sprite" parent="Armas/ArmasCaCNodo/Tridente/TridenteIdle"]
 position = Vector2( 30, 0 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
 texture = ExtResource( 27 )
 
-[node name="TridenteAtque" type="Position2D" parent="ArmasCaCNodo/Tridente"]
+[node name="TridenteAtque" type="Position2D" parent="Armas/ArmasCaCNodo/Tridente"]
 visible = false
 position = Vector2( 17.74, 48.69 )
 rotation = -1.22522
 
-[node name="Sprite" type="Sprite" parent="ArmasCaCNodo/Tridente/TridenteAtque"]
+[node name="Sprite" type="Sprite" parent="Armas/ArmasCaCNodo/Tridente/TridenteAtque"]
 position = Vector2( 30, 0 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
 texture = ExtResource( 26 )
 
-[node name="Area2D" type="Area2D" parent="ArmasCaCNodo/Tridente/TridenteAtque"]
+[node name="Area2D" type="Area2D" parent="Armas/ArmasCaCNodo/Tridente/TridenteAtque"]
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ArmasCaCNodo/Tridente/TridenteAtque/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Armas/ArmasCaCNodo/Tridente/TridenteAtque/Area2D"]
 position = Vector2( 100, 0 )
 scale = Vector2( 10, 1 )
 shape = SubResource( 1 )
 disabled = true
 
-[node name="Sarten" type="Position2D" parent="ArmasCaCNodo"]
+[node name="Sarten" type="Position2D" parent="Armas/ArmasCaCNodo"]
 
-[node name="SartenIdle" type="Position2D" parent="ArmasCaCNodo/Sarten"]
+[node name="SartenIdle" type="Position2D" parent="Armas/ArmasCaCNodo/Sarten"]
 position = Vector2( 17.74, 48.69 )
 
-[node name="Sprite" type="Sprite" parent="ArmasCaCNodo/Sarten/SartenIdle"]
+[node name="Sprite" type="Sprite" parent="Armas/ArmasCaCNodo/Sarten/SartenIdle"]
 position = Vector2( 30, 0 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
 texture = ExtResource( 24 )
 
-[node name="SartenAtque" type="Position2D" parent="ArmasCaCNodo/Sarten"]
+[node name="SartenAtque" type="Position2D" parent="Armas/ArmasCaCNodo/Sarten"]
 visible = false
 position = Vector2( 17.74, 48.69 )
 rotation = -1.22522
 
-[node name="Sprite" type="Sprite" parent="ArmasCaCNodo/Sarten/SartenAtque"]
+[node name="Sprite" type="Sprite" parent="Armas/ArmasCaCNodo/Sarten/SartenAtque"]
 position = Vector2( 30, 0 )
 rotation = 1.5708
 scale = Vector2( 0.268, 0.268 )
 texture = ExtResource( 25 )
 
-[node name="Area2D" type="Area2D" parent="ArmasCaCNodo/Sarten/SartenAtque"]
+[node name="Area2D" type="Area2D" parent="Armas/ArmasCaCNodo/Sarten/SartenAtque"]
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ArmasCaCNodo/Sarten/SartenAtque/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Armas/ArmasCaCNodo/Sarten/SartenAtque/Area2D"]
 position = Vector2( 100, 0 )
 scale = Vector2( 10, 1 )
 shape = SubResource( 1 )
 disabled = true
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="ArmasCaCNodo/Sarten/SartenAtque/Area2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Armas/ArmasCaCNodo/Sarten/SartenAtque/Area2D"]
 position = Vector2( 134.197, 0 )
 shape = SubResource( 2 )
 disabled = true
@@ -612,10 +667,10 @@ anims/ataqueEspada = SubResource( 6 )
 anims/ataquePalanca = SubResource( 7 )
 anims/ataqueSarten = SubResource( 8 )
 anims/ataqueTridente = SubResource( 9 )
-[connection signal="body_entered" from="ArmasCaCNodo/Palanca/PalancaAtque/Area2D" to="." method="_on_enemy_entered"]
-[connection signal="body_entered" from="ArmasCaCNodo/Espada/EspadaAtque/Area2D" to="." method="_on_enemy_entered"]
-[connection signal="body_entered" from="ArmasCaCNodo/Tridente/TridenteAtque/Area2D" to="." method="_on_enemy_entered"]
-[connection signal="body_entered" from="ArmasCaCNodo/Sarten/SartenAtque/Area2D" to="." method="_on_enemy_entered"]
+[connection signal="body_entered" from="Armas/ArmasCaCNodo/Palanca/PalancaAtque/Area2D" to="." method="_on_enemy_entered"]
+[connection signal="body_entered" from="Armas/ArmasCaCNodo/Espada/EspadaAtque/Area2D" to="." method="_on_enemy_entered"]
+[connection signal="body_entered" from="Armas/ArmasCaCNodo/Tridente/TridenteAtque/Area2D" to="." method="_on_enemy_entered"]
+[connection signal="body_entered" from="Armas/ArmasCaCNodo/Sarten/SartenAtque/Area2D" to="." method="_on_enemy_entered"]
 [connection signal="button_down" from="Inventario/Fondo/VBoxContainer/ColorRect/HBoxContainer5/Button" to="Inventario" method="changeVisibility"]
 
 [editable path="UI"]

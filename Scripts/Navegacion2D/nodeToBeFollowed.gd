@@ -5,7 +5,7 @@ var distance
 func _ready():
 	add_to_group("follow")
 
-func start(pos, node, dis):
+func start(pos:Vector2, node:Node, dis:int):
 	position = pos
 	followedNode = node
 	distance = dis

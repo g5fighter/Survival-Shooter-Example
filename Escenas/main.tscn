@@ -133,6 +133,8 @@ pause_mode = 2
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource( 5 )
 
 [node name="ColorRect" type="ColorRect" parent="UI/Pause"]
@@ -298,7 +300,7 @@ anims/desparecer = SubResource( 2 )
 [connection signal="button_down" from="UI/Pause/ColorRect/VBoxContainer/RestartButton" to="." method="restart_level"]
 [connection signal="button_down" from="UI/Pause/ColorRect/VBoxContainer/MainMenuButton" to="UI/Pause" method="return_to_title"]
 [connection signal="button_down" from="UI/Pause/ColorRect/VBoxContainer/ExitButton" to="." method="close_game"]
-[connection signal="button_down" from="UI/DieMessage/ColorRect/VBoxContainer/RestartButton" to="." method="restart_level"]
-[connection signal="button_down" from="UI/DieMessage/ColorRect/VBoxContainer/MainMenuButton" to="UI/Pause" method="return_to_title"]
+[connection signal="button_down" from="UI/DieMessage/ColorRect/VBoxContainer/RestartButton" to="UI/DieMessage" method="restart_level"]
+[connection signal="button_down" from="UI/DieMessage/ColorRect/VBoxContainer/MainMenuButton" to="UI/DieMessage" method="return_to_title"]
 [connection signal="button_down" from="UI/DieMessage/ColorRect/VBoxContainer/ExitButton" to="." method="close_game"]
 [connection signal="animation_finished" from="AnimationPlayer" to="UI/InfoEnPantalla" method="_on_animation_finished"]

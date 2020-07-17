@@ -16,19 +16,20 @@ var isPlayer = null
 onready var gameScene = get_tree().get_root().get_node("MainScene")
 onready var ui_lab = $AnimationReciver/ColorRect/Label
 onready var ui_color_rect = $AnimationReciver/ColorRect
-onready var images = [$AnimationReciver/Sprites/GunCharger,$AnimationReciver/Sprites/AkCharger,$AnimationReciver/Sprites/SniperCharger]
+onready var images = [$AnimationReciver/Sprites/GunCharger,$AnimationReciver/Sprites/AkCharger,$AnimationReciver/Sprites/SniperCharger,$AnimationReciver/Sprites/EscopetaCharger]
 
-func start(pos,num):
+func start(pos:Vector2,num:int):
 	position=pos
 	configureCharger(num)
 	drop(pos)
 	
-# Called when the node enters the scene tree for the first time.
-func configureCharger(num):
+
+func configureCharger(num:int):
 	chargerID = num
 	balasTotales = cargador[chargerID]*maxCargadores
 	images[chargerID].show()
-func recharge(balas):
+	
+func recharge(balas:int):
 	if(balasTotales)>0:
 		balasTotales-=balas
 		
@@ -36,7 +37,8 @@ func take():
 	$AnimationReciver/Sprites.hide()
 	ui_color_rect.hide()
 	taken = true
-func drop(pos):
+	
+func drop(pos:Vector2):
 	position=pos
 	$AnimationReciver/Sprites.show()
 	$AnimationPlayer.play("drop")

@@ -13,7 +13,7 @@ func _ready():
 func put_focus():
 	$ColorRect/Button.grab_focus()
 
-func start(nodoPadre,nodo,num,manager):
+func start(nodoPadre:Node,nodo:Node,num:int,manager):
 	player = nodoPadre
 	nodoAdjunto = nodo
 	index = num

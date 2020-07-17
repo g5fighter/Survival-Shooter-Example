@@ -31,5 +31,17 @@ func save_settings():
 	Settings.save_game('conf')
 	$ColorRect/PopupPanel.popup()
 
-func toggle_fullscreen(cond):
+func toggle_fullscreen(cond:bool):
 	OS.window_fullscreen = cond
+	
+func show_stats():
+	var elapsed = int(Stats.timePlayed)
+	var hours = elapsed/3600
+	var minutes = elapsed / 60 - hours*60
+	var seconds = elapsed % 60
+	var str_elapsed = "%02d:%02d:%02d" % [hours, minutes, seconds]
+	$StatsPanel/VBoxContainer/Label2.set_text("Total kills: "+str(Stats.kills)+"\n"+"Max rounds played: "+str(Stats.maxRounds)+"\n"+"Times played: "+str(Stats.timesPlayed)+"\n"+"Time played: "+str_elapsed)
+	$StatsPanel.show()
+
+func hide_stats():
+	$StatsPanel.hide()

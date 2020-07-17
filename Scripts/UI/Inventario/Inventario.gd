@@ -4,7 +4,7 @@ var item = preload("res://objetos/UI/Inventario/Item.tscn")
 var player = null
 onready var container = $Fondo/VBoxContainer/GridContainer
 # Called when the node enters the scene tree for the first time.
-func start(node):
+func start(node:Node):
 	player = node
 
 func changeVisibility():

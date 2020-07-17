@@ -3,14 +3,14 @@ extends HBoxContainer
 var maximum = 100
 var current_health = 0
 # Called when the node enters the scene tree for the first time.
-func initialize(max_value):
+func initialize(max_value:int):
 	maximum = max_value
 	$TextureProgress.max_value = maximum
 	
-func _on_Interface_health_updated(new_health):
+func _on_Interface_health_updated(new_health:int):
 	update_count_text(new_health)
 	current_health = new_health
 	$TextureProgress.value = current_health
 	
-func update_count_text(value):
+func update_count_text(value:int):
 	$TextureProgress/Label.text = str(round(value))

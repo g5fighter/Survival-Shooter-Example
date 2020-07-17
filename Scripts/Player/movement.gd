@@ -14,15 +14,10 @@ onready var ui_lab = get_node("UI/Control/Label")
 
 onready var node_ui_manager = get_node("UI")
 
-################# NODOS DE LAS ARMAS
-onready var node_armaUno = get_node("pistol")
-onready var node_armaDos = get_node("Aka")
-onready var node_armaTres = get_node("sniper")
-
 onready var animation_player = $AnimationPlayer
 
-onready var node_Array = [node_armaUno,node_armaDos,node_armaTres]
-onready var Cac_Array = [$ArmasCaCNodo/Sarten,$ArmasCaCNodo/Espada,$ArmasCaCNodo/Tridente,$ArmasCaCNodo/Palanca,$ArmasCaCNodo/Palanca]
+onready var node_Array = [$Armas/Guns/pistol,$Armas/Guns/Aka,$Armas/Guns/sniper,$Armas/Guns/escopeta]
+onready var Cac_Array = [$Armas/ArmasCaCNodo/Sarten,$Armas/ArmasCaCNodo/Espada,$Armas/ArmasCaCNodo/Tridente,$Armas/ArmasCaCNodo/Palanca]
 
 onready var soundManager = $sonidos
 onready var mobileUI = null
@@ -37,6 +32,7 @@ var mobileUInstatiate = preload("res://objetos/UI/mobile/mmobileUI.tscn")
 # vector desplacamiento
 var velocity = Vector2()
 var direction = Vector2()
+var last_rot = Vector2()
 
 # temporizadores de arma para disparar, recarga y cooldown
 var timer = null
@@ -228,6 +224,7 @@ func generalShoot():
 			if(Global.touch_controls):
 				if(search_for_near_enemie()!=null):
 					look_at(search_for_near_enemie().global_position)
+					last_rot = global_rotation
 			if(can_shoot&&inventario[index].bulletAmount>0):
 				if(shootType==0):
 					shoot()
@@ -271,9 +268,10 @@ func shoot():
 	fireSprite.start(node_Array[typeOfGun].get_bullet_spawn().global_position, node_Array[typeOfGun].get_Rot_Desv().global_rotation)
 	bullet.start(node_Array[typeOfGun].get_bullet_spawn().global_position, node_Array[typeOfGun].get_Rot_Desv().global_rotation, inventario[index].gunDamage)
 	
-	# añadimos en el arbol de nodos la bala
+	# añadimos en el arbol de nodos la bala y fuego
 	get_parent().add_child(bullet)
 	get_parent().add_child(fireSprite)
+	
 	can_shoot = false
 	timer.start()
 	update_UI()

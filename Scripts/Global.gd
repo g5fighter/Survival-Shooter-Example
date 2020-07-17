@@ -20,10 +20,10 @@ func _input(event):
 	if (event.is_action_pressed('dir_right')||event.is_action_pressed('dir_left')||event.is_action_pressed('dir_down')||event.is_action_pressed('dir_up'))and not use_gamepad:
 		use_gamepad = true
 
-func next_scene(scene = nextScene):
+func next_scene(scene:String = nextScene):
 	get_tree().change_scene(scene)
 	
-func transition_scene(scene):
+func transition_scene(scene:String):
 	nextScene = scene
 	get_tree().change_scene("res://Escenas/TransitionScene.tscn")
 	
@@ -43,7 +43,7 @@ func useTouch():
 func deleteTouch():
 	emit_signal("delete_touch")
 	
-func set_ui_mode(cond):
+func set_ui_mode(cond: bool):
 	ui_mode = cond
 	emit_signal("ui_mode_changed")
 
