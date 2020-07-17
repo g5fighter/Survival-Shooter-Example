@@ -17,5 +17,5 @@ Musica
 
 ## Datos  
 Iniciado en Godot 3.1.2  
-Continuado en Godot 3.2
-Sseguido en Godot 3.2.2
+Continuado en Godot 3.2  
+Seguido en Godot 3.2.2
